@@ -9,19 +9,15 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import CrudApp from "./CrudApp";
+import { Routes, Route, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
 function AdminPanel() {
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-
-  const [selectedNav, setSelectedNav] = useState("1");
-
-  const handleMenuClick = (key) => {
-    setSelectedNav(key);
-  };
 
   return (
     <Layout>
@@ -30,22 +26,20 @@ function AdminPanel() {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
-          selectedKeys={[selectedNav]}
-          onClick={({ key }) => handleMenuClick(key)}
+          onClick={({ key }) => navigate(key)}
           items={[
             {
-              key: "1",
+              key: "/home",
               icon: <HomeOutlined />,
               label: "Home",
             },
             {
-              key: "2",
+              key: "/order",
               icon: <UnorderedListOutlined />,
               label: "Order",
             },
             {
-              key: "3",
+              key: "/user",
               icon: <UserOutlined />,
               label: "User",
             },
@@ -73,13 +67,29 @@ function AdminPanel() {
             background: colorBgContainer,
           }}
         >
-          {selectedNav === "1" && <div></div>}
-          {selectedNav === "2" && <div>Nội dung Nav 2</div>}
-          {selectedNav === "3" && (
-            <div>
-              <CrudApp />
-            </div>
-          )}
+          <Routes>
+            <Route
+              exact
+              path="/home"
+              element={<div>Nội dung Nav 1</div>}
+            ></Route>
+
+            <Route
+              exact
+              path="/order"
+              element={<div>Nội dung Nav 2</div>}
+            ></Route>
+
+            <Route
+              exact
+              path="/user"
+              element={
+                <div>
+                  <CrudApp />
+                </div>
+              }
+            ></Route>
+          </Routes>
         </Content>
       </Layout>
     </Layout>
