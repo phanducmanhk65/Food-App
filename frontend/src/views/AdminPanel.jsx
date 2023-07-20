@@ -8,7 +8,8 @@ import {
   UnorderedListOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
-import CrudApp from "./CrudApp";
+import CrudUser from "./CrudUser";
+import CrudDishesManagement from "./CrudDishesManagement";
 const { Header, Sider, Content } = Layout;
 
 function AdminPanel() {
@@ -73,11 +74,16 @@ function AdminPanel() {
             background: colorBgContainer,
           }}
         >
-          {selectedNav === "1" && <div></div>}
+          {selectedNav === "1" && (
+            <div>
+              <CrudDishesManagement />
+            </div>
+          )}
+
           {selectedNav === "2" && <div>Nội dung Nav 2</div>}
           {selectedNav === "3" && (
             <div>
-              <CrudApp />
+              <CrudUser />
             </div>
           )}
         </Content>

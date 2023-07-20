@@ -5,7 +5,7 @@ const initialUsers = [
   { id: 2, name: "Jane Smith", email: "jane@example.com", birthYear: 1985 },
 ];
 
-const CrudApp = () => {
+const CrudUser = () => {
   const [users, setUsers] = useState(initialUsers);
   const [editing, setEditing] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
@@ -31,15 +31,16 @@ const CrudApp = () => {
 
   return (
     <div className="container mt-4">
-      <h1>CRUD App</h1>
-      <div>
+      <h1>User Management</h1>
+      <div className="d-flex p-3">
         {editing ? (
           <EditUserForm
             currentUser={currentUser}
             onUpdateUser={handleUpdateUser}
+            className="p-2"
           />
         ) : (
-          <AddUserForm onAddUser={handleAddUser} />
+          <AddUserForm onAddUser={handleAddUser} className="p-2" />
         )}
       </div>
       <div>
@@ -199,4 +200,4 @@ const UserList = ({ users, onDeleteUser, onEditUser }) => {
   );
 };
 
-export default CrudApp;
+export default CrudUser;
