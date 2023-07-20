@@ -8,6 +8,7 @@ import {
   UnorderedListOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
+import CrudApp from "./CrudApp";
 const { Header, Sider, Content } = Layout;
 
 function AdminPanel() {
@@ -72,9 +73,13 @@ function AdminPanel() {
             background: colorBgContainer,
           }}
         >
-          {selectedNav === "1" && <div>Nội dung Nav 1</div>}
+          {selectedNav === "1" && <div></div>}
           {selectedNav === "2" && <div>Nội dung Nav 2</div>}
-          {selectedNav === "3" && <div>Nội dung Nav 3</div>}
+          {selectedNav === "3" && (
+            <div>
+              <CrudApp />
+            </div>
+          )}
         </Content>
       </Layout>
     </Layout>
