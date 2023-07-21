@@ -15,6 +15,34 @@ const initialDishes = [
     image:
       "https://luhanhvietnam.com.vn/du-lich/vnt_upload/news/09_2022/quan-com-tam-o-ha-noi-.jpg",
   },
+  {
+    id: 3,
+    image:
+      "https://daynauan.info.vn/wp-content/uploads/2020/11/com-rang-dua-bo.jpg",
+    name: "Cơm rang dưa bò",
+    price: 20,
+  },
+  {
+    id: 4,
+    image:
+      "https://cdn.tgdd.vn/Files/2022/01/25/1412805/cach-nau-pho-bo-nam-dinh-chuan-vi-thom-ngon-nhu-hang-quan-202201250230038502.jpg",
+    name: "Phở bò",
+    price: 25,
+  },
+  {
+    id: 5,
+    image:
+      "https://cdn.tgdd.vn/Files/2017/10/22/1034982/cach-lam-banh-cuon-bang-bot-lam-banh-cuon-mikko-202111111226513462.jpg",
+    name: "Bánh cuốn",
+    price: 15,
+  },
+  {
+    id: 6,
+    image:
+      "https://cdn.tgdd.vn/2021/05/CookProduct/Banhcanhcuabien-1200x676.jpg",
+    name: "Bánh canh cua",
+    price: 20,
+  },
 ];
 
 const DishesManagement = () => {

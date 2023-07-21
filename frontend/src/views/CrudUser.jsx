@@ -1,8 +1,20 @@
 import React, { useState } from "react";
 
 const initialUsers = [
-  { id: 1, name: "John Doe", email: "john@example.com", birthYear: 1990 },
-  { id: 2, name: "Jane Smith", email: "jane@example.com", birthYear: 1985 },
+  {
+    id: 1,
+    name: "John Doe",
+    email: "john@example.com",
+    birthYear: 1990,
+    address: "New York",
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    email: "jane@example.com",
+    birthYear: 1985,
+    address: "Los Angeles",
+  },
 ];
 
 const CrudUser = () => {
@@ -56,7 +68,12 @@ const CrudUser = () => {
 };
 
 const AddUserForm = ({ onAddUser }) => {
-  const [user, setUser] = useState({ name: "", email: "", birthYear: "" });
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    birthYear: "",
+    address: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,7 +83,7 @@ const AddUserForm = ({ onAddUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddUser({ ...user, id: Date.now() });
-    setUser({ name: "", email: "", birthYear: "" });
+    setUser({ name: "", email: "", birthYear: "", address: "" });
   };
 
   return (
@@ -99,6 +116,17 @@ const AddUserForm = ({ onAddUser }) => {
           name="birthYear"
           placeholder="Birth Year"
           value={user.birthYear}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <input
+          type="text"
+          name="address"
+          placeholder="Address"
+          value={user.address}
           onChange={handleChange}
           required
           className="form-control"
@@ -156,6 +184,16 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
           className="form-control"
         />
       </div>
+      <div className="form-group">
+        <input
+          type="text"
+          name="address"
+          value={user.address}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
+      </div>
       <button type="submit" className="btn btn-primary">
         Update User
       </button>
@@ -168,10 +206,11 @@ const UserList = ({ users, onDeleteUser, onEditUser }) => {
     <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
       <colgroup>
         <col style={{ width: "10%" }} />
-        <col style={{ width: "30%" }} />
-        <col style={{ width: "30%" }} />
+        <col style={{ width: "20%" }} />
+        <col style={{ width: "20%" }} />
         <col style={{ width: "15%" }} />
         <col style={{ width: "15%" }} />
+        <col style={{ width: "20%" }} />
       </colgroup>
       <thead>
         <tr>
@@ -179,6 +218,7 @@ const UserList = ({ users, onDeleteUser, onEditUser }) => {
           <th>Name</th>
           <th>Email</th>
           <th>Birth Year</th>
+          <th>Address</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -189,6 +229,7 @@ const UserList = ({ users, onDeleteUser, onEditUser }) => {
             <td>{user.name}</td>
             <td>{user.email}</td>
             <td>{user.birthYear}</td>
+            <td>{user.address}</td>
             <td>
               <button onClick={() => onEditUser(user)} className="btn btn-info">
                 Edit
