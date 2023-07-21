@@ -12,6 +12,8 @@ import { Layout, Menu, Button, theme } from "antd";
 import CrudUser from "./CrudUser";
 import CrudDishesManagement from "./CrudDishesManagement";
 import OrderStatus from "./OrderStatus";
+import ParentComponent from "../component/ParentComponent";
+import Register from "../component/Register";
 import { Routes, Route, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
@@ -50,6 +52,16 @@ function AdminPanel() {
               key: "/",
               icon: <LogoutOutlined />,
               label: "Log out",
+            },
+            {
+              key: "/login",
+              icon: <LogoutOutlined />,
+              label: "Log in",
+            },
+            {
+              key: "/regiter",
+              icon: <LogoutOutlined />,
+              label: "Regiter",
             },
           ]}
         />
@@ -102,6 +114,24 @@ function AdminPanel() {
               element={
                 <div>
                   <CrudUser />
+                </div>
+              }
+            ></Route>
+            <Route
+              exact
+              path="/login"
+              element={
+                <div>
+                  <ParentComponent />
+                </div>
+              }
+            ></Route>
+            <Route
+              exact
+              path="/regiter"
+              element={
+                <div>
+                  <Register />
                 </div>
               }
             ></Route>
