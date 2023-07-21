@@ -5,6 +5,7 @@ import {
 } from "@ant-design/icons";
 import React, { useState } from "react";
 import "../styles/Login.scss";
+import { Link } from "react-router-dom";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -58,12 +59,11 @@ const Login = (props) => {
         >
           Login
         </button>
-        <button
+        <Link to="/register"
           className="link-btn"
-          onClick={() => props.onFormSwitch("register")}
         >
           Don't have an account? Register here.
-        </button>
+        </Link>
         <div className="back">
           <CaretLeftOutlined style={{ marginTop: "4px" }} /> Go back
         </div>

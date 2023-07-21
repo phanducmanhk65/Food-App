@@ -10,8 +10,17 @@
     height: 90px;
 }
 
-.ant-menu{
+.ant-menu {
 
     position: sticky;
     top: 90px;
+}
+
+.header-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 0;
+    background: colorBgContainer;
+    width: 30%;
 }

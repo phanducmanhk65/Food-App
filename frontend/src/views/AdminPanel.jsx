@@ -7,12 +7,13 @@ import {
   ShopOutlined,
   UnorderedListOutlined,
   LogoutOutlined,
+  LoginOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import CrudUser from "./CrudUser";
 import CrudDishesManagement from "./CrudDishesManagement";
 import OrderStatus from "./OrderStatus";
-import ParentComponent from "../component/ParentComponent";
+import Login from "../component/Login";
 import Register from "../component/Register";
 import { Routes, Route, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
@@ -53,21 +54,14 @@ function AdminPanel() {
               icon: <LogoutOutlined />,
               label: "Log out",
             },
-            {
-              key: "/login",
-              icon: <LogoutOutlined />,
-              label: "Log in",
-            },
-            {
-              key: "/regiter",
-              icon: <LogoutOutlined />,
-              label: "Regiter",
-            },
+          
+         
           ]}
         />
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }}>
+ 
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -75,9 +69,28 @@ function AdminPanel() {
             style={{
               fontSize: "16px",
               width: 64,
-              height: 64,
+              height: 64,marginTop: '1px'
             }}
           />
+         
+          <Menu style={{ padding: 0, float: 'right' }}
+
+          theme="light"
+          mode="horizontal"
+          onClick={({ key }) => navigate(key)}
+          items={[
+            {
+              key: "/login",
+              icon: <LoginOutlined />,
+              label: "Log in",
+            },
+            {
+              key: "/register",
+              icon: <LogoutOutlined />,
+              label: "Register",
+            }
+          ]}
+          ></Menu>
         </Header>
         <Content
           style={{
@@ -122,13 +135,13 @@ function AdminPanel() {
               path="/login"
               element={
                 <div>
-                  <ParentComponent />
+                  <Login />
                 </div>
-              }
+              }           
             ></Route>
-            <Route
+              <Route
               exact
-              path="/regiter"
+              path="/register"
               element={
                 <div>
                   <Register />
