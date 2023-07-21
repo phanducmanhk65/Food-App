@@ -165,7 +165,14 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
 
 const UserList = ({ users, onDeleteUser, onEditUser }) => {
   return (
-    <table className="table table-bordered">
+    <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
+      <colgroup>
+        <col style={{ width: "10%" }} />
+        <col style={{ width: "30%" }} />
+        <col style={{ width: "30%" }} />
+        <col style={{ width: "15%" }} />
+        <col style={{ width: "15%" }} />
+      </colgroup>
       <thead>
         <tr>
           <th>ID</th>

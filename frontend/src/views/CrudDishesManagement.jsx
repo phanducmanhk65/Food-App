@@ -176,7 +176,14 @@ const EditDishForm = ({ currentDish, onUpdateDish }) => {
 
 const DishList = ({ dishes, onDeleteDish, onEditDish }) => {
   return (
-    <table className="table table-bordered">
+    <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
+      <colgroup>
+        <col style={{ width: "10%" }} />
+        <col style={{ width: "40%" }} />
+        <col style={{ width: "15%" }} />
+        <col style={{ width: "15%" }} />
+        <col style={{ width: "20%" }} />
+      </colgroup>
       <thead>
         <tr>
           <th>ID</th>
@@ -194,7 +201,7 @@ const DishList = ({ dishes, onDeleteDish, onEditDish }) => {
               <img
                 src={dish.image}
                 alt={dish.name}
-                style={{ width: "100px" }}
+                style={{ width: "250px" }}
               />
             </td>
             <td>{dish.name}</td>

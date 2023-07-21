@@ -4,13 +4,14 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
-  HomeOutlined,
+  ShopOutlined,
   UnorderedListOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import CrudUser from "./CrudUser";
 import CrudDishesManagement from "./CrudDishesManagement";
-import CrudApp from "./CrudApp";
+import OrderStatus from "./OrderStatus";
 import { Routes, Route, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
@@ -31,9 +32,9 @@ function AdminPanel() {
           onClick={({ key }) => navigate(key)}
           items={[
             {
-              key: "/home",
-              icon: <HomeOutlined />,
-              label: "Home",
+              key: "/dishes",
+              icon: <ShopOutlined />,
+              label: "Dishes",
             },
             {
               key: "/order",
@@ -44,6 +45,11 @@ function AdminPanel() {
               key: "/user",
               icon: <UserOutlined />,
               label: "User",
+            },
+            {
+              key: "/",
+              icon: <LogoutOutlined />,
+              label: "Log out",
             },
           ]}
         />
@@ -72,14 +78,22 @@ function AdminPanel() {
           <Routes>
             <Route
               exact
-              path="/home"
-              element={<div>Nội dung Nav 1</div>}
+              path="/dishes"
+              element={
+                <div>
+                  <CrudDishesManagement />
+                </div>
+              }
             ></Route>
 
             <Route
               exact
               path="/order"
-              element={<div>Nội dung Nav 2</div>}
+              element={
+                <div>
+                  <OrderStatus />
+                </div>
+              }
             ></Route>
 
             <Route
@@ -87,7 +101,7 @@ function AdminPanel() {
               path="/user"
               element={
                 <div>
-                  <CrudApp />
+                  <CrudUser />
                 </div>
               }
             ></Route>
