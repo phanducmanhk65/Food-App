@@ -3,31 +3,31 @@ import { OrderDetailService } from './order-detail.service';
 import { CreateOrderDetailDto } from './dto/create-order-detail.dto';
 import { UpdateOrderDetailDto } from './dto/update-order-detail.dto';
 
-@Controller('order-detail')
+@Controller('orderdetail')
 export class OrderDetailController {
   constructor(private readonly orderDetailService: OrderDetailService) {}
 
-  @Post()
+  @Post('/create')
   create(@Body() createOrderDetailDto: CreateOrderDetailDto) {
     return this.orderDetailService.create(createOrderDetailDto);
   }
 
-  @Get()
+  @Get('/all')
   findAll() {
     return this.orderDetailService.findAll();
   }
 
-  @Get(':id')
+  @Get('getone/:id')
   findOne(@Param('id') id: string) {
     return this.orderDetailService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   update(@Param('id') id: string, @Body() updateOrderDetailDto: UpdateOrderDetailDto) {
     return this.orderDetailService.update(+id, updateOrderDetailDto);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   remove(@Param('id') id: string) {
     return this.orderDetailService.remove(+id);
   }
