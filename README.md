@@ -1,5 +1,15 @@
 # Sota-Intern
+---------------BACKEND---------------------------
 
+
+
+
+
+
+
+
+
+----------------FRONTENT--------------------------
 npm install
 
 npm install antd
