@@ -9,6 +9,7 @@ const OrderStatus = () => {
         "https://i-giadinh.vnecdn.net/2023/04/16/Buoc-11-Thanh-pham-11-7068-1681636164.jpg",
       name: "Bún Chả",
       price: 10,
+      quantity: 1,
       status: "Đang chờ",
     },
     {
@@ -17,41 +18,10 @@ const OrderStatus = () => {
         "https://luhanhvietnam.com.vn/du-lich/vnt_upload/news/09_2022/quan-com-tam-o-ha-noi-.jpg",
       name: "Cơm tấm",
       price: 15,
+      quantity: 2,
       status: "Đang chờ",
     },
-    {
-      id: 3,
-      image:
-        "https://daynauan.info.vn/wp-content/uploads/2020/11/com-rang-dua-bo.jpg",
-      name: "Cơm rang dưa bò",
-      price: 20,
-      status: "Đang chờ",
-    },
-    {
-      id: 4,
-      image:
-        "https://cdn.tgdd.vn/Files/2022/01/25/1412805/cach-nau-pho-bo-nam-dinh-chuan-vi-thom-ngon-nhu-hang-quan-202201250230038502.jpg",
-      name: "Phở bò",
-      price: 25,
-      status: "Đang chờ",
-    },
-    {
-      id: 5,
-      image:
-        "https://cdn.tgdd.vn/Files/2017/10/22/1034982/cach-lam-banh-cuon-bang-bot-lam-banh-cuon-mikko-202111111226513462.jpg",
-      name: "Bánh cuốn",
-      price: 15,
-      status: "Đang chờ",
-    },
-    {
-      id: 6,
-      image:
-        "https://cdn.tgdd.vn/2021/05/CookProduct/Banhcanhcuabien-1200x676.jpg",
-      name: "Bánh canh cua",
-      price: 20,
-      status: "Đang chờ",
-    },
-    // Add more orders as needed
+    // Thêm các đơn hàng khác tùy ý
   ]);
 
   useEffect(() => {
@@ -100,8 +70,8 @@ const OrderStatus = () => {
           <col style={{ width: "10%" }} />
           <col style={{ width: "30%" }} />
           <col style={{ width: "15%" }} />
-          <col style={{ width: "15%" }} />
-          <col style={{ width: "20%" }} />
+          <col style={{ width: "10%" }} />
+          <col style={{ width: "10%" }} />
           <col style={{ width: "10%" }} />
         </colgroup>
         <thead>
@@ -110,6 +80,7 @@ const OrderStatus = () => {
             <th>Image</th>
             <th>Name</th>
             <th>Price</th>
+            <th>Quantity</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -123,6 +94,7 @@ const OrderStatus = () => {
               </td>
               <td>{order.name}</td>
               <td>${order.price}</td>
+              <td>{order.quantity}</td>
               <td>{order.status}</td>
               <td>
                 {order.status === "Đang chờ" && (
