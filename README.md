@@ -1,4 +1,17 @@
 # Sota-Intern
+----------------BACKEND---------------------------
+
+sửa file main.ts với thông tin đăng nhập MySQL trong máy cá nhân
+sau đó: npm run dev
+
+
+
+
+
+
+
+----------------FRONTENT--------------------------
+
 
 npm install
 
