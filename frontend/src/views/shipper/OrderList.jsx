@@ -3,13 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const OrderList = () => {
   const orders = [
-    { id: 1, customer: 'Khách hàng 1', phone: '0123456789', address: 'Địa chỉ 1', price: 100 },
-    { id: 2, customer: 'Khách hàng 2', phone: '0987654321', address: 'Địa chỉ 2', price: 150 },
-    { id: 3, customer: 'Khách hàng 3', phone: '0369845621', address: 'Địa chỉ 3', price: 200 },
+    { id: 1, customer: 'Nguyễn A', phone: '0123456789', address: 'Địa chỉ của Nguyễn A', price: 100 },
+    { id: 2, customer: 'Phạm B', phone: '0987654321', address: 'Địa chỉ của Phạm B', price: 150 },
+    { id: 3, customer: 'Trần C', phone: '0369845621', address: 'Địa chỉ của Trần C', price: 200 },
   ];
 
-  const handleAcceptOrder = (orderId) => {
-    console.log(`Đã nhận đơn hàng có ID: ${orderId}`);
+  const handleAcceptOrder = (orderCustomer) => {
+    console.log(`Đã nhận đơn hàng của: ${orderCustomer}`);
   };
 
   return (
@@ -24,7 +24,7 @@ const OrderList = () => {
                 <p className="card-text">Số điện thoại: {order.phone}</p>
                 <p className="card-text">Địa chỉ: {order.address}</p>
                 <p className="card-text">Giá đơn: ${order.price}</p>
-                <button className="btn btn-primary" onClick={() => handleAcceptOrder(order.id)}>Nhận đơn</button>
+                <button className="btn btn-primary" onClick={() => handleAcceptOrder(order.customer)}>Nhận đơn</button>
               </div>
             </div>
           </div>

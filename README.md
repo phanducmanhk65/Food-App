@@ -23,3 +23,7 @@ npm i bootstrap@5.3.0
 
 react-router-dom:
 npm install --save-exact react-router-dom@6.14.2
+
+npm install @googlemaps/js-api-loader
+
+npm install @react-google-maps/api
