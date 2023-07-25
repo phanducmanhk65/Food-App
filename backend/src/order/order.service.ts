@@ -19,6 +19,16 @@ export class OrderService {
   findOne(id: number) {
     return this.orderRepository.findOneBy({id});
   }
+  //lấy danh sách order theo nhà hàng
+  findOrderByRes(id: number, status: number) {
+    return this.orderRepository.createQueryBuilder('order').where('status =: stt', {stt: status}).andWhere('idRestaurant =: idR', {idR: id}).getMany();
+  }
+  
+  //lấy danh sách order theo shipper
+  findOrderByShipper(id: number, status: number) {
+    return this.orderRepository.createQueryBuilder('order').where('status =: stt', {stt: status}).andWhere('idShipper =: idS', {idS: id}).getMany();
+
+  }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {
     return this.orderRepository.update(id, updateOrderDto);
