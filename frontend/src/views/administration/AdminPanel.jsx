@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./../styles/AdminPanel.scss";
+import "../../styles/AdminPanel.scss";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -13,8 +13,8 @@ import { Layout, Menu, Button, theme } from "antd";
 import CrudUser from "./CrudUser";
 import CrudDishesManagement from "./CrudDishesManagement";
 import OrderStatus from "./OrderStatus";
-import Login from "../component/Login";
-import Register from "../component/Register";
+import Login from "../Login"
+import Register from "../Register";
 import { Routes, Route, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
