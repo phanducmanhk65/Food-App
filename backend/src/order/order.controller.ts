@@ -17,12 +17,27 @@ export class OrderController {
     return this.orderService.findAll();
   }
 
+  // lấy danh sách order đang chờ duyệt của nhà hàng
+  @Get('/neworder/:id') 
+  findNewOrder(@Param('id') id: string) {
+    return this.orderService
+  }
+
   @Get('getone/:id')
   findOne(@Param('id') id: string) {
     return this.orderService.findOne(+id);
   }
+  @Get('/findorderres')
+  findOrderByRes(@Param('id') id: string, @Body('status') status: number  ) {
+    return this.orderService.findOrderByRes(+id, status)
+  }
 
-  @Patch('update/:id')
+  @Get('/findOrdership')
+  findOrderByShip(@Param('id') id: string, @Body('status') status: number ) {
+    return this.orderService.findOrderByShipper(+id, status);
+  }
+
+  @Patch()
   update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     return this.orderService.update(+id, updateOrderDto);
   }
