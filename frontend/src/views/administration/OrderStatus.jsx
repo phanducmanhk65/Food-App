@@ -21,11 +21,9 @@ const OrderStatus = () => {
       quantity: 2,
       status: "Đang chờ",
     },
-    // Thêm các đơn hàng khác tùy ý
   ]);
 
   useEffect(() => {
-    // Set the initial status and button label when the component mounts
     setInitialStatus();
   }, []);
 

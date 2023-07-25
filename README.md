@@ -21,7 +21,6 @@ npm install @ant-design/icons
 
 npm i bootstrap@5.3.0
 
-react-router-dom:
 npm install --save-exact react-router-dom@6.14.2
 
 npm install @googlemaps/js-api-loader

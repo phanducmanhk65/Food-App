@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -16,7 +17,7 @@ import { DeliverInfoModule } from './deliver-info/deliver-info.module';
     host: "localhost",
     port: 3306,
     username: "root",
-    password: "Manh2812002",
+    password: "",
     database: "foodapp",
     entities,
     synchronize: true,
