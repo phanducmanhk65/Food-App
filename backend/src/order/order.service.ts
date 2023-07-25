@@ -30,6 +30,12 @@ export class OrderService {
 
   }
 
+  // lấy danh sách order theo người dùng
+  findOrderByCustomer(id: number, status: number) {
+    return this.orderRepository.createQueryBuilder('order').where('status =: stt', {stt: status}).andWhere('idCustomer =: idC', {idC: id}).getMany();
+
+  }
+
   update(id: number, updateOrderDto: UpdateOrderDto) {
     return this.orderRepository.update(id, updateOrderDto);
   }
