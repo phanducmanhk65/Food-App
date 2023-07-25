@@ -6,7 +6,6 @@ const OrderList = () => {
     { id: 1, customer: 'Khách hàng 1', phone: '0123456789', address: 'Địa chỉ 1', price: 100 },
     { id: 2, customer: 'Khách hàng 2', phone: '0987654321', address: 'Địa chỉ 2', price: 150 },
     { id: 3, customer: 'Khách hàng 3', phone: '0369845621', address: 'Địa chỉ 3', price: 200 },
-    // Thêm các đơn hàng khác tùy ý
   ];
 
   const handleAcceptOrder = (orderId) => {
