@@ -1,34 +1,27 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../../styles/CrudUser.scss"
+import "../views/Test.scss"
 
-const initialUsers = [
-  {
-    id: 1,
-    name: "John Doe",
-    username: "Joe_Dohn",
-    email: "john@example.com",
-    password: "999",
-    address: "New York",
-    phonenumber: "122133"
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    username: "Jith_Smane",
-    email: "jane@example.com",
-    password: "888",    
-    address: "Los Angeles",
-    phonenumber: "233244"
-  },
-];
+const initialUsers = [];
 
-const CrudUser = () => {
-
+const Test = () => {
   const [users, setUsers] = useState(initialUsers);
   const [editing, setEditing] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get("https://reqres.in/api/users");
+      setUsers(response.data.data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
   const handleAddUser = (user) => {
     setUsers([...users, user]);
@@ -265,11 +258,11 @@ const UserList = ({ users, onDeleteUser, onEditUser }) => {
     <div className="table-wrapper">
     <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
       <colgroup>
-        <col style={{ width: "10%" }} />
+        <col style={{ width: "8%" }} />
         <col style={{ width: "12%" }} />
         <col style={{ width: "12%" }} />
+        <col style={{ width: "16%" }} />
         <col style={{ width: "14%" }} />
-        <col style={{ width: "12%" }} />
         <col style={{ width: "12%" }} />
         <col style={{ width: "12%" }} />
         <col style={{ width: "12%" }} />
@@ -290,7 +283,7 @@ const UserList = ({ users, onDeleteUser, onEditUser }) => {
         {users.map((user) => (
           <tr key={user.id}>
             <td>{user.id}</td>
-            <td>{user.name}</td>
+            <td>{user.first_name} {user.last_name}</td>
             <td>{user.username}</td>
             <td>{user.address}</td>
             <td>{user.email}</td>
@@ -315,4 +308,4 @@ const UserList = ({ users, onDeleteUser, onEditUser }) => {
   );
 };
 
-export default CrudUser;
+export default Test;
