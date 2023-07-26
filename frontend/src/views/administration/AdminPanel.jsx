@@ -30,7 +30,7 @@ function AdminPanel() {
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
         <Menu
-          theme="darknpm install axios"
+          theme="dark"
           mode="inline"
           onClick={({ key }) => navigate(key)}
           items={[
