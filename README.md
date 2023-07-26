@@ -26,3 +26,5 @@ npm install --save-exact react-router-dom@6.14.2
 npm install @googlemaps/js-api-loader
 
 npm install @react-google-maps/api
+
+npm i axios
