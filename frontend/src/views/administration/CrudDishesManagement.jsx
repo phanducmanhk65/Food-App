@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const initialDishes = [
   {
@@ -48,6 +49,20 @@ const initialDishes = [
 ];
 
 const DishesManagement = () => {
+
+  useEffect(() => {
+    fetchDishes();
+  }, []);
+
+  const fetchDishes = async () => {
+    try {
+      const response = await axios.get("");
+      setDishes(response.data.data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
   const [dishes, setDishes] = useState(initialDishes);
   const [editing, setEditing] = useState(false);
   const [currentDish, setCurrentDish] = useState({});
@@ -154,6 +169,10 @@ const AddDishForm = ({ onAddDish }) => {
 
 const EditDishForm = ({ currentDish, onUpdateDish }) => {
   const [dish, setDish] = useState(currentDish);
+
+  useEffect(() => {
+    setDish(currentDish);
+  }, [currentDish]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
