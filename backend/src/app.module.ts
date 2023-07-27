@@ -12,6 +12,7 @@ import { OrderModule } from './order/order.module';
 import { OrderDetailModule } from './order-detail/order-detail.module';
 import { DeliverInfoModule } from './deliver-info/deliver-info.module';
 import { ConfigModule } from '@nestjs/config';
+import { EventGateway } from './event.gateway';
 
 
 @Module({

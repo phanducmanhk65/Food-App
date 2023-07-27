@@ -38,8 +38,25 @@ export class OrderService {
   // lấy danh sách order theo người dùng
   findOrderByCustomer(id: number, status: number) {
     return this.orderRepository.createQueryBuilder('order').where('status = :stt', {stt: status}).andWhere('idCustomer = :idC', {idC: id}).getMany();
-
+   
   }
+  // lấy trạng thái đơn hàng
+
+  async getOrderStatus(id: number): Promise<number|null> {
+   
+    try {
+      const order = await this.orderRepository
+        .createQueryBuilder('order')
+        .where('id = :id', { id: id })
+        .getOne();
+  
+      return order ? order.status : null;
+    } catch (error) {
+      // Handle the error
+      console.error('Error while fetching order status:', error.message);
+      return null;
+    }
+   }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {
     return this.orderRepository.update(id, updateOrderDto);
