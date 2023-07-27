@@ -5,7 +5,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.1.4",
     "@googlemaps/js-api-loader": "^1.16.2",
-    "@react-google-maps/api": "^2.19.0",
+    "@react-google-maps/api": "^2.19.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

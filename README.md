@@ -5,8 +5,12 @@ sửa file main.ts với thông tin đăng nhập MySQL trong máy cá nhân
 sau đó: npm run dev
 
 npm i @nestjs/common
+npm i @nestjs/common
 
 npm i @nestjs/typeorm
+npm i @nestjs/typeorm
+
+
 
 ----------------FRONTENT--------------------------
 
