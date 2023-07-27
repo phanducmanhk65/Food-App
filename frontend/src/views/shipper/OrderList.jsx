@@ -119,5 +119,4 @@ const OrderList = () => {
   );
 };
 
-//ádasdasdsd
 export default OrderList;
