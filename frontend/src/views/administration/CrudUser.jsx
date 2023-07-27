@@ -4,27 +4,31 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/CrudUser.scss"
 
 const initialUsers = [
-  // {
-  //   id: 1,
-  //   name: "John Doe",
-  //   username: "Joe_Dohn",
-  //   email: "john@example.com",
-  //   password: "999",
-  //   address: "New York",
-  //   phonenumber: "122133"
-  // },
-  // {
-  //   id: 2,
-  //   name: "Jane Smith",
-  //   username: "Jith_Smane",
-  //   email: "jane@example.com",
-  //   password: "888",    
-  //   address: "Los Angeles",
-  //   phonenumber: "233244"
-  // },
+  {
+    id: 1,
+    name: "John Doe",
+    username: "Joe_Dohn",
+    email: "john@example.com",
+    password: "999",
+    address: "New York",
+    phonenumber: "122133"
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    username: "Jith_Smane",
+    email: "jane@example.com",
+    password: "888",    
+    address: "Los Angeles",
+    phonenumber: "233244"
+  },
+
 ];
 
-const CrudUser = () => {
+const Test = () => {
+  const [users, setUsers] = useState(initialUsers);
+  const [editing, setEditing] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
     fetchUsers();
@@ -32,16 +36,12 @@ const CrudUser = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("");
+      const response = await axios.get({});
       setUsers(response.data.data);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
   };
-
-  const [users, setUsers] = useState(initialUsers);
-  const [editing, setEditing] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
 
   const handleAddUser = (user) => {
     setUsers([...users, user]);
@@ -96,6 +96,7 @@ const AddUserForm = ({ onAddUser }) => {
     username: "",
     password: "",
     phonenumber: "",
+    avatar:"",
   });
 
   const handleChange = (e) => {
@@ -106,7 +107,7 @@ const AddUserForm = ({ onAddUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddUser({ ...user, id: Date.now() });
-    setUser({ name: "", username: "", email: "", address: "",password: "", phonenumber: "", });
+    setUser({ name: "", username: "", email: "", address: "",password: "", phonenumber: "",avatar:"" });
   };
 
   return (
@@ -143,6 +144,8 @@ const AddUserForm = ({ onAddUser }) => {
           required
           className="form-control"
         />
+      </div>
+      <div className="form-group">
         <input
           type="text"
           name="address"
@@ -152,6 +155,8 @@ const AddUserForm = ({ onAddUser }) => {
           required
           className="form-control"
         />
+      </div>
+      <div className="form-group">
         <input
           type="password"
           name="password"
@@ -181,7 +186,7 @@ const AddUserForm = ({ onAddUser }) => {
 };
 
 const EditUserForm = ({ currentUser, onUpdateUser }) => {
-  const [user, setUser] = useState(currentUser);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     setUser(currentUser);
@@ -204,7 +209,7 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
           type="text"
           name="name"
           placeholder="Name"
-          value={user.name}
+          value={user.name || ""} // Kiểm tra nếu user.name là null hoặc undefined thì trả về ""
           onChange={handleChange}
           required
           className="form-control"
@@ -215,7 +220,7 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
           type="text"
           name="username"
           placeholder="Username"
-          value={user.username}
+          value={user.username || ""}
           onChange={handleChange}
           required
           className="form-control"
@@ -226,7 +231,7 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
           type="email"
           name="email"
           placeholder="Email"
-          value={user.email}
+          value={user.email || ""}
           onChange={handleChange}
           required
           className="form-control"
@@ -237,7 +242,7 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
           type="text"
           name="address"
           placeholder="Address"
-          value={user.address}
+          value={user.address || ""}
           onChange={handleChange}
           required
           className="form-control"
@@ -248,7 +253,7 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
           type="password"
           name="password"
           placeholder="Password"
-          value={user.password}
+          value={user.password || ""}
           onChange={handleChange}
           required
           className="form-control"
@@ -259,7 +264,7 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
           type="text"
           name="phonenumber"
           placeholder="Phone Number"
-          value={user.phonenumber}
+          value={user.phonenumber || ""}
           onChange={handleChange}
           required
           className="form-control"
@@ -273,16 +278,17 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
 };
 
 
+
 const UserList = ({ users, onDeleteUser, onEditUser }) => {
   return (
     <div className="table-wrapper">
     <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
       <colgroup>
-        <col style={{ width: "10%" }} />
+        <col style={{ width: "8%" }} />
         <col style={{ width: "12%" }} />
         <col style={{ width: "12%" }} />
+        <col style={{ width: "16%" }} />
         <col style={{ width: "14%" }} />
-        <col style={{ width: "12%" }} />
         <col style={{ width: "12%" }} />
         <col style={{ width: "12%" }} />
         <col style={{ width: "12%" }} />
@@ -328,4 +334,4 @@ const UserList = ({ users, onDeleteUser, onEditUser }) => {
   );
 };
 
-export default CrudUser;
+export default Test;

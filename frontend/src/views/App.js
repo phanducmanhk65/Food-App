@@ -7,7 +7,7 @@ import UserList from "./Test";
 import Test from "./Test";
 
 function App() {
-  return <AdminPanel/>;
+  return <ShipperPage/>;
 }
 
 
