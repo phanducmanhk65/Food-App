@@ -4,27 +4,40 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/CrudUser.scss"
 
 const initialUsers = [
-  {
-    id: 1,
-    name: "John Doe",
-    username: "Joe_Dohn",
-    email: "john@example.com",
-    password: "999",
-    address: "New York",
-    phonenumber: "122133"
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    username: "Jith_Smane",
-    email: "jane@example.com",
-    password: "888",    
-    address: "Los Angeles",
-    phonenumber: "233244"
-  },
+  // {
+  //   id: 1,
+  //   name: "John Doe",
+  //   username: "Joe_Dohn",
+  //   email: "john@example.com",
+  //   password: "999",
+  //   address: "New York",
+  //   phonenumber: "122133"
+  // },
+  // {
+  //   id: 2,
+  //   name: "Jane Smith",
+  //   username: "Jith_Smane",
+  //   email: "jane@example.com",
+  //   password: "888",    
+  //   address: "Los Angeles",
+  //   phonenumber: "233244"
+  // },
 ];
 
 const CrudUser = () => {
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get("");
+      setUsers(response.data.data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
   const [users, setUsers] = useState(initialUsers);
   const [editing, setEditing] = useState(false);

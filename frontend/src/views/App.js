@@ -7,5 +7,9 @@ import UserList from "./Test";
 import Test from "./Test";
 
 function App() {
-  return <Home/>;
+  return <AdminPanel/>;
+}
+
+
+
 export default App;
