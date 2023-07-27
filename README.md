@@ -6,10 +6,8 @@ sau đó: npm run dev
 
 npm i @nestjs/common
 npm i @nestjs/common
-
-npm i @nestjs/typeorm
-npm i @nestjs/typeorm
-
+npm i @nestjs/websockets
+npm i socket.io
 
 
 ----------------FRONTENT--------------------------
