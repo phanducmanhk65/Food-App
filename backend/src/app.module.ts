@@ -10,14 +10,17 @@ import { UserModule } from './user/user.module';
 import { OrderModule } from './order/order.module';
 import { OrderDetailModule } from './order-detail/order-detail.module';
 import { DeliverInfoModule } from './deliver-info/deliver-info.module';
+import { ConfigModule } from '@nestjs/config';
+
+
 @Module({
-  imports: [TypeOrmModule.forRoot({
+  imports: [ConfigModule.forRoot(),TypeOrmModule.forRoot({
     type: "mysql",
-    host: "localhost",
-    port: 3306,
-    username: "root",
-    password: "Manh2812002",
-    database: "foodapp",
+    host: process.env.DATABASEHOST,
+    port: parseInt(process.env.PORT),
+    username: process.env.USER,
+    password: process.env.PASSWORD,
+    database: process.env.DBNAME,
     entities,
     synchronize: true,
   }), RestaurantModule, DishModule, ProductLineModule, UserModule, OrderModule, OrderDetailModule, DeliverInfoModule],
