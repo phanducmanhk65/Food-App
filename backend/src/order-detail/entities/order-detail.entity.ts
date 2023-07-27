@@ -8,6 +8,10 @@ export class OrderDetail {
     })
     id: number;
     
+    @Column({
+        nullable:false
+    })
+    idOrder: number;
     
     @Column({
         nullable:true
