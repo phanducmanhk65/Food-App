@@ -25,6 +25,7 @@ export class OrderDetailService {
     return this.ordetailRepository.createQueryBuilder('order-detail').where('idOrder = :id', {id: id}).getMany();
 
   }
+  
 
   update(id: number, updateOrderDetailDto: UpdateOrderDetailDto) {
     return this.ordetailRepository.update(id,updateOrderDetailDto)
