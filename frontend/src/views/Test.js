@@ -51,7 +51,7 @@ const Test = () => {
 
   const handleDeleteUser = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/user/${id}`);
+      await axios.delete(`http://localhost:3000/api/user/${id}`);
       const updatedUsers = users.filter((user) => user.id !== id);
       setUsers(updatedUsers);
     } catch (error) {
@@ -66,7 +66,7 @@ const Test = () => {
 
   const handleUpdateUser = async (id, updatedUser) => {
     try {
-      await axios.patch(`http://localhost:3000/user/${id}`, updatedUser);
+      await axios.patch(`http://localhost:3000/api/user/${id}`, updatedUser);
       setEditing(false);
       setUsers(users.map((user) => (user.id === id ? updatedUser : user)));
     } catch (error) {
@@ -123,7 +123,7 @@ const AddUserForm = ({ onAddUser, users, setUsers }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/user", user);
+      const response = await axios.post("http://localhost:3000/api/user", user);
       const newUser = response.data;
 
       if (!Array.isArray(users)) {
