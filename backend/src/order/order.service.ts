@@ -7,12 +7,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
 export class OrderService {
   constructor(@InjectRepository(Order)
-    private readonly orderRepository: Repository<Order>
+    private readonly orderRepository: Repository<Order>,
   ){}
   create(createOrderDto: CreateOrderDto) {
     return this.orderRepository.save(createOrderDto);
   }
 
+  
   findAll() {
     return this.orderRepository.find();
   }
