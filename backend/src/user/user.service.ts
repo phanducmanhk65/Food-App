@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
-import { User } from './user.entity/user.entity';
+import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm/repository/Repository';
 import { UpdateResult, DeleteResult } from 'typeorm';
@@ -35,11 +35,10 @@ export class UserService {
     return await this.userRepo.delete(id);
   }
 
-  async findByEmail(email: string): Promise<User | null> {
-    const user = await this.userRepo.findOne({ where: { email } });
+  async findById(id: number): Promise<User | null> {
+    const user = await this.userRepo.findOne({ where: { id } });
     return user || null;
   }
-
   comparePasswords(enteredPassword: string, storedPassword: string): boolean {
     if (!enteredPassword || !storedPassword) {
       return false;

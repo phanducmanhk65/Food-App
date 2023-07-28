@@ -15,7 +15,7 @@ import { DishService } from './dish.service';
 export class DishController {
   constructor(private readonly dishService: DishService) {}
 
-  @Get()
+  @Get('/all')
   findAll(): Promise<Dish[]> {
     return this.dishService.findAll();
   }
@@ -25,22 +25,22 @@ export class DishController {
     return this.dishService.findOne(params.id);
   }
 
-  @Post()
+  @Post('/create')
   create(@Body() dish: Dish) {
     return this.dishService.create(dish);
   }
 
-  @Put(':id')
+  @Put('/update/:id')
   update(@Param('id') id: number, @Body() dish: Dish) {
     dish.id = id;
     return this.dishService.update(dish);
   }
 
-  @Delete(':id')
+  @Delete('/delete/:id')
   deleteUser(@Param() params) {
     return this.dishService.delete(params.id);
   }
-  @Get('search')
+  @Get('/search')
   async search(
     @Query('idRestaurant') idRestaurant?: number,
     @Query('name') name?: string,

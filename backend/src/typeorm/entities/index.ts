@@ -1,4 +1,4 @@
-import { User } from '../../user/user.entity/user.entity';
+import { User } from '../../user/entities/user.entity';
 import { ProductLine } from '../../product-line/entities/product-line.entity';
 import { Dish } from '../../dish/dish.entity/dish.entity';
 import { Restaurant } from '../../restaurant/entities/restaurant.entity';
