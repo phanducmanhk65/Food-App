@@ -16,8 +16,5 @@ export class Dish {
 
   @Column()
   idRestaurant: number;
-
-  @Column()
-  status: boolean;
-  orders: any;
+ 
 }
