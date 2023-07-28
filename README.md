@@ -6,10 +6,17 @@ sau đó: npm run dev
 
 npm i @nestjs/common
 npm i @nestjs/common
+npm i @nestjs/websockets
+npm i socket.io
 
-npm i @nestjs/typeorm
-npm i @nestjs/typeorm
-
+npm i passport-jwt --savenpm i bcryptjs --save
+npm i typeorm --save
+npm i @nestjs/common --save
+npm i @nestjs/typeorm --save
+npm i @nestjs/jwt --save
+npm i @nestjs/config --save
+npm i bcrypt --save
+npm i @nestjs/passport --save
 
 
 ----------------FRONTENT--------------------------
