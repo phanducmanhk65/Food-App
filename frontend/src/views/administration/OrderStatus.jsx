@@ -3,24 +3,24 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const OrderStatus = () => {
   const [orders, setOrders] = useState([
-    // {
-    //   id: 1,
-    //   image:
-    //     "https://i-giadinh.vnecdn.net/2023/04/16/Buoc-11-Thanh-pham-11-7068-1681636164.jpg",
-    //   name: "Bún Chả",
-    //   price: 10,
-    //   quantity: 1,
-    //   status: "Đang chờ",
-    // },
-    // {
-    //   id: 2,
-    //   image:
-    //     "https://luhanhvietnam.com.vn/du-lich/vnt_upload/news/09_2022/quan-com-tam-o-ha-noi-.jpg",
-    //   name: "Cơm tấm",
-    //   price: 15,
-    //   quantity: 2,
-    //   status: "Đang chờ",
-    // },
+    {
+      id: 1,
+      image:
+        "https://i-giadinh.vnecdn.net/2023/04/16/Buoc-11-Thanh-pham-11-7068-1681636164.jpg",
+      name: "Bún Chả",
+      price: 10,
+      quantity: 1,
+      status: "Đang chờ",
+    },
+    {
+      id: 2,
+      image:
+        "https://luhanhvietnam.com.vn/du-lich/vnt_upload/news/09_2022/quan-com-tam-o-ha-noi-.jpg",
+      name: "Cơm tấm",
+      price: 15,
+      quantity: 2,
+      status: "Đang chờ",
+    },
   ]);
 
   useEffect(() => {
