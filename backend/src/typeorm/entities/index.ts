@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { User } from "../../user/entities/user.entity";
 import { ProductLine } from "../../product-line/entities/product-line.entity";
 import { Dish } from "../../dish/entities/dish.entity";
