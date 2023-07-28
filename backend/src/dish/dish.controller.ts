@@ -1,56 +1,34 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common';
-import { Dish } from './dish.entity/dish.entity';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { DishService } from './dish.service';
+import { CreateDishDto } from './dto/create-dish.dto';
+import { UpdateDishDto } from './dto/update-dish.dto';
 
 @Controller('dish')
 export class DishController {
   constructor(private readonly dishService: DishService) {}
 
+  @Post('/create')
+  create(@Body() createDishDto: CreateDishDto) {
+    return this.dishService.create(createDishDto);
+  }
+
   @Get()
-  findAll(): Promise<Dish[]> {
+  findAll() {
     return this.dishService.findAll();
   }
 
-  @Get('detail/:id')
-  get(@Param() params) {
-    return this.dishService.findOne(params.id);
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.dishService.findOne(+id);
   }
 
-  @Post()
-  create(@Body() dish: Dish) {
-    console.log(dish);
-    return this.dishService.create(dish);
+  @Patch('update/:id')
+  update(@Param('id') id: string, @Body() updateDishDto: UpdateDishDto) {
+    return this.dishService.update(+id, updateDishDto);
   }
 
-  @Put(':id')
-  update(@Param('id') id: number, @Body() dish: Dish) {
-    dish.id = id;
-    return this.dishService.update(dish);
-  }
-
-  @Delete(':id')
-  deleteUser(@Param() params) {
-    return this.dishService.delete(params.id);
-  }
-  @Get('search')
-  async search(
-    @Query('idRestaurant') idRestaurant?: string,
-    @Query('name') name?: string,
-    @Query('productline') productline?: string,
-  ) {
-    return this.dishService.findByRestaurantAndDishName(
-      idRestaurant,
-      name,
-      productline,
-    );
+  @Delete('delete/:id')
+  remove(@Param('id') id: string) {
+    return this.dishService.remove(+id);
   }
 }
