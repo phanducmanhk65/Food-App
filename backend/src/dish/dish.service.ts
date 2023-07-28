@@ -1,57 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { Dish } from './dish.entity/dish.entity';
-import { DeleteResult, Like, Repository, UpdateResult } from 'typeorm';
+import { CreateDishDto } from './dto/create-dish.dto';
+import { UpdateDishDto } from './dto/update-dish.dto';
+import { Repository } from 'typeorm';
+import { Dish } from './entities/dish.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class DishService {
-  constructor(
-    @InjectRepository(Dish)
-    private readonly dishRepo: Repository<Dish>,
-  ) {}
-
-  async findAll(): Promise<Dish[]> {
-    return await this.dishRepo.find();
+  constructor(@InjectRepository(Dish)
+  private readonly dishRepository: Repository<Dish>){}
+  
+  create(createDishDto: CreateDishDto) {
+    return this.dishRepository.save(createDishDto);
   }
 
-  async findOne(id: number): Promise<Dish> {
-    return await this.dishRepo.findOne({ where: { id } });
+  findAll() {
+    return this.dishRepository.find();
   }
 
-  async create(dish: Dish): Promise<Dish> {
-    return await this.dishRepo.save(dish);
+  findOne(id: number) {
+    return this.dishRepository.findOneBy({id});
   }
 
-  async update(dish: Dish): Promise<UpdateResult> {
-    return await this.dishRepo.update(dish.id, { ...dish });
+  update(id: number, updateDishDto: UpdateDishDto) {
+    return this.dishRepository.update(id,updateDishDto);
   }
 
-  async delete(id): Promise<DeleteResult> {
-    return await this.dishRepo.delete(id);
-  }
-
-  async findByRestaurantAndDishName(
-    idRestaurant?: string,
-    name?: string,
-    productLine?: string,
-  ): Promise<Dish[]> {
-    let whereCondition: any = {};
-
-    if (idRestaurant) {
-      whereCondition.idRestaurant = Like(`%${idRestaurant}%`);
-    }
-
-    if (name) {
-      whereCondition.name = Like(`%${name}%`);
-    }
-
-    if (productLine) {
-      whereCondition.productLine = Like(`%${productLine}%`);
-    }
-
-    return await this.dishRepo.find({
-      where: whereCondition,
-      select: ['name', 'price', 'productLine', 'idRestaurant',],
-    });
+  remove(id: number) {
+    return this.dishRepository.delete(id);
   }
 }

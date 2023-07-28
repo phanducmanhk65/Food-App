@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { DishService } from './dish.service';
 import { DishController } from './dish.controller';
-import { Dish } from './dish.entity/dish.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Dish } from './entities/dish.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Dish])],
-  providers: [DishService],
   controllers: [DishController],
+  providers: [DishService]
 })
 export class DishModule {}
