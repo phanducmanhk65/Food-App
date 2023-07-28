@@ -26,7 +26,7 @@ const initialUsers = [
 ];
 
 const Test = () => {
-  const [users, setUsers] = useState(initialUsers);
+  const [users, setUsers] = useState([]);
   const [editing, setEditing] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [selectedUserId, setSelectedUserId] = useState(null);
@@ -38,7 +38,7 @@ const Test = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/user');
+      const response = await axios.get('http://localhost:3000/user');
       setUsers(response.data.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -51,7 +51,7 @@ const Test = () => {
 
   const handleDeleteUser = async (id) => {
     try {
-      await axios.delete(`/user/${id}`);
+      await axios.delete(`http://localhost:3000/user/${id}`);
       const updatedUsers = users.filter((user) => user.id !== id);
       setUsers(updatedUsers);
     } catch (error) {
@@ -66,7 +66,7 @@ const Test = () => {
 
   const handleUpdateUser = async (id, updatedUser) => {
     try {
-      await axios.patch(`/user/${id}`, updatedUser);
+      await axios.patch(`http://localhost:3000/user/${id}`, updatedUser);
       setEditing(false);
       setUsers(users.map((user) => (user.id === id ? updatedUser : user)));
     } catch (error) {
@@ -91,17 +91,13 @@ const Test = () => {
             className="p-2"
           />
         ) : (
-          <AddUserForm onAddUser={handleAddUser} className="p-2" />
+          <AddUserForm onAddUser={handleAddUser} users={users} setUsers={setUsers} className="p-2" />
+
         )}
       </div>
       <div>
         <h2>User List</h2>
-        <UserList
-          users={users}
-          onDeleteUser={handleDeleteUser}
-          onEditUser={handleEditUser}
-          onSelectUser={handleSelectUser}
-        />
+        <UserList users={users} onDeleteUser={handleDeleteUser} onEditUser={handleEditUser} onSelectUser={handleSelectUser} />
       </div>
       {selectedUserId && <UserDetails user={currentUser} />}
     </div>
@@ -109,7 +105,7 @@ const Test = () => {
 };
 
 
-const AddUserForm = ({ onAddUser }) => {
+const AddUserForm = ({ onAddUser, users, setUsers }) => {
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -117,7 +113,6 @@ const AddUserForm = ({ onAddUser }) => {
     username: "",
     password: "",
     phonenumber: "",
-    avatar: "",
   });
 
   const handleChange = (e) => {
@@ -128,8 +123,13 @@ const AddUserForm = ({ onAddUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/user", user);
+      const response = await axios.post("http://localhost:3000/user", user);
       const newUser = response.data;
+
+      if (!Array.isArray(users)) {
+        setUsers([]);
+      }
+
       onAddUser(newUser);
       setUser({
         name: "",
@@ -138,7 +138,6 @@ const AddUserForm = ({ onAddUser }) => {
         address: "",
         password: "",
         phonenumber: "",
-        avatar: "",
       });
     } catch (error) {
       console.error("Error adding user:", error);
@@ -326,10 +325,14 @@ const UserDetails = ({ user }) => {
   );
 };
 
-const UserList = ({ users, onDeleteUser, onEditUser, onSelectUser  }) => {
+const UserList = ({ users, onDeleteUser, onEditUser, onSelectUser }) => {
+  if (!users || users.length === 0) {
+    return <p>No users found.</p>;
+  }
+
   return (
     <div className="table-wrapper">
-    <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
+      <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
       <colgroup>
         <col style={{ width: "8%" }} />
         <col style={{ width: "12%" }} />

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
