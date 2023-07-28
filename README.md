@@ -21,18 +21,18 @@ npm i @nestjs/passport --save
 
 ----------------FRONTENT--------------------------
 
-npm install
+npm install --save
 
-npm install antd
+npm install antd --save
 
-npm install @ant-design/icons
+npm install @ant-design/icons --save
 
-npm i bootstrap@5.3.0
+npm i bootstrap@5.3.0 --save
 
-npm install --save-exact react-router-dom@6.14.2
+npm install --save-exact react-router-dom@6.14.2 --save
 
-npm install @googlemaps/js-api-loader
+npm install @googlemaps/js-api-loader --save
 
-npm install @react-google-maps/api
+npm install @react-google-maps/api --save
 
-npm i axios
+npm i axios --save
