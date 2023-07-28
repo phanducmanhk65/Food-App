@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Body,
   Controller,
@@ -12,6 +13,10 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { User } from './user.entity/user.entity';
+=======
+/* eslint-disable prettier/prettier */
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+>>>>>>> 17fce38462880f596b6abc95c4fb5716211f8598
 import { UserService } from './user.service';
 import * as bcrypt from 'bcryptjs';
 import { AuthService } from 'src/auth/auth.service';

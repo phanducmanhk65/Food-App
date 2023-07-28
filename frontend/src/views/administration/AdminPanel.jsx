@@ -13,8 +13,8 @@ import { Layout, Menu, Button, theme } from "antd";
 import CrudUser from "./CrudUser";
 import CrudDishesManagement from "./CrudDishesManagement";
 import OrderStatus from "./OrderStatus";
-import Login from "../Login"
-import Register from "../Register";
+import Login from "../../components/Login";
+import Register from "../../components/Register";
 import { Routes, Route, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 

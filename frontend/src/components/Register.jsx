@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 const Register = (props) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
 
   const [password, setPassword] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -23,6 +25,12 @@ const Register = (props) => {
   };
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
+  };
+  const handlePhoneNumberChange = (e) => {
+    setPhoneNumber(e.target.value);
+  };
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value);
   };
 
   return (
@@ -65,9 +73,23 @@ const Register = (props) => {
             )}
           </i>
         </div>
+        <div className="text">Phone :</div>
+        <input
+          type="text"
+          placeholder="Phone"
+          value={phoneNumber}
+          onChange={handlePhoneNumberChange}
+        ></input>
+          <div className="text">Address :</div>
+        <input
+          type="text"
+          placeholder="Address"
+          value={address}
+          onChange={handleAddressChange}
+        ></input>
         <button
-          className={email && password && username ? "active" : ""}
-          disabled={email && password && username ? false : true}
+          className={email && password && username && phoneNumber && address? "active" : ""}
+          disabled={email && password && username && phoneNumber && address? false : true}
         >
           Sign up
         </button>

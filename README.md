@@ -4,14 +4,13 @@
 sửa file main.ts với thông tin đăng nhập MySQL trong máy cá nhân
 sau đó: npm run dev
 
-
-
-
-
+npm i @nestjs/common
+npm i @nestjs/common
+npm i @nestjs/websockets
+npm i socket.io
 
 
 ----------------FRONTENT--------------------------
-
 
 npm install
 
