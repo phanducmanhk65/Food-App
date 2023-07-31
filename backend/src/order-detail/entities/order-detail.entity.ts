@@ -28,4 +28,7 @@ export class OrderDetail {
     })
     quantity: number;
 
+    @Column({nullable:true})
+    imageUrl: string;
+
 }
