@@ -21,6 +21,11 @@ export class OrderDetailService {
   findOne(id: number) {
     return this.ordetailRepository.findOneBy({id});
   }
+  findOrderDetail(id: number) {
+    return this.ordetailRepository.createQueryBuilder('order-detail').where('idOrder = :id', {id: id}).getMany();
+
+  }
+  
 
   update(id: number, updateOrderDetailDto: UpdateOrderDetailDto) {
     return this.ordetailRepository.update(id,updateOrderDetailDto)

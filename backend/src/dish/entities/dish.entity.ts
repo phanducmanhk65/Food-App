@@ -1,31 +1,21 @@
-import { Entity,PrimaryGeneratedColumn, Column  } from "typeorm";
+/* eslint-disable prettier/prettier */
+import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
 
 @Entity()
 export class Dish {
-    @PrimaryGeneratedColumn(
-        'increment'
-    )
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({
-        name: "productLine"
-        })
-    productLine: string;
+  @Column()
+  name: string;
 
-    @Column()
-    name: string;
+  @Column()
+  price: number;
 
-    @Column({
-        name: "price",
-        nullable: false, 
-        type: 'double'
-      })
-    price: number;
+  @Column()
+  productline: string;
 
-      @Column({
-        name: "idRestaurant",
-        nullable: false  })
-    idRestaurant: number;
-
-
+  @Column()
+  idRestaurant: number;
+ 
 }

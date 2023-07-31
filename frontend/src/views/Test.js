@@ -3,90 +3,119 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../views/Test.scss"
 
-const initialUsers = [];
+const initialDishes = [
+  // {
+  //   id: 1,
+  //   name: "Bún Chả",
+  //   price: 10,
+  //   image:
+  //     "https://i-giadinh.vnecdn.net/2023/04/16/Buoc-11-Thanh-pham-11-7068-1681636164.jpg",
+  // },
+  // {
+  //   id: 2,
+  //   name: "Cơm Tấm",
+  //   price: 15,
+  //   image:
+  //     "https://luhanhvietnam.com.vn/du-lich/vnt_upload/news/09_2022/quan-com-tam-o-ha-noi-.jpg",
+  // },
+];
 
-const Test = () => {
-  const [users, setUsers] = useState(initialUsers);
+const DishesManagement = () => {
+
+  const [dishes, setDishes] = useState(initialDishes);
   const [editing, setEditing] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
-
+  const [currentDish, setCurrentDish] = useState({});
+  
   useEffect(() => {
-    fetchUsers();
+    fetchDishes();
   }, []);
 
-  const fetchUsers = async () => {
+  const fetchDishes = async () => {
     try {
-      const response = await axios.get("https://reqres.in/api/users");
-      setUsers(response.data.data);
+      const response = await axios.get("http://localhost:3000/dish/all");
+      setDishes(response.data.data);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching dishes:", error);
     }
   };
 
-  const handleAddUser = (user) => {
-    setUsers([...users, user]);
+  const handleCreateDish = async (newDish) => {
+    try {
+      const response = await axios.post("http://localhost:3000/dish/create", newDish);
+      setDishes([...dishes, response.data]);
+    } catch (error) {
+      console.error("Error creating dish:", error);
+    }
   };
 
-  const handleDeleteUser = (id) => {
-    const updatedUsers = users.filter((user) => user.id !== id);
-    setUsers(updatedUsers);
+  const handleDeleteDish = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/dish/delete/${id}`);
+      const updatedDishes = dishes.filter((dish) => dish.id !== id);
+      setDishes(updatedDishes);
+    } catch (error) {
+      console.error("Error deleting dish:", error);
+    }
   };
 
-  const handleEditUser = (user) => {
+  const handleEditDish = (dish) => {
     setEditing(true);
-    setCurrentUser(user);
+    setCurrentDish(dish);
   };
 
-  const handleUpdateUser = (id, updatedUser) => {
-    setEditing(false);
-    setUsers(users.map((user) => (user.id === id ? updatedUser : user)));
+  const handleUpdateDish = async (id, updatedDish) => {
+    try {
+      await axios.patch(`http://localhost:3000/dish/update/${id}`, updatedDish);
+      setEditing(false);
+      setDishes(dishes.map((dish) => (dish.id === id ? updatedDish : dish)));
+    } catch (error) {
+      console.error("Error updating dish:", error);
+    }
   };
+
+  // const handleAddDish = (dish) => {
+  //   handleCreateDish(dish); 
+  // };
 
   return (
     <div className="container mt-4">
-      <h1>User Management</h1>
+      <h1>Dishes Management</h1>
       <div className="d-flex p-3">
         {editing ? (
-          <EditUserForm
-            currentUser={currentUser}
-            onUpdateUser={handleUpdateUser}
-            className="p-2"
+          <EditDishForm
+            currentDish={currentDish}
+            onUpdateDish={handleUpdateDish}
           />
         ) : (
-          <AddUserForm onAddUser={handleAddUser} className="p-2" />
+          <>
+            <AddDishForm onCreateDish={handleCreateDish} />
+            {dishes && dishes.length > 0 && (
+              <DishList
+                dishes={dishes}
+                onDeleteDish={handleDeleteDish}
+                onEditDish={handleEditDish}
+              />
+            )}
+          </>
         )}
-      </div>
-      <div>
-        <h2>User List</h2>
-        <UserList
-          users={users}
-          onDeleteUser={handleDeleteUser}
-          onEditUser={handleEditUser}
-        />
       </div>
     </div>
   );
+  
 };
 
-const AddUserForm = ({ onAddUser }) => {
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    address: "",
-    username: "",
-    password: "",
-    phonenumber: "",
-  });
+const AddDishForm = ({ onCreateDish }) => {
+
+  const [dish, setDish] = useState({ name: "", price: "", image: "" });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setDish({ ...dish, [name]: value });
   };
-
-  const handleSubmit = (e) => {
+const handleSubmit = (e) => {
     e.preventDefault();
-    onAddUser({ ...user, id: Date.now() });
-    setUser({ name: "", username: "", email: "", address: "",password: "", phonenumber: "", });
+    onCreateDish({ ...dish, id: Date.now() });
+    setDish({ name: "", price: "", image: "" });
   };
 
   return (
@@ -95,8 +124,19 @@ const AddUserForm = ({ onAddUser }) => {
         <input
           type="text"
           name="name"
-          placeholder="Name"
-          value={user.name}
+          placeholder="Dish Name"
+          value={dish.name}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <input
+          type="number"
+          name="price"
+          placeholder="Price"
+          value={dish.price}
           onChange={handleChange}
           required
           className="form-control"
@@ -105,76 +145,36 @@ const AddUserForm = ({ onAddUser }) => {
       <div className="form-group">
         <input
           type="text"
-          name="username"
-          placeholder="Username"
-          value={user.username}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={user.email}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          value={user.address}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={user.password}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          name="phonenumber"
-          placeholder="Phone Number"
-          value={user.phonenumber}
+          name="image"
+          placeholder="Image URL"
+          value={dish.image}
           onChange={handleChange}
           required
           className="form-control"
         />
       </div>
       <button type="submit" className="btn btn-primary">
-        Add User
+        Add Dish
       </button>
     </form>
   );
 };
 
-const EditUserForm = ({ currentUser, onUpdateUser }) => {
-  const [user, setUser] = useState(currentUser);
+const EditDishForm = ({ currentDish, onUpdateDish }) => {
+  const [dish, setDish] = useState(currentDish);
 
   useEffect(() => {
-    setUser(currentUser);
-  }, [currentUser]);
+    setDish(currentDish);
+  }, [currentDish]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setDish({ ...dish, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdateUser(currentUser.id, user);
+    onUpdateDish(currentDish.id, dish);
   };
 
   return (
@@ -183,8 +183,17 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
         <input
           type="text"
           name="name"
-          placeholder="Name"
-          value={user.name}
+          value={dish.name}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <input
+          type="number"
+          name="price"
+          value={dish.price}
           onChange={handleChange}
           required
           className="form-control"
@@ -193,108 +202,58 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
       <div className="form-group">
         <input
           type="text"
-          name="username"
-          placeholder="Username"
-          value={user.username}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={user.email}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          value={user.address}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={user.password}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          name="phonenumber"
-          placeholder="Phone Number"
-          value={user.phonenumber}
+          name="image"
+          value={dish.image}
           onChange={handleChange}
           required
           className="form-control"
         />
       </div>
       <button type="submit" className="btn btn-primary">
-        Update User
+        Update Dish
       </button>
     </form>
   );
 };
 
-
-const UserList = ({ users, onDeleteUser, onEditUser }) => {
+const DishList = ({ dishes, onDeleteDish, onEditDish }) => {
   return (
-    <div className="table-wrapper">
     <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
       <colgroup>
-        <col style={{ width: "8%" }} />
-        <col style={{ width: "12%" }} />
-        <col style={{ width: "12%" }} />
-        <col style={{ width: "16%" }} />
-        <col style={{ width: "14%" }} />
-        <col style={{ width: "12%" }} />
-        <col style={{ width: "12%" }} />
-        <col style={{ width: "12%" }} />
+        <col style={{ width: "10%" }} />
+        <col style={{ width: "40%" }} />
+        <col style={{ width: "15%" }} />
+        <col style={{ width: "15%" }} />
+        <col style={{ width: "20%" }} />
       </colgroup>
       <thead>
         <tr>
-          <th>ID</th>          
+          <th>ID</th>
+          <th>Image</th>
           <th>Name</th>
-          <th>Username</th>
-          <th>Address</th>
-          <th>Email</th>
-          <th>Password</th>
-          <th>Phone Number</th>
+          <th>Price</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {users.map((user) => (
-          <tr key={user.id}>
-            <td>{user.id}</td>
-            <td>{user.first_name} {user.last_name}</td>
-            <td>{user.username}</td>
-            <td>{user.address}</td>
-            <td>{user.email}</td>
-            <td>{user.password}</td>
-            <td>{user.phonenumber}</td>
+        {dishes.map((dish) => (
+<tr key={dish.id}>
+            <td>{dish.id}</td>
             <td>
-              <button onClick={() => onEditUser(user)} className="btn btn-info">
+              <img
+                src={dish.image}
+                alt={dish.name}
+                style={{ width: "250px" }}
+              />
+            </td>
+            <td>{dish.name}</td>
+            <td>${dish.price}</td>
+            <td>
+              <button onClick={() => onEditDish(dish)} className="btn btn-info">
                 Edit
               </button>
               <button
-                onClick={() => onDeleteUser(user.id)}
+                onClick={() => onDeleteDish(dish.id)}
                 className="btn btn-danger"
               >
                 Delete
@@ -304,8 +263,7 @@ const UserList = ({ users, onDeleteUser, onEditUser }) => {
         ))}
       </tbody>
     </table>
-    </div>
   );
 };
 
-export default Test;
+export default DishesManagement;
