@@ -16,5 +16,8 @@ export class Dish {
 
   @Column()
   idRestaurant: number;
+
+  @Column({nullable: true})
+  imageUrl: string;
  
 }

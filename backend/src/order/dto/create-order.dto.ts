@@ -8,5 +8,6 @@ totalPrice: number;
 @IsNumber()
 status: number;
 
+imageUrl: string;
 
 }

@@ -13,4 +13,6 @@ price: number;
 
 @IsNumber()
 idRestaurant: number;
+
+imageUrl: string;
 }
