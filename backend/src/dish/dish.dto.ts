@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 
 export class DishDto {
 @IsNotEmpty()
-productLine: string;
+productline: string;
 
 @IsNotEmpty()
 name: string;
