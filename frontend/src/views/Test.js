@@ -20,14 +20,9 @@ const initialDishes = [
   // },
 ];
 
-<<<<<<< HEAD
-const Test = () => {
-  const [users, setUsers] = useState([]);
-=======
 const DishesManagement = () => {
 
   const [dishes, setDishes] = useState(initialDishes);
->>>>>>> long
   const [editing, setEditing] = useState(false);
   const [currentDish, setCurrentDish] = useState({});
   
@@ -37,13 +32,8 @@ const DishesManagement = () => {
 
   const fetchDishes = async () => {
     try {
-<<<<<<< HEAD
-      const response = await axios.get('http://localhost:3000/user');
-      setUsers(response.data.data);
-=======
-      const response = await axios.get("http://localhost:3000/dish");
+      const response = await axios.get("http://localhost:3000/dish/all");
       setDishes(response.data.data);
->>>>>>> long
     } catch (error) {
       console.error("Error fetching dishes:", error);
     }
@@ -97,17 +87,6 @@ const DishesManagement = () => {
             onUpdateDish={handleUpdateDish}
           />
         ) : (
-<<<<<<< HEAD
-          <AddUserForm onAddUser={handleAddUser} users={users} setUsers={setUsers} className="p-2" />
-
-        )}
-      </div>
-      <div>
-        <h2>User List</h2>
-        <UserList users={users} onDeleteUser={handleDeleteUser} onEditUser={handleEditUser} onSelectUser={handleSelectUser} />
-      </div>
-      {selectedUserId && <UserDetails user={currentUser} />}
-=======
           <>
             <AddDishForm onCreateDish={handleCreateDish} />
             {dishes && dishes.length > 0 && (
@@ -120,7 +99,6 @@ const DishesManagement = () => {
           </>
         )}
       </div>
->>>>>>> long
     </div>
   );
   
@@ -128,141 +106,13 @@ const DishesManagement = () => {
 
 const AddDishForm = ({ onCreateDish }) => {
 
-<<<<<<< HEAD
-const AddUserForm = ({ onAddUser, users, setUsers }) => {
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    address: "",
-    username: "",
-    password: "",
-    phonenumber: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:3000/api/user", user);
-      const newUser = response.data;
-
-      if (!Array.isArray(users)) {
-        setUsers([]);
-      }
-
-      onAddUser(newUser);
-      setUser({
-        name: "",
-        username: "",
-        email: "",
-        address: "",
-        password: "",
-        phonenumber: "",
-      });
-    } catch (error) {
-      console.error("Error adding user:", error);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={user.name}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={user.username}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={user.email}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          value={user.address}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={user.password}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          name="phonenumber"
-          placeholder="Phone Number"
-          value={user.phonenumber}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <button type="submit" className="btn btn-primary">
-        Add User
-      </button>
-    </form>
-  );
-};
-
-const EditUserForm = ({ currentUser, onUpdateUser }) => {
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    setUser(currentUser);
-  }, [currentUser]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-=======
   const [dish, setDish] = useState({ name: "", price: "", image: "" });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDish({ ...dish, [name]: value });
->>>>>>> long
   };
-
-  const handleSubmit = (e) => {
+const handleSubmit = (e) => {
     e.preventDefault();
     onCreateDish({ ...dish, id: Date.now() });
     setDish({ name: "", price: "", image: "" });
@@ -366,20 +216,9 @@ const EditDishForm = ({ currentDish, onUpdateDish }) => {
   );
 };
 
-<<<<<<< HEAD
-const UserList = ({ users, onDeleteUser, onEditUser, onSelectUser }) => {
-  if (!users || users.length === 0) {
-    return <p>No users found.</p>;
-  }
-
-  return (
-    <div className="table-wrapper">
-      <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
-=======
 const DishList = ({ dishes, onDeleteDish, onEditDish }) => {
   return (
     <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
->>>>>>> long
       <colgroup>
         <col style={{ width: "10%" }} />
         <col style={{ width: "40%" }} />
@@ -398,7 +237,7 @@ const DishList = ({ dishes, onDeleteDish, onEditDish }) => {
       </thead>
       <tbody>
         {dishes.map((dish) => (
-          <tr key={dish.id}>
+<tr key={dish.id}>
             <td>{dish.id}</td>
             <td>
               <img
