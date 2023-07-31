@@ -1,7 +1,7 @@
 import { MinLength, IsNotEmpty, IsNumber } from 'class-validator';
 import * as bcrypt from 'bcrypt';
 
-export class Dish {
+export class DishDto {
 @IsNotEmpty()
 productLine: string;
 

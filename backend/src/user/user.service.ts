@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm/repository/Repository';
 import { UpdateResult, DeleteResult } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { CreateUserDto } from './dto/create-user.dto';
 @Injectable()
 export class UserService {
   [x: string]: any;
@@ -17,14 +18,24 @@ export class UserService {
     return await this.userRepo.find();
   }
 
+  findByUsername(username: string) {
+    return this.userRepo.createQueryBuilder('user').where('username = :username', {username: username}).getOne();
+  }
+
   async findOne(id: number): Promise<User> {
     return await this.userRepo.findOne({ where: { id } });
   }
 
-  async create(user: User): Promise<User> {
-    const hashedPassword = bcrypt.hashSync(user.password, 10);
+  async create(user: CreateUserDto){
+    const duplicateUser = await this.userRepo.createQueryBuilder('user').where('username = :username', {username: user.username}).getOne();
+    if(duplicateUser) {
+      return {message: "Username đã tồn tại"};
+    } else {
+      const hashedPassword = bcrypt.hashSync(user.password, 10);
     user.password = hashedPassword;
     return await this.userRepo.save(user);
+    }
+    
   }
 
   async update(user: User): Promise<any> {

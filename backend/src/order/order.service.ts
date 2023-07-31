@@ -17,8 +17,9 @@ export class OrderService {
   findAll() {
     return this.orderRepository.find();
   }
-  findOne(id: number) {
-    return this.orderRepository.findOneBy({id});
+  findOne(id: number, idUser: number) {
+  
+    return this.orderRepository.createQueryBuilder('order').where('idRestaurant = :id OR idCustomer = :id OR idShipper = :id', {id: idUser}).andWhere('id = :id', {id: id}).getOne();
   }
   //lấy danh sách order theo nhà hàng
   findOrderByRes(id: number, status: number) {

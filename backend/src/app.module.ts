@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer , NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import entities from './typeorm/entities';
@@ -13,10 +13,17 @@ import { OrderDetailModule } from './order-detail/order-detail.module';
 import { DeliverInfoModule } from './deliver-info/deliver-info.module';
 import { ConfigModule } from '@nestjs/config';
 import { EventGateway } from './event.gateway';
-
+import { LoginMiddleware } from './middleware/login.middleware';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [ConfigModule.forRoot(),TypeOrmModule.forRoot({
+  imports:[  
+    JwtModule.register({
+    secret: 'user123', // Replace 'your_secret_key' with your actual secret key
+    signOptions: { expiresIn: '1h' }, // Example: Token expires in 1 hour
+  }),
+
+  ConfigModule.forRoot(),TypeOrmModule.forRoot({
     type: "mysql",
     host: process.env.DATABASEHOST,
     port: parseInt(process.env.PORT),
@@ -29,4 +36,9 @@ import { EventGateway } from './event.gateway';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoginMiddleware).forRoutes('/order')
+  }
+
+}
