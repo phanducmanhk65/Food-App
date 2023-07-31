@@ -4,9 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./Home/HomePage";
 import ShipperPage from "./shipper/ShipperPage";
 import Test from "./Test";
-import ShopContextProvider from "../context/shop-context";
+// import ShopContextProvider from "../context/shop-context";
 
 function App() {
-  return  <Test></Test> ;
+  return  <AdminPanel/> ;
   }
 export default App;

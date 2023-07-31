@@ -3,26 +3,26 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../views/Test.scss"
 
-const initialDishes = [
-  // {
-  //   id: 1,
-  //   name: "Bún Chả",
-  //   price: 10,
-  //   image:
-  //     "https://i-giadinh.vnecdn.net/2023/04/16/Buoc-11-Thanh-pham-11-7068-1681636164.jpg",
-  // },
-  // {
-  //   id: 2,
-  //   name: "Cơm Tấm",
-  //   price: 15,
-  //   image:
-  //     "https://luhanhvietnam.com.vn/du-lich/vnt_upload/news/09_2022/quan-com-tam-o-ha-noi-.jpg",
-  // },
-];
+// const initialDishes = [
+//   // {
+//   //   id: 1,
+//   //   name: "Bún Chả",
+//   //   price: 10,
+//   //   image:
+//   //     "https://i-giadinh.vnecdn.net/2023/04/16/Buoc-11-Thanh-pham-11-7068-1681636164.jpg",
+//   // },
+//   // {
+//   //   id: 2,
+//   //   name: "Cơm Tấm",
+//   //   price: 15,
+//   //   image:
+//   //     "https://luhanhvietnam.com.vn/du-lich/vnt_upload/news/09_2022/quan-com-tam-o-ha-noi-.jpg",
+//   // },
+// ];
 
 const DishesManagement = () => {
 
-  const [dishes, setDishes] = useState(initialDishes);
+  const [dishes, setDishes] = useState();
   const [editing, setEditing] = useState(false);
   const [currentDish, setCurrentDish] = useState({});
   
@@ -72,10 +72,6 @@ const DishesManagement = () => {
       console.error("Error updating dish:", error);
     }
   };
-
-  // const handleAddDish = (dish) => {
-  //   handleCreateDish(dish); 
-  // };
 
   return (
     <div className="container mt-4">
@@ -153,6 +149,28 @@ const handleSubmit = (e) => {
           className="form-control"
         />
       </div>
+      <div className="form-group">
+        <input
+          type="text"
+          name="product"
+          placeholder="Product Line"
+          value={dish.productLine}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <input
+          type="number"
+          name="id Restaurant"
+          placeholder="ID Restaurant"
+          value={dish.idRestaurant}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
+      </div>
       <button type="submit" className="btn btn-primary">
         Add Dish
       </button>
@@ -208,6 +226,26 @@ const EditDishForm = ({ currentDish, onUpdateDish }) => {
           required
           className="form-control"
         />
+              <div className="form-group">
+        <input
+          type="number"
+          name="price"
+          value={dish.productLine}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <input
+          type="number"
+          name="price"
+          value={dish.idRestaurant}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
+      </div>
       </div>
       <button type="submit" className="btn btn-primary">
         Update Dish
@@ -237,7 +275,7 @@ const DishList = ({ dishes, onDeleteDish, onEditDish }) => {
       </thead>
       <tbody>
         {dishes.map((dish) => (
-<tr key={dish.id}>
+          <tr key={dish.id}>
             <td>{dish.id}</td>
             <td>
               <img

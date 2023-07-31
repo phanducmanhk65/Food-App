@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { Dish } from './dish.entity/dish.entity';
 import { DeleteResult, Like, Repository, UpdateResult } from 'typeorm';
@@ -36,7 +37,7 @@ export class DishService {
     name?: string,
     productline?: string,
   ): Promise<Dish[]> {
-    let whereCondition: any = {};
+    const whereCondition: any = {};
 
     if (idRestaurant) {
       whereCondition.restaurant = Like(`%${idRestaurant}%`);
