@@ -4,12 +4,19 @@ import "./styles/global.scss";
 import App from "./views/App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import rootReducer from "./store/reducers/rootReducers"
+
+const reduxStore = createStore(rootReducer);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+    <Provider store={reduxStore}> 
+    <App />
+    </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

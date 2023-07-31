@@ -8,7 +8,6 @@ import {
   SearchPage,
   UserProfile,
 } from "../../components";
-import ShopContextProvider from "../../context/shop-context";
 import Main from "../../components/Main/Main";
 import Cart from "../../components/Cart/Cart";
 

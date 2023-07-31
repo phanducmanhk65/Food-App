@@ -5,10 +5,10 @@ import Home from "./Home/HomePage";
 // import ShipperPage from "./shipper/ShipperPage";
 // import UserList from "./Test";
 // import Test from "./Test";
-import ShopContextProvider from "../context/shop-context";
+
 
 function App() {
 
-  return  <ShopContextProvider><Home/></ShopContextProvider> ;
+  return  <Home/> ;
   }
 export default App;
