@@ -54,14 +54,11 @@ function AdminPanel() {
               icon: <LogoutOutlined />,
               label: "Log out",
             },
-          
-         
           ]}
         />
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }}>
- 
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -69,28 +66,28 @@ function AdminPanel() {
             style={{
               fontSize: "16px",
               width: 64,
-              height: 64,marginTop: '1px'
+              height: 64,
+              marginTop: "1px",
             }}
           />
-         
-          <Menu style={{ padding: 0, float: 'right' }}
 
-          theme="light"
-          mode="horizontal"
-          onClick={({ key }) => navigate(key)}
-          items={[
-            {
-              key: "/login",
-              icon: <LoginOutlined />,
-              label: "Log in",
-            },
-            {
-              key: "/register",
-              icon: <LogoutOutlined />,
-              label: "Register",
-            }
-          ]}
-          ></Menu>
+          <Menu
+            style={{ padding: 0, float: "right" }}
+            theme="light"
+            mode="horizontal"
+            onClick={({ key }) => navigate(key)}
+            items={[
+              {
+                key: "/login",
+                icon: <LoginOutlined />,
+                label: "Log in",
+              },
+              {
+                key: "/register",
+                icon: <LogoutOutlined />,
+                label: "Register",
+              },
+            ]}></Menu>
         </Header>
         <Content
           style={{
@@ -98,8 +95,7 @@ function AdminPanel() {
             padding: 24,
             minHeight: 280,
             background: colorBgContainer,
-          }}
-        >
+          }}>
           <Routes>
             <Route
               exact
@@ -108,8 +104,7 @@ function AdminPanel() {
                 <div>
                   <CrudDishesManagement />
                 </div>
-              }
-            ></Route>
+              }></Route>
 
             <Route
               exact
@@ -118,8 +113,7 @@ function AdminPanel() {
                 <div>
                   <OrderStatus />
                 </div>
-              }
-            ></Route>
+              }></Route>
 
             <Route
               exact
@@ -128,8 +122,7 @@ function AdminPanel() {
                 <div>
                   <CrudUser />
                 </div>
-              }
-            ></Route>
+              }></Route>
             <Route
               exact
               path="/login"
@@ -137,17 +130,15 @@ function AdminPanel() {
                 <div>
                   <Login />
                 </div>
-              }           
-            ></Route>
-              <Route
+              }></Route>
+            <Route
               exact
               path="/register"
               element={
                 <div>
                   <Register />
                 </div>
-              }
-            ></Route>
+              }></Route>
           </Routes>
         </Content>
       </Layout>

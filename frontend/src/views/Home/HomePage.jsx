@@ -1,13 +1,24 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom"; // Đảm bảo đã import useNavigate từ react-router-dom
 import "../../styles/home.scss";
-import { Navbar, Login, Register, SearchPage, Main, Cart, UserProfile } from "../../components";
+import {
+  Navbar,
+  Login,
+  Register,
+  SearchPage,
+  UserProfile,
+} from "../../components";
+import ShopContextProvider from "../../context/shop-context";
+import Main from "../../components/Main/Main";
+import Cart from "../../components/Cart/Cart";
 
 const HomePage = () => {
   const navigate = useNavigate();
 
   return (
+    // <ShopContextProvider>
     <>
+      {" "}
       <div className="home-1">
         <div className="container-1">
           <div className="navbar-1">
@@ -26,8 +37,9 @@ const HomePage = () => {
         </Routes>
       </div>
     </>
+
+    // </ShopContextProvider>
   );
 };
 
 export default HomePage;
- 
