@@ -15,6 +15,8 @@ import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 import * as bcrypt from 'bcryptjs';
 import { AuthService } from '../auth/auth.service';
+import { CreateUserDto } from './dto/create-user.dto';
+
 @Controller('user')
 export class UserController {
   [x: string]: any;
@@ -33,12 +35,12 @@ export class UserController {
     return this.userService.findOne(params.id);
   }
 
-  @Post()
-  async create(@Body() user: User) {
+  @Post('/signup')
+  async create(@Body() user: CreateUserDto) {
     const createdUser = await this.userService.create(user);
-    const token = await this.authService.generateToken(createdUser);
-    const { password, ...userData } = createdUser;
-    return { token, user: userData };
+    // const token = await this.authService.generateToken(createdUser);
+    const {...userData } = createdUser;
+    return {user: userData };
   }
 
   @Put(':id')
@@ -52,19 +54,23 @@ export class UserController {
   }
   @Post('login')
   async loginUser(
-    @Body('email') email: string,
+    @Body('username') username: string,
     @Body('password') password: string,
+    @Res() res: Response
   ) {
-    const user = await this.userService.findByEmail(email);
+    const user = await this.userService.findByUsername(username);
+    if(!user) {
+      return "Không có tài khoản user này";
+    }
 
     if (user && this.userService.comparePasswords(password, user.password)) {
       const token = await this.authService.generateToken(user);
       const { password, ...userData } = user;
-      return { token, user: userData };
-    }
+      res.cookie('jwt', token, { httpOnly: true }); 
+      return res.status(HttpStatus.OK).json({ token });    }
 
     return {
-      message: 'Không có',
+      message: 'Sai mật khẩu',
     };
   }
   @Post('logout')

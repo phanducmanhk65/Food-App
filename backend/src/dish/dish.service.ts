@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Dish } from './dish.entity/dish.entity';
 import { DeleteResult, Like, Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DishDto } from './dish.dto';
 
 @Injectable()
 export class DishService {
@@ -18,7 +19,7 @@ export class DishService {
     return await this.dishRepo.findOne({ where: { id } });
   }
 
-  async create(dish: Dish): Promise<Dish> {
+  async create(dish: DishDto): Promise<Dish> {
     return await this.dishRepo.save(dish);
   }
 

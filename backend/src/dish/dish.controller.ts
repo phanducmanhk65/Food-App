@@ -9,6 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { Dish } from './dish.entity/dish.entity';
+import { DishDto } from './dish.dto';
 import { DishService } from './dish.service';
 
 @Controller('dish')
@@ -26,7 +27,7 @@ export class DishController {
   }
 
   @Post('/create')
-  create(@Body() dish: Dish) {
+  create(@Body() dish: DishDto) {
     return this.dishService.create(dish);
   }
 
