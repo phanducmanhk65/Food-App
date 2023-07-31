@@ -5,34 +5,35 @@ sửa file main.ts với thông tin đăng nhập MySQL trong máy cá nhân
 sau đó: npm run dev
 
 npm i @nestjs/common
-npm i @nestjs/common
-npm i @nestjs/websockets
-npm i socket.io
-
-npm i passport-jwt --savenpm i bcryptjs --save
-npm i typeorm --save
-npm i @nestjs/common --save
-npm i @nestjs/typeorm --save
-npm i @nestjs/jwt --save
 npm i @nestjs/config --save
-npm i bcrypt --save
+npm i @nestjs/jwt --save
 npm i @nestjs/passport --save
+npm i @nestjs/typeorm --save
+npm i bcrypt --save
+npm i typeorm --save
 
+
+npm i passport-jwt --save
+npm i bcryptjs --save
+npm i socket.io
+npm i @nestjs/websockets
 
 ----------------FRONTENT--------------------------
 
-npm install
+npm install --save
 
-npm install antd
+npm install antd --save
 
-npm install @ant-design/icons
+npm install @ant-design/icons --save
 
-npm i bootstrap@5.3.0
+npm i bootstrap@5.3.0 --save
 
-npm install --save-exact react-router-dom@6.14.2
+npm install --save-exact 
 
-npm install @googlemaps/js-api-loader
+npm i react-router-dom --save
 
-npm install @react-google-maps/api
+npm install @googlemaps/js-api-loader --save
 
-npm i axios
+npm install @react-google-maps/api --save
+
+npm i axios --save

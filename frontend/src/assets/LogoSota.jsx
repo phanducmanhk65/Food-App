@@ -1,10 +1,10 @@
-import React from 'react';
-import logoUrl from './logo.png'; // Import the image directly
+import React from "react";
+import logoUrl from "./logo.png"; // Import the image directly
 
 const LogoUrl = () => {
   return (
     <div>
-      <img src={logoUrl} alt="Logo" className='logo'/>
+      <img src={logoUrl} alt="Logo" className="logo" />
     </div>
   );
 };

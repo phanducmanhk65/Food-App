@@ -2,8 +2,8 @@ import Navbar from "./Navbar"
 import Login from "./Login"
 import Register from "./Register"
 import SearchPage from "./SearchPage"
-import Main from "./Main"
-import Cart from "./Cart"
+import Main from "./Main/Main"
+import Cart from "./Cart/Cart"
 import UserProfile from "./UserProfile"
 
 export{
@@ -14,4 +14,5 @@ export{
     Main,
     Cart,
     UserProfile,
+    
 };

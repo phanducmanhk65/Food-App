@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const initialDishes = [
   {
@@ -49,6 +50,10 @@ const initialDishes = [
 ];
 
 const DishesManagement = () => {
+  
+  const [dishes, setDishes] = useState(initialDishes);
+  const [editing, setEditing] = useState(false);
+  const [currentDish, setCurrentDish] = useState({});
 
   useEffect(() => {
     fetchDishes();
@@ -63,9 +68,6 @@ const DishesManagement = () => {
     }
   };
 
-  const [dishes, setDishes] = useState(initialDishes);
-  const [editing, setEditing] = useState(false);
-  const [currentDish, setCurrentDish] = useState({});
 
   const handleAddDish = (dish) => {
     setDishes([...dishes, dish]);
