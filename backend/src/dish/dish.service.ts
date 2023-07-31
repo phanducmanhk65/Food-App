@@ -51,7 +51,7 @@ export class DishService {
 
     return await this.dishRepo.find({
       where: whereCondition,
-      select: ['name', 'price', 'productline', 'idRestaurant', 'status'],
+      select: ['name', 'price', 'productline', 'idRestaurant'],
     });
   }
 }

@@ -31,7 +31,6 @@
     "@nestjs/swagger": "^7.1.1",
     "@nestjs/typeorm": "^10.0.0",
     "@nestjs/websockets": "^10.1.2",
->>>>>>> 17fce38462880f596b6abc95c4fb5716211f8598
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "cors": "^2.8.5",
