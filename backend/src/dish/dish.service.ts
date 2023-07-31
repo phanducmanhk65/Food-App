@@ -20,8 +20,8 @@ export class DishService {
     return await this.dishRepo.findOne({ where: { id } });
   }
 
-  async create(dish: DishDto): Promise<Dish> {
-    return await this.dishRepo.save(dish);
+   create(dish: DishDto) {
+    return  this.dishRepo.save(dish);
   }
 
   async update(dish: Dish): Promise<UpdateResult> {
