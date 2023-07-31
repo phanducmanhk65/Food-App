@@ -4,7 +4,7 @@
 sửa file main.ts với thông tin đăng nhập MySQL trong máy cá nhân
 sau đó: npm run dev
 
-npm i @nestjs/common
+npm i @nestjs/common --save
 npm i @nestjs/config --save
 npm i @nestjs/jwt --save
 npm i @nestjs/passport --save
@@ -15,8 +15,8 @@ npm i typeorm --save
 
 npm i passport-jwt --save
 npm i bcryptjs --save
-npm i socket.io
-npm i @nestjs/websockets
+npm i socket.io --save
+npm i @nestjs/websockets --save
 
 ----------------FRONTENT--------------------------
 
