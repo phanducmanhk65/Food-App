@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Body,
   Controller,
@@ -56,23 +57,24 @@ export class UserController {
   async loginUser(
     @Body('username') username: string,
     @Body('password') password: string,
-    @Res() res: Response
+    @Res() res: Response,
   ) {
     const user = await this.userService.findByUsername(username);
-    if(!user) {
-      return "Không có tài khoản user này";
+  
+    if (!user) {
+      return res.status(HttpStatus.NOT_FOUND).json({ message: 'Không có tài khoản user này' });
     }
-
+  
     if (user && this.userService.comparePasswords(password, user.password)) {
       const token = await this.authService.generateToken(user);
-      const { password, ...userData } = user;
-      res.cookie('jwt', token, { httpOnly: true }); 
-      return res.status(HttpStatus.OK).json({ token });    }
-
-    return {
-      message: 'Sai mật khẩu',
-    };
+      const { password: _password, ...userData } = user; // Loại bỏ trường 'password' khỏi dữ liệu trả về
+      res.cookie('jwt', token, { httpOnly: true });
+      return res.status(HttpStatus.OK).json({ token });
+    }
+  
+    return res.status(HttpStatus.UNAUTHORIZED).json({ message: 'Sai mật khẩu' });
   }
+  
   @Post('logout')
   async logout(@Req() req: Request, @Res() res: Response) {
     return res.status(HttpStatus.OK).json({ message: 'Logout successful' });
