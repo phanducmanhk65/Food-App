@@ -3,26 +3,9 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../views/Test.scss"
 
-const initialDishes = [
-  // {
-  //   id: 1,
-  //   name: "Bún Chả",
-  //   price: 10,
-  //   image:
-  //     "https://i-giadinh.vnecdn.net/2023/04/16/Buoc-11-Thanh-pham-11-7068-1681636164.jpg",
-  // },
-  // {
-  //   id: 2,
-  //   name: "Cơm Tấm",
-  //   price: 15,
-  //   image:
-  //     "https://luhanhvietnam.com.vn/du-lich/vnt_upload/news/09_2022/quan-com-tam-o-ha-noi-.jpg",
-  // },
-];
-
 const DishesManagement = () => {
 
-  const [dishes, setDishes] = useState(initialDishes);
+  const [dishes, setDishes] = useState();
   const [editing, setEditing] = useState(false);
   const [currentDish, setCurrentDish] = useState({});
   
@@ -41,12 +24,24 @@ const DishesManagement = () => {
 
   const handleCreateDish = async (newDish) => {
     try {
-      const response = await axios.post("http://localhost:3000/dish/create", newDish);
-      setDishes([...dishes, response.data]);
+      const priceAsNumber = parseFloat(newDish.price);
+      const idRestaurantAsNumber = parseInt(newDish.idRestaurant);
+      if (!isNaN(priceAsNumber) && !isNaN(idRestaurantAsNumber)) {
+        const dishWithNumberValues = {
+          ...newDish,
+          price: priceAsNumber,
+          idRestaurant: idRestaurantAsNumber,
+        };
+        const response = await axios.post("http://localhost:3000/dish/create", dishWithNumberValues);
+        setDishes([...dishes, response.data]);
+      } else {
+        console.error("Invalid price or idRestaurant value:", newDish);
+      }
     } catch (error) {
       console.error("Error creating dish:", error);
     }
   };
+  
 
   const handleDeleteDish = async (id) => {
     try {
@@ -72,10 +67,6 @@ const DishesManagement = () => {
       console.error("Error updating dish:", error);
     }
   };
-
-  // const handleAddDish = (dish) => {
-  //   handleCreateDish(dish); 
-  // };
 
   return (
     <div className="container mt-4">
@@ -106,16 +97,29 @@ const DishesManagement = () => {
 
 const AddDishForm = ({ onCreateDish }) => {
 
-  const [dish, setDish] = useState({ name: "", price: "", image: "" });
+  const [dish, setDish] = useState({     
+  
+  name: "",
+  price: 1,
+  imageURL: "",
+  idRestaurant: 1,
+  productline: "",});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDish({ ...dish, [name]: value });
   };
-const handleSubmit = (e) => {
+  
+  const handleSubmit = (e) => {
     e.preventDefault();
-    onCreateDish({ ...dish, id: Date.now() });
-    setDish({ name: "", price: "", image: "" });
+    onCreateDish({ ...dish });
+    setDish({
+      name: "",
+      price: 1,
+      imageURL: "",
+      idRestaurant: 1,
+      productline: "",
+    });
   };
 
   return (
@@ -132,11 +136,23 @@ const handleSubmit = (e) => {
         />
       </div>
       <div className="form-group">
-        <input
+      <input
           type="number"
+          step="0.01"
           name="price"
           placeholder="Price"
+          onChange={handleChange}
           value={dish.price}
+          required
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <input
+          type="text"
+          name="imageURL"
+          placeholder="Image URL"
+          value={dish.image}
           onChange={handleChange}
           required
           className="form-control"
@@ -145,9 +161,21 @@ const handleSubmit = (e) => {
       <div className="form-group">
         <input
           type="text"
-          name="image"
-          placeholder="Image URL"
-          value={dish.image}
+          name="productline"
+          placeholder="Product Line"
+          value={dish.productline}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <input
+          type="number"
+          name="idRestaurant"
+          step="1"
+          placeholder="ID Restaurant"
+          value={dish.idRestaurant}
           onChange={handleChange}
           required
           className="form-control"
@@ -190,11 +218,13 @@ const EditDishForm = ({ currentDish, onUpdateDish }) => {
         />
       </div>
       <div className="form-group">
-        <input
+      <input
           type="number"
+          step="0.01"
           name="price"
-          value={dish.price}
+          placeholder="Price"
           onChange={handleChange}
+          value={dish.price}
           required
           className="form-control"
         />
@@ -208,6 +238,27 @@ const EditDishForm = ({ currentDish, onUpdateDish }) => {
           required
           className="form-control"
         />
+              <div className="form-group">
+        <input
+          type="text"
+          name="productline"
+          value={dish.productline}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <input
+          type="number"
+          name="idRestaurant"
+          step="1"
+          value={dish.idRestaurant}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
+      </div>
       </div>
       <button type="submit" className="btn btn-primary">
         Update Dish
@@ -237,11 +288,11 @@ const DishList = ({ dishes, onDeleteDish, onEditDish }) => {
       </thead>
       <tbody>
         {dishes.map((dish) => (
-<tr key={dish.id}>
+          <tr key={dish.id}>
             <td>{dish.id}</td>
             <td>
               <img
-                src={dish.image}
+                src={dish.imageURL}
                 alt={dish.name}
                 style={{ width: "250px" }}
               />

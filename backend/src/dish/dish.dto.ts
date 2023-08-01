@@ -1,9 +1,10 @@
+/* eslint-disable prettier/prettier */
 import { MinLength, IsNotEmpty, IsNumber } from 'class-validator';
 import * as bcrypt from 'bcrypt';
 
 export class DishDto {
 @IsNotEmpty()
-productLine: string;
+productline: string;
 
 @IsNotEmpty()
 name: string;
