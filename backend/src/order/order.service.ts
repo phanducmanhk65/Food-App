@@ -44,15 +44,15 @@ export class OrderService {
   }
   // lấy trạng thái đơn hàng
 
-  async getOrderStatus(id: number): Promise<number|null> {
+  async getOrderStatus(id: number, idU: number): Promise<number|null> {
    
     try {
       const order = await this.orderRepository
         .createQueryBuilder('order')
-        .where('id = :id', { id: id })
+        .where('id = :id', { id: id }).andWhere('idCustomer = :idU', {idU: idU})
         .getOne();
   
-      return order ? order.status : null;
+      return order ? order.status : -1;
     } catch (error) {
       // Handle the error
       console.error('Error while fetching order status:', error.message);
@@ -60,11 +60,11 @@ export class OrderService {
     }
    }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return this.orderRepository.update(id, updateOrderDto);
+  update(id: number,idU: number, status: number) {
+    return this.orderRepository.createQueryBuilder().update('order').set({status: status}).where('id = :id', {id:id}).where('idRestaurant = :idU OR idShipper = :idU', {idU: idU}).execute();
   }
 
-  remove(id: number) {
-    return this.orderRepository.delete({id});
-  }
+  // remove(id: number) {
+  //   return this.orderRepository.delete({id});
+  // }
 }
