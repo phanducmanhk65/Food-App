@@ -16,9 +16,9 @@ export class CreateOrderDetailDto {
 
     constructor(idOrder: number, idDish: number, price: number, quantity: number){
         this.idOrder = idOrder;
-        idDish = idDish;
-        price = price;
-        quantity = quantity;
+        this.idDish = idDish;
+        this.price = price;
+        this.quantity = quantity;
     }
 
 }
