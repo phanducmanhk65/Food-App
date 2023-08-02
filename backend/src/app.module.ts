@@ -17,13 +17,8 @@ import { LoginMiddleware } from './middleware/login.middleware';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports:[  
-    JwtModule.register({
-    secret: 'user123', // Replace 'your_secret_key' with your actual secret key
-    signOptions: { expiresIn: '5h' }, // Example: Token expires in 1 hour
-  }),
-
-  ConfigModule.forRoot(),TypeOrmModule.forRoot({
+  imports:[ 
+    ConfigModule.forRoot(),TypeOrmModule.forRoot({
     type: "mysql",
     host: process.env.DATABASEHOST,
     port: parseInt(process.env.PORT),
