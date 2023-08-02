@@ -6,9 +6,10 @@ import {
 import React, { useState } from "react";
 import "../styles/Login.scss";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Register = (props) => {
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
@@ -16,8 +17,8 @@ const Register = (props) => {
   const [password, setPassword] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
 
   const handleUsernameChange = (e) => {
@@ -33,24 +34,47 @@ const Register = (props) => {
     setAddress(e.target.value);
   };
 
+  const handleSubmit = () => {
+    const userData = {
+      name: name,
+      username: username,
+      password: password,
+      phoneNumber: phoneNumber,
+      address: address,
+    };
+
+    axios
+      .post("http://localhost:3000/user/signup", userData)
+      .then((response) => {
+        // Xử lý kết quả trả về từ API (nếu cần)
+        if (response.status === 201) {
+          alert("Đăng ký thành công!");
+          // Chuyển hướng đến trang đăng nhập
+          window.location.replace("/login");
+        }
+      })
+      .catch((error) => {
+        alert("Thất bại");
+        // Xử lý lỗi (nếu có)
+        console.error(error);
+      });
+  };
   return (
     <>
       <div className="login-container col-12 col-sm-4">
         <div className="title">Sign Up</div>
-        <div className="text">username :</div>
+        <div className="text">Full Name :</div>
         <input
           type="text"
-          placeholder="username"
+          placeholder="Full Name "
+          value={name}
+          onChange={handleNameChange}></input>
+        <div className="text">Username :</div>
+        <input
+          type="text"
+          placeholder="Username"
           value={username}
-          onChange={handleUsernameChange}
-        ></input>
-        <div className="text">Email :</div>
-        <input
-          type="text"
-          placeholder="Email "
-          value={email}
-          onChange={handleEmailChange}
-        ></input>
+          onChange={handleUsernameChange}></input>
         <div className="text">Password :</div>
         <div className="input-pass">
           <input
@@ -78,25 +102,28 @@ const Register = (props) => {
           type="text"
           placeholder="Phone"
           value={phoneNumber}
-          onChange={handlePhoneNumberChange}
-        ></input>
-          <div className="text">Address :</div>
+          onChange={handlePhoneNumberChange}></input>
+        <div className="text">Address :</div>
         <input
           type="text"
           placeholder="Address"
           value={address}
-          onChange={handleAddressChange}
-        ></input>
+          onChange={handleAddressChange}></input>
         <button
-          className={email && password && username && phoneNumber && address? "active" : ""}
-          disabled={email && password && username && phoneNumber && address? false : true}
-        >
+          onClick={handleSubmit}
+          className={
+            name && password && username && phoneNumber && address
+              ? "active"
+              : ""
+          }
+          disabled={
+            name && password && username && phoneNumber && address
+              ? false
+              : true
+          }>
           Sign up
         </button>
-        <Link to="/login"
-          className="link-btn"
-         
-        >
+        <Link to="/login" className="link-btn">
           Already have an account? Login here.
         </Link>
         <div className="back">

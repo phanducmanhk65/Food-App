@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {NestMiddleware, Injectable, HttpException, HttpStatus} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request, Response, NextFunction } from 'express';

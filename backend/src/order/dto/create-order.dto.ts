@@ -5,9 +5,15 @@ export class CreateOrderDto {
 @IsNotEmpty()
 totalPrice: number;
 
-@IsNumber()
 status: number;
 
-imageUrl: string;
+@IsNotEmpty()
+idCustomer: number;
+
+@IsNotEmpty()
+idRestaurant: number;
+
+idShipper: number;
+
 
 }

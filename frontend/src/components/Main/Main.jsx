@@ -2,7 +2,6 @@ import React from "react";
 import { Products } from "../../constants";
 import Product from "../Product";
 import "../../styles/main.scss";
-// import { ShopContext } from "../../context/shop-context";
 
 const main = () => {
   return (

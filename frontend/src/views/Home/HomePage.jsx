@@ -8,7 +8,6 @@ import {
   SearchPage,
   UserProfile,
 } from "../../components";
-import ShopContextProvider from "../../context/shop-context";
 import Main from "../../components/Main/Main";
 import Cart from "../../components/Cart/Cart";
 
@@ -16,7 +15,6 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   return (
-    // <ShopContextProvider>
     <>
       {" "}
       <div className="home-1">
@@ -37,8 +35,6 @@ const HomePage = () => {
         </Routes>
       </div>
     </>
-
-    // </ShopContextProvider>
   );
 };
 
