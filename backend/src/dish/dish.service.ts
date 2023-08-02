@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { Dish } from './dish.entity/dish.entity';
 import { DeleteResult, Like, Repository, UpdateResult } from 'typeorm';
@@ -31,28 +32,28 @@ export class DishService {
     return await this.dishRepo.delete(id);
   }
 
-  async findByRestaurantAndDishName(
-    idRestaurant?: string,
-    name?: string,
-    productline?: string,
-  ): Promise<Dish[]> {
-    let whereCondition: any = {};
+  // async findByRestaurantAndDishName(
+  //   idRestaurant?: string,
+  //   name?: string,
+  //   productline?: string,
+  // ): Promise<Dish[]> {
+  //   let whereCondition: any = {};
 
-    if (idRestaurant) {
-      whereCondition.restaurant = Like(`%${idRestaurant}%`);
-    }
+  //   if (idRestaurant) {
+  //     whereCondition.restaurant = Like(`%${idRestaurant}%`);
+  //   }
 
-    if (name) {
-      whereCondition.name = Like(`%${name}%`);
-    }
+  //   if (name) {
+  //     whereCondition.name = Like(`%${name}%`);
+  //   }
 
-    if (productline) {
-      whereCondition.productline = Like(`%${productline}%`);
-    }
+  //   if (productline) {
+  //     whereCondition.productline = Like(`%${productline}%`);
+  //   }
 
-    return await this.dishRepo.find({
-      where: whereCondition,
-      select: ['name', 'price', 'productline', 'idRestaurant'],
-    });
-  }
+  //   return await this.dishRepo.find({
+  //     where: whereCondition,
+  //     select: ['name', 'price', 'productline', 'idRestaurant'],
+  //   });
+  // }
 }
