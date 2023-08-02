@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../../styles/OrderStatus.scss"
 
 const OrderStatus = () => {
   const [orders, setOrders] = useState([

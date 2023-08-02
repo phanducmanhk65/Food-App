@@ -22,8 +22,8 @@ const OrderStatus = () => {
 
   const handleAcceptOrder = async (orderId) => {
     try {
-      const response = await axios.put(
-        `http://localhost:3000/order/updateorder/${orderId}/`,
+      await axios.put(
+        `http://localhost:3000/order/updateorder/${orderId}/0`,
         { status: 1 },
         {
           withCredentials: true,
@@ -41,7 +41,7 @@ const OrderStatus = () => {
 
   return (
     <div className="container">
-      <h2>New Status</h2>
+      <h2>New Order</h2>
       <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
         <colgroup>
           <col style={{ width: "12.5%" }} />
