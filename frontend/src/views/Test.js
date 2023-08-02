@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import Cookies from 'js-cookie';
 
 const OrderStatus = () => {
-  const [orders, setOrders] = useState([
-  ]);
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     fetchOrders();
@@ -13,16 +11,31 @@ const OrderStatus = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/order/findorderres/0`, {
-          data: {
-            status: 0,
-          },
-          withCredentials: true,
-         
+      const response = await axios.get("http://localhost:3000/order/findorderres/0", {
+        withCredentials: true,
       });
       setOrders(response.data);
     } catch (error) {
       console.error("Error fetching orders:", error);
+    }
+  };
+
+  const handleAcceptOrder = async (orderId) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/order/updateorder/${orderId}/`,
+        { status: 1 },
+        {
+          withCredentials: true,
+        }
+      );
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.id === orderId ? { ...order, status: 1 } : order
+        )
+      );
+    } catch (error) {
+      console.error("Error updating order:", error);
     }
   };
 
@@ -37,7 +50,6 @@ const OrderStatus = () => {
           <col style={{ width: "12.5%" }} />
           <col style={{ width: "12.5%" }} />
           <col style={{ width: "12.5%" }} />
-
         </colgroup>
         <thead>
           <tr>
@@ -59,7 +71,12 @@ const OrderStatus = () => {
               <td>{order.note}</td>
               <td>
                 {order.status === 0 && (
-                  <button className="btn btn-primary">Chấp nhận đơn</button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handleAcceptOrder(order.id)}
+                  >
+                    Chấp nhận đơn
+                  </button>
                 )}
               </td>
             </tr>

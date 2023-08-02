@@ -9,6 +9,6 @@ import { Register } from "../components";
 // import ShopContextProvider from "../context/shop-context";
 
 function App() {
-  return  <Home /> ;
+  return  <Test /> ;
   }
 export default App;
