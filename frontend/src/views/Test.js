@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/OrderStatus.scss"
 
 const OrderStatus = () => {
   const [orders, setOrders] = useState([]);
@@ -23,7 +24,7 @@ const OrderStatus = () => {
   const handleAcceptOrder = async (orderId) => {
     try {
       await axios.put(
-        `http://localhost:3000/order/updateorder/${orderId}/0`,
+        `http://localhost:3000/order/updateorder/`,
         { status: 1 },
         {
           withCredentials: true,
