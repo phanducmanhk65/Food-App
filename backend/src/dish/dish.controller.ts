@@ -42,12 +42,16 @@ export class DishController {
   deleteUser(@Param() params) {
     return this.dishService.delete(params.id);
   }
-  // @Get('/search')
-  // async search(
-  //   @Query('idRestaurant') idRestaurant?: number,
-  //   @Query('name') name?: string,
-  //   @Query('productline') productline?: string,
-  // ) {
-  //   return this.dishService.findByRestaurantAndDishName(name, productline);
-  // }
+  @Get('/search')
+  async search(
+    @Query('idRestaurant') idRestaurant?: string,
+    @Query('name') name?: string,
+    @Query('productline') productline?: string,
+  ) {
+    return this.dishService.findByRestaurantAndDishName(
+      idRestaurant,
+      name,
+      productline,
+    );
+  }
 }
