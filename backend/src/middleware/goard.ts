@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
 import * as jwtoken from 'jsonwebtoken';
 

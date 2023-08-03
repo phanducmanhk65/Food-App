@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
@@ -17,7 +18,7 @@ async function bootstrap() {
   const corsOptions: CorsOptions = {
     origin: 'http://localhost:3001', // The allowed origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // The allowed HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // The allowed request headers
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookies'], // The allowed request headers
     credentials: true, // Enable sending cookies and authorization headers with requests
   };
   
