@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body,Patch, Delete, Param } from "@nestjs/common";
+/* eslint-disable prettier/prettier */
+import { Controller, Get, Post, Body,Patch, Delete, Param, Query } from "@nestjs/common";
 import { RestaurantService } from "./restaurant.service";
 import { CreateRestaurantDto } from "./dto/create-restaurant.dto";
 import { UpdateRestaurantDto } from "./dto/update-user.dto";
@@ -35,4 +36,9 @@ export class RestaurantController {
          this.restaurantService.remove(+id);
          return "Xóa thành công "+ id;
 }
+@Get('/search')
+async search(@Query('name') name?: string): Promise<Restaurant[]> {
+  return this.restaurantService.findByRestaurantName(name);
+}
+
 }

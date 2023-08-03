@@ -1,7 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from "@nestjs/common";
 import { CreateRestaurantDto } from "./dto/create-restaurant.dto";
 import { UpdateRestaurantDto } from "./dto/update-user.dto";
-import { Repository } from "typeorm";
+import { Like, Repository } from "typeorm";
 import { Restaurant } from "./entities/restaurant.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 @Injectable()
@@ -31,4 +32,16 @@ export class RestaurantService {
     remove(id: number) {
         this.Restaurantrepository.delete(id);
     }
+    async findByRestaurantName(name?: string): Promise<Restaurant[]> {
+        const whereCondition: any = {};
+    
+        if (name) {
+          whereCondition.name = Like(`%${name}%`);
+        }
+    
+        return await this.Restaurantrepository.find({
+          where: whereCondition,
+          select: ['id', 'name', 'address', 'phoneNumber'],
+        });
+      }
 }
