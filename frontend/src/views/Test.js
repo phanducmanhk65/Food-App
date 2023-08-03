@@ -13,7 +13,7 @@ const RestaurantManagement = () => {
 
   const fetchRestaurants = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/restaurant/all`);
+      const response = await axios.get(`http://localhost:3000/restaurant/myrestaurant`);
       setRestaurants(response.data);
     } catch (error) {
       console.error("Error fetching restaurants:", error);
@@ -31,7 +31,7 @@ const RestaurantManagement = () => {
 
   const handleDeleteRestaurant = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/restaurant/delete/${id}`);
+      await axios.delete(`http://localhost:3000/restaurant/deleteres/${id}`);
       const updatedRestaurants = restaurants.filter((restaurant) => restaurant.id !== id);
       setRestaurants(updatedRestaurants);
     } catch (error) {
@@ -46,7 +46,7 @@ const RestaurantManagement = () => {
 
   const handleUpdateRestaurant = async (id, updatedRestaurant) => {
     try {
-      const response = await axios.patch(
+      const response = await axios.put(
         `http://localhost:3000/restaurant/updateres/${id}`,
         updatedRestaurant
       );
