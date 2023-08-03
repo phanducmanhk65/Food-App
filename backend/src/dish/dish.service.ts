@@ -32,28 +32,28 @@ export class DishService {
     return await this.dishRepo.delete(id);
   }
 
-  async findByRestaurantAndDishName(
-    idRestaurant?: string,
-    name?: string,
-    productline?: string,
-  ): Promise<Dish[]> {
-    const whereCondition: any = {};
+  // async findByRestaurantAndDishName(
+  //   idRestaurant?: string,
+  //   name?: string,
+  //   productline?: string,
+  // ): Promise<Dish[]> {
+  //   let whereCondition: any = {};
 
-    if (idRestaurant) {
-      whereCondition.idRestaurant = Like(`%${idRestaurant}%`);
-    }
+  //   if (idRestaurant) {
+  //     whereCondition.restaurant = Like(`%${idRestaurant}%`);
+  //   }
 
-    if (name) {
-      whereCondition.name = Like(`%${name}%`);
-    }
+  //   if (name) {
+  //     whereCondition.name = Like(`%${name}%`);
+  //   }
 
-    if (productline) {
-      whereCondition.productline = Like(`%${productline}%`);
-    }
+  //   if (productline) {
+  //     whereCondition.productline = Like(`%${productline}%`);
+  //   }
 
-    return await this.dishRepo.find({
-      where: whereCondition,
-      select: ['id','name', 'price', 'productline', 'idRestaurant'],
-    });
-  }
+  //   return await this.dishRepo.find({
+  //     where: whereCondition,
+  //     select: ['name', 'price', 'productline', 'idRestaurant'],
+  //   });
+  // }
 }
