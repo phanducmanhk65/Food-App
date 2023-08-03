@@ -97,7 +97,7 @@ const AddRestaurantForm = ({ onCreateRestaurant }) => {
   const [restaurant, setRestaurant] = useState({
     name: "",
     address: "",
-    phone: "",
+    phoneNumber: "",
   });
 
   const handleChange = (e) => {
@@ -111,7 +111,7 @@ const AddRestaurantForm = ({ onCreateRestaurant }) => {
     setRestaurant({
       name: "",
       address: "",
-      phone: "",
+      phoneNumber: "",
     });
   };
 
@@ -142,9 +142,9 @@ const AddRestaurantForm = ({ onCreateRestaurant }) => {
       <div className="form-group">
         <input
           type="text"
-          name="phone"
+          name="phoneNumber"
           placeholder="Phone"
-          value={restaurant.phone}
+          value={restaurant.phoneNumber}
           onChange={handleChange}
           required
           className="form-control"
@@ -202,8 +202,8 @@ const EditRestaurantForm = ({ currentRestaurant, onUpdateRestaurant, onCancelEdi
       <div className="form-group">
         <input
           type="text"
-          name="phone"
-          value={restaurant.phone}
+          name="phoneNumber"
+          value={restaurant.phoneNumber}
           onChange={handleChange}
           required
           className="form-control"

@@ -1,85 +1,64 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../../styles/OrderStatus.scss"
 
 const OrderStatus = () => {
-  const [orders, setOrders] = useState([
-    {
-      id: 1,
-      image:
-        "https://i-giadinh.vnecdn.net/2023/04/16/Buoc-11-Thanh-pham-11-7068-1681636164.jpg",
-      name: "Bún Chả",
-      price: 10,
-      quantity: 1,
-      status: "Đang chờ",
-    },
-    {
-      id: 2,
-      image:
-        "https://luhanhvietnam.com.vn/du-lich/vnt_upload/news/09_2022/quan-com-tam-o-ha-noi-.jpg",
-      name: "Cơm tấm",
-      price: 15,
-      quantity: 2,
-      status: "Đang chờ",
-    },
-  ]);
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    setInitialStatus();
+    fetchOrders();
   }, []);
 
-  const setInitialStatus = () => {
-    setOrders((prevOrders) =>
-      prevOrders.map((order) => ({
-        ...order,
-        status: "Đang chờ",
-      }))
-    );
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/order/findorderres/0", {
+        withCredentials: true,
+      });
+      setOrders(response.data);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
   };
 
-  const handleStatusChange = (orderId) => {
-    setOrders((prevOrders) => {
-      return prevOrders.map((order) =>
-        order.id === orderId
-          ? {
-              ...order,
-              status:
-                order.status === "Đang chờ"
-                  ? "Đang nấu"
-                  : order.status === "Đang nấu"
-                  ? "Đang vận chuyển"
-                  : order.status,
-            }
-          : order
+  const handleAcceptOrder = async (orderId) => {
+    try {
+      await axios.put(
+        `http://localhost:3000/order/updateorder/`,
+        { status: 1 },
+        {
+          withCredentials: true,
+        }
       );
-    });
-  };
-
-  const handleDeleteOrder = (orderId) => {
-    setOrders((prevOrders) =>
-      prevOrders.filter((order) => order.id !== orderId)
-    );
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.id === orderId ? { ...order, status: 1 } : order
+        )
+      );
+    } catch (error) {
+      console.error("Error updating order:", error);
+    }
   };
 
   return (
     <div className="container">
-      <h2>Order Status</h2>
+      <h2>New Order</h2>
       <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
         <colgroup>
-          <col style={{ width: "10%" }} />
-          <col style={{ width: "30%" }} />
-          <col style={{ width: "15%" }} />
-          <col style={{ width: "10%" }} />
-          <col style={{ width: "10%" }} />
-          <col style={{ width: "10%" }} />
+          <col style={{ width: "12.5%" }} />
+          <col style={{ width: "12.5%" }} />
+          <col style={{ width: "12.5%" }} />
+          <col style={{ width: "12.5%" }} />
+          <col style={{ width: "12.5%" }} />
+          <col style={{ width: "12.5%" }} />
         </colgroup>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Image</th>
-            <th>Name</th>
+            <th>idCustomer</th>
+            <th>idRestaurant</th>
             <th>Price</th>
-            <th>Quantity</th>
-            <th>Status</th>
+            <th>note</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -87,36 +66,17 @@ const OrderStatus = () => {
           {orders.map((order) => (
             <tr key={order.id}>
               <td>{order.id}</td>
+              <td>{order.idCustomer}</td>
+              <td>{order.idRestaurant}</td>
+              <td>${order.totalPrice}</td>
+              <td>{order.note}</td>
               <td>
-                <img src={order.image} alt={order.name} width="250" />
-              </td>
-              <td>{order.name}</td>
-              <td>${order.price}</td>
-              <td>{order.quantity}</td>
-              <td>{order.status}</td>
-              <td>
-                {order.status === "Đang chờ" && (
+                {order.status === 0 && (
                   <button
                     className="btn btn-primary"
-                    onClick={() => handleStatusChange(order.id)}
+                    onClick={() => handleAcceptOrder(order.id)}
                   >
                     Chấp nhận đơn
-                  </button>
-                )}
-                {order.status === "Đang nấu" && (
-                  <button
-                    className="btn btn-warning"
-                    onClick={() => handleStatusChange(order.id)}
-                  >
-                    Vận chuyển
-                  </button>
-                )}
-                {order.status === "Đang vận chuyển" && (
-                  <button
-                    className="btn btn-success"
-                    onClick={() => handleDeleteOrder(order.id)}
-                  >
-                    Hoàn thành
                   </button>
                 )}
               </td>
