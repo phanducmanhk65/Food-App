@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body,Put,Patch, Delete, Param, UseGuards, Request } from "@nestjs/common";
+/* eslint-disable prettier/prettier */
+import { Controller, Get, Post, Body,Put, Patch, Delete, Param, UseGuards, Request } from "@nestjs/common";
 import { RestaurantService } from "./restaurant.service";
 import { CreateRestaurantDto } from "./dto/create-restaurant.dto";
 import { UpdateRestaurantDto } from "./dto/update-user.dto";
@@ -10,11 +11,9 @@ export class RestaurantController {
     constructor(private readonly restaurantService: RestaurantService){};
 
     @Post('/create')
-    @UseGuards(Goard)
-    create(@Body() restaurant: {name: string, address: string, phoneNumber: string, latitude: number, longitude: number}
-    , @Request() req) {
-        const data = new CreateRestaurantDto(req.idUser, restaurant.name, restaurant.address, restaurant.phoneNumber, restaurant.latitude, restaurant.longitude);
-        return this.restaurantService.create(data);
+    create(@Body() createRestaurantDto: CreateRestaurantDto) {
+        // console.log
+        return this.restaurantService.create(createRestaurantDto);
 
     }
 
