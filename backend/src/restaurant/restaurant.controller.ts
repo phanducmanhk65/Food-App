@@ -36,4 +36,9 @@ export class RestaurantController {
          return this.restaurantService.remove(req.idUser,+id);
          
 }
+@Get('/search')
+async search(@Query('name') name?: string): Promise<Restaurant[]> {
+  return this.restaurantService.findByRestaurantName(name);
+}
+
 }
