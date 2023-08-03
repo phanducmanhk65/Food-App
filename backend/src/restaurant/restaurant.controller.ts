@@ -3,7 +3,7 @@ import { RestaurantService } from "./restaurant.service";
 import { CreateRestaurantDto } from "./dto/create-restaurant.dto";
 import { UpdateRestaurantDto } from "./dto/update-user.dto";
 import { Restaurant } from "./entities/restaurant.entity";
-import { Goard } from "../middleware/goard";
+import { Goard } from "../middleware/goard"; 
 
 @Controller('restaurant')
 export class RestaurantController {
@@ -18,7 +18,7 @@ export class RestaurantController {
 
     }
 
-    @Get('/myrestaurant') 
+    @Get('/myrestaurant')
     @UseGuards(Goard)
     findMyRestaurant(@Request() req) {
         return this.restaurantService.findMyRestaurant(req.idUser);

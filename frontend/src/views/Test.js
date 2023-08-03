@@ -13,16 +13,51 @@ const OrderStatus = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/order/findorderres/0`, {
-          data: {
-            status: 0,
-          },
-          withCredentials: true,
-         
-      });
-      setOrders(response.data);
+      const response = await axios.get(`http://localhost:3000/restaurant/myrestaurant`);
+      setRestaurants(response.data);
     } catch (error) {
-      console.error("Error fetching orders:", error);
+      console.error("Error fetching restaurants:", error);
+    }
+  };
+
+  const handleCreateRestaurant = async (newRestaurant) => {
+    try {
+      const response = await axios.post("http://localhost:3000/restaurant/create", newRestaurant);
+      setRestaurants([...restaurants, response.data]);
+    } catch (error) {
+      console.error("Error creating restaurant:", error);
+    }
+  };
+
+  const handleDeleteRestaurant = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/restaurant/deleteres/${id}`);
+      const updatedRestaurants = restaurants.filter((restaurant) => restaurant.id !== id);
+      setRestaurants(updatedRestaurants);
+    } catch (error) {
+      console.error("Error deleting restaurant:", error);
+    }
+  };
+
+  const handleEditRestaurant = (restaurant) => {
+    setEditing(true);
+    setCurrentRestaurant(restaurant);
+  };
+
+  const handleUpdateRestaurant = async (id, updatedRestaurant) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/restaurant/updateres/${id}`,
+        updatedRestaurant
+      );
+
+      setRestaurants((prevRestaurants) =>
+        prevRestaurants.map((restaurant) => (restaurant.id === id ? response.data : restaurant))
+      );
+
+      setEditing(false);
+    } catch (error) {
+      console.error("Error updating restaurant:", error);
     }
   };
 
