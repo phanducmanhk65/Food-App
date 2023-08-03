@@ -17,7 +17,7 @@ export class RestaurantController {
 
     }
 
-    @Get('/myrestaurant') 
+    @Get('/myrestaurant')
     @UseGuards(Goard)
     findMyRestaurant(@Request() req) {
         return this.restaurantService.findMyRestaurant(req.idUser);
