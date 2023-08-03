@@ -17,7 +17,6 @@ import OrderList from './OrderList';
 import Login from "../../components/Login";
 import Register from "../../components/Register";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import OrdersWaiting from "./OrdersWaiting";
 const { Header, Sider, Content } = Layout;
 
 function ShipperPage() {
@@ -112,7 +111,7 @@ function ShipperPage() {
               path="/order"
               element={
                 <div style={{ flex: 1 }}>
-                  <OrdersWaiting />
+                  <OrderList />
                 </div>
               }></Route>
             <Route
