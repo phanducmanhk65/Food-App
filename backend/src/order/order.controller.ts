@@ -1,4 +1,4 @@
-import { Inject,Controller, Get, Post, Body,Put, Put, Patch, Param, Delete, UseGuards, Request, HttpException, HttpCode, HttpStatus} from '@nestjs/common';
+import { Inject,Controller, Get, Post, Body, Put, Patch, Param, Delete, UseGuards, Request, HttpException, HttpCode, HttpStatus} from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrderDetailService } from '../order-detail/order-detail.service';
