@@ -5,9 +5,9 @@ const OrdersWaiting = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
 
-  const fetchOrders = async () => {
+  const fetchOrders = async (order) => {
     try {
-      const response = await axios.get("http://localhost:3000/order/all");
+      const response = await axios.get(`http://localhost:3000/order/findOrdership/${order.id}`);
       setOrders(response.data);
     } catch (error) {
       console.error("Error fetching orders:", error);
@@ -22,7 +22,7 @@ const OrdersWaiting = () => {
   const handleAcceptOrder = async (order) => {
     try {
       const updatedOrder = { ...order, status: 2 };
-      await axios.put(`http://localhost:3000/order/update/${order.id}`, updatedOrder);
+      await axios.put(`http://localhost:3000/order/updateorder`, updatedOrder);
       setOrders(orders.map(o => o.id === order.id ? updatedOrder : o));
     } catch (error) {
       console.error("Error updating order:", error);

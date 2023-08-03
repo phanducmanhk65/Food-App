@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body,Patch, Delete, Param } from "@nestjs/common";
 import { RestaurantService } from "./restaurant.service";
 import { CreateRestaurantDto } from "./dto/create-restaurant.dto";
@@ -12,7 +13,6 @@ export class RestaurantController {
     create(@Body() createRestaurantDto: CreateRestaurantDto) {
         // console.log
         return this.restaurantService.create(createRestaurantDto);
-
     }
 
     @Get('/all')
