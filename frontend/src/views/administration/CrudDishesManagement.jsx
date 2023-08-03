@@ -299,11 +299,12 @@
     return (
       <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
         <colgroup>
+          <col style={{ width: "7%" }} />
+          <col style={{ width: "40%" }} />
+          <col style={{ width: "12%" }} />
+          <col style={{ width: "12%" }} />
           <col style={{ width: "10%" }} />
-          <col style={{ width: "30%" }} />
-          <col style={{ width: "15%" }} />
-          <col style={{ width: "15%" }} />
-          <col style={{ width: "15%" }} />
+          <col style={{ width: "12%" }} />
         </colgroup>
         <thead>
           <tr>
@@ -311,6 +312,7 @@
             <th>Image</th>
             <th>Name</th>
             <th>Price</th>
+            <th>ID Restaurant</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -327,6 +329,7 @@
               </td>
               <td>{dish.name}</td>
               <td>${dish.price}</td>
+              <td>{dish.idRestaurant}</td>
               <td>
                 <button onClick={() => onEditDish(dish)} className="btn btn-info">
                   Edit
