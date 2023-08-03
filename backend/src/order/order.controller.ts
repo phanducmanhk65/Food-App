@@ -62,7 +62,7 @@ export class OrderController {
   }
 
 // tìm order theo shipper
-  @Get('/findOrdership')
+  @Get('/findOrdership/:id')
   @UseGuards(Goard)
   findOrderByShip(@Param('id') id: string, @Body('status') status: number, @Request() userInfo  ) {
     if(userInfo.idUser) {

@@ -5,29 +5,29 @@ const OrdersWaiting = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
 
-  // const fetchOrders = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:3000/order/all");
-  //     setOrders(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching orders:", error);
-  //     setError(error);
-  //   }
-  // };
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/order/all");
+      setOrders(response.data);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+      setError(error);
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchOrders();
-  // }, []);
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
   const handleAcceptOrder = async (order) => {
-    // try {
-    //   const updatedOrder = { ...order, status: 2 };
-    //   await axios.put(`http://localhost:3000/order/update/${order.id}`, updatedOrder);
-    //   setOrders(orders.map(o => o.id === order.id ? updatedOrder : o));
-    // } catch (error) {
-    //   console.error("Error updating order:", error);
-    //   setError(error);
-    // }
+    try {
+      const updatedOrder = { ...order, status: 2 };
+      await axios.put(`http://localhost:3000/order/update/${order.id}`, updatedOrder);
+      setOrders(orders.map(o => o.id === order.id ? updatedOrder : o));
+    } catch (error) {
+      console.error("Error updating order:", error);
+      setError(error);
+    }
   };
 
   if (error) {
