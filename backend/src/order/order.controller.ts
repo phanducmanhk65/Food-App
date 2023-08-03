@@ -1,4 +1,4 @@
-import { Inject,Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request, HttpException, HttpCode, HttpStatus} from '@nestjs/common';
+import { Inject,Controller, Get, Post, Body,Put, Patch, Param, Delete, UseGuards, Request, HttpException, HttpCode, HttpStatus} from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrderDetailService } from '../order-detail/order-detail.service';
@@ -59,7 +59,7 @@ export class OrderController {
   }
 
 // tìm order theo shipper
-  @Get('/findOrdership')
+  @Get('/findOrdership/:id')
   @UseGuards(Goard)
   findOrderByShip(@Param('id') id: string, @Body('status') status: number, @Request() userInfo  ) {
     if(userInfo.idUser) {
@@ -87,7 +87,7 @@ export class OrderController {
   }
 
 //cập nhật trạng thái order
-  @Patch('/updateorder')
+  @Put('/updateorder')
   @UseGuards(Goard)
   async update(@Body('status') status: number, @Body('idOrder')idOrder: number, @Request() userInfo) {
     this.orderService.update(+idOrder,userInfo.idUser, status);
