@@ -13,7 +13,7 @@ const RestaurantManagement = () => {
 
   const fetchRestaurants = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/restaurant/all`);
+      const response = await axios.get(`http://localhost:3000/restaurant/myrestaurant`);
       setRestaurants(response.data);
     } catch (error) {
       console.error("Error fetching restaurants:", error);
