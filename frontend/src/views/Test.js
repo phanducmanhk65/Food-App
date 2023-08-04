@@ -1,89 +1,90 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../views/Test.scss"
 
-const RestaurantManagement = () => {
-  const [restaurants, setRestaurants] = useState([]);
+const DishesManagement = () => {
+
+  const [dishes, setDishes] = useState();
   const [editing, setEditing] = useState(false);
-  const [currentRestaurant, setCurrentRestaurant] = useState({});
-
+  const [currentDish, setCurrentDish] = useState({});
+  
   useEffect(() => {
-    fetchRestaurants();
+    fetchDishes();
   }, []);
 
-  const fetchRestaurants = async () => {
+  const fetchDishes = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/restaurant/myrestaurant`);
-      setRestaurants(response.data);
+      const response = await axios.get("http://localhost:3000/dish/all");
+      setDishes(response.data.data);
     } catch (error) {
-      console.error("Error fetching restaurants:", error);
+      console.error("Error fetching dishes:", error);
     }
   };
 
-  const handleCreateRestaurant = async (newRestaurant) => {
+  const handleCreateDish = async (newDish) => {
     try {
-      const response = await axios.post("http://localhost:3000/restaurant/create", newRestaurant);
-      setRestaurants([...restaurants, response.data]);
+      const priceAsNumber = parseFloat(newDish.price);
+      const idRestaurantAsNumber = parseInt(newDish.idRestaurant);
+      if (!isNaN(priceAsNumber) && !isNaN(idRestaurantAsNumber)) {
+        const dishWithNumberValues = {
+          ...newDish,
+          price: priceAsNumber,
+          idRestaurant: idRestaurantAsNumber,
+        };
+        const response = await axios.post("http://localhost:3000/dish/create", dishWithNumberValues);
+        setDishes([...dishes, response.data]);
+      } else {
+        console.error("Invalid price or idRestaurant value:", newDish);
+      }
     } catch (error) {
-      console.error("Error creating restaurant:", error);
+      console.error("Error creating dish:", error);
+    }
+  };
+  
+
+  const handleDeleteDish = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/dish/delete/${id}`);
+      const updatedDishes = dishes.filter((dish) => dish.id !== id);
+      setDishes(updatedDishes);
+    } catch (error) {
+      console.error("Error deleting dish:", error);
     }
   };
 
-  const handleDeleteRestaurant = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3000/restaurant/deleteres/${id}`);
-      const updatedRestaurants = restaurants.filter((restaurant) => restaurant.id !== id);
-      setRestaurants(updatedRestaurants);
-    } catch (error) {
-      console.error("Error deleting restaurant:", error);
-    }
-  };
-
-  const handleEditRestaurant = (restaurant) => {
+  const handleEditDish = (dish) => {
     setEditing(true);
-    setCurrentRestaurant(restaurant);
+    setCurrentDish(dish);
   };
 
-  const handleUpdateRestaurant = async (id, updatedRestaurant) => {
+  const handleUpdateDish = async (id, updatedDish) => {
     try {
-      const response = await axios.put(
-        `http://localhost:3000/restaurant/updateres/${id}`,
-        updatedRestaurant
-      );
-
-      setRestaurants((prevRestaurants) =>
-        prevRestaurants.map((restaurant) => (restaurant.id === id ? response.data : restaurant))
-      );
-
+      await axios.patch(`http://localhost:3000/dish/update/${id}`, updatedDish);
       setEditing(false);
+      setDishes(dishes.map((dish) => (dish.id === id ? updatedDish : dish)));
     } catch (error) {
-      console.error("Error updating restaurant:", error);
+      console.error("Error updating dish:", error);
     }
-  };
-
-  const handleCancelEdit = () => {
-    setEditing(false);
-    setCurrentRestaurant({});
   };
 
   return (
     <div className="container mt-4">
-      <h1>Restaurant Management</h1>
+      <h1>Dishes Management</h1>
       <div className="d-flex p-3">
         {editing ? (
-          <EditRestaurantForm
-            currentRestaurant={currentRestaurant}
-            onUpdateRestaurant={handleUpdateRestaurant}
-            onCancelEdit={handleCancelEdit}
+          <EditDishForm
+            currentDish={currentDish}
+            onUpdateDish={handleUpdateDish}
           />
         ) : (
           <>
-            <AddRestaurantForm onCreateRestaurant={handleCreateRestaurant} />
-            {restaurants && restaurants.length > 0 && (
-              <RestaurantList
-                restaurants={restaurants}
-                onDeleteRestaurant={handleDeleteRestaurant}
-                onEditRestaurant={handleEditRestaurant}
+            <AddDishForm onCreateDish={handleCreateDish} />
+            {dishes && dishes.length > 0 && (
+              <DishList
+                dishes={dishes}
+                onDeleteDish={handleDeleteDish}
+                onEditDish={handleEditDish}
               />
             )}
           </>
@@ -91,27 +92,33 @@ const RestaurantManagement = () => {
       </div>
     </div>
   );
+  
 };
 
-const AddRestaurantForm = ({ onCreateRestaurant }) => {
-  const [restaurant, setRestaurant] = useState({
-    name: "",
-    address: "",
-    phoneNumber: "",
-  });
+const AddDishForm = ({ onCreateDish }) => {
+
+  const [dish, setDish] = useState({     
+  
+  name: "",
+  price: 1,
+  imageURL: "",
+  idRestaurant: 1,
+  productline: "",});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setRestaurant({ ...restaurant, [name]: value });
+    setDish({ ...dish, [name]: value });
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    onCreateRestaurant({ ...restaurant });
-    setRestaurant({
+    onCreateDish({ ...dish });
+    setDish({
       name: "",
-      address: "",
-      phoneNumber: "",
+      price: 1,
+      imageURL: "",
+      idRestaurant: 1,
+      productline: "",
     });
   };
 
@@ -121,8 +128,31 @@ const AddRestaurantForm = ({ onCreateRestaurant }) => {
         <input
           type="text"
           name="name"
-          placeholder="Restaurant Name"
-          value={restaurant.name}
+          placeholder="Dish Name"
+          value={dish.name}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+      <input
+          type="number"
+          step="0.01"
+          name="price"
+          placeholder="Price"
+          onChange={handleChange}
+          value={dish.price}
+          required
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <input
+          type="text"
+          name="imageURL"
+          placeholder="Image URL"
+          value={dish.image}
           onChange={handleChange}
           required
           className="form-control"
@@ -131,9 +161,9 @@ const AddRestaurantForm = ({ onCreateRestaurant }) => {
       <div className="form-group">
         <input
           type="text"
-          name="address"
-          placeholder="Address"
-          value={restaurant.address}
+          name="productline"
+          placeholder="Product Line"
+          value={dish.productline}
           onChange={handleChange}
           required
           className="form-control"
@@ -141,40 +171,38 @@ const AddRestaurantForm = ({ onCreateRestaurant }) => {
       </div>
       <div className="form-group">
         <input
-          type="text"
-          name="phoneNumber"
-          placeholder="Phone"
-          value={restaurant.phoneNumber}
+          type="number"
+          name="idRestaurant"
+          step="1"
+          placeholder="ID Restaurant"
+          value={dish.idRestaurant}
           onChange={handleChange}
           required
           className="form-control"
         />
       </div>
       <button type="submit" className="btn btn-primary">
-        Add Restaurant
+        Add Dish
       </button>
     </form>
   );
 };
 
-const EditRestaurantForm = ({ currentRestaurant, onUpdateRestaurant, onCancelEdit }) => {
-  const [restaurant, setRestaurant] = useState(currentRestaurant);
+const EditDishForm = ({ currentDish, onUpdateDish }) => {
+  const [dish, setDish] = useState(currentDish);
 
   useEffect(() => {
-    setRestaurant(currentRestaurant);
-  }, [currentRestaurant]);
+    setDish(currentDish);
+  }, [currentDish]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setRestaurant((prevRestaurant) => ({
-      ...prevRestaurant,
-      [name]: value,
-    }));
+    setDish({ ...dish, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdateRestaurant(currentRestaurant.id, restaurant);
+    onUpdateDish(currentDish.id, dish);
   };
 
   return (
@@ -183,8 +211,20 @@ const EditRestaurantForm = ({ currentRestaurant, onUpdateRestaurant, onCancelEdi
         <input
           type="text"
           name="name"
-          value={restaurant.name}
+          value={dish.name}
           onChange={handleChange}
+          required
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+      <input
+          type="number"
+          step="0.01"
+          name="price"
+          placeholder="Price"
+          onChange={handleChange}
+          value={dish.price}
           required
           className="form-control"
         />
@@ -192,8 +232,17 @@ const EditRestaurantForm = ({ currentRestaurant, onUpdateRestaurant, onCancelEdi
       <div className="form-group">
         <input
           type="text"
-          name="address"
-          value={restaurant.address}
+          name="image"
+          value={dish.image}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
+              <div className="form-group">
+        <input
+          type="text"
+          name="productline"
+          value={dish.productline}
           onChange={handleChange}
           required
           className="form-control"
@@ -201,56 +250,61 @@ const EditRestaurantForm = ({ currentRestaurant, onUpdateRestaurant, onCancelEdi
       </div>
       <div className="form-group">
         <input
-          type="text"
-          name="phoneNumber"
-          value={restaurant.phoneNumber}
+          type="number"
+          name="idRestaurant"
+          step="1"
+          value={dish.idRestaurant}
           onChange={handleChange}
           required
           className="form-control"
         />
+      </div>
       </div>
       <button type="submit" className="btn btn-primary">
-        Update Restaurant
-      </button>
-      <button type="button" className="btn btn-secondary" onClick={onCancelEdit}>
-        Cancel
+        Update Dish
       </button>
     </form>
   );
 };
 
-const RestaurantList = ({ restaurants, onDeleteRestaurant, onEditRestaurant }) => {
+const DishList = ({ dishes, onDeleteDish, onEditDish }) => {
   return (
     <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
       <colgroup>
-        <col style={{ width: "7%" }} />
+        <col style={{ width: "10%" }} />
         <col style={{ width: "40%" }} />
+        <col style={{ width: "15%" }} />
+        <col style={{ width: "15%" }} />
         <col style={{ width: "20%" }} />
-        <col style={{ width: "20%" }} />
-        <col style={{ width: "13%" }} />
       </colgroup>
       <thead>
         <tr>
           <th>ID</th>
+          <th>Image</th>
           <th>Name</th>
-          <th>Address</th>
-          <th>Phone</th>
+          <th>Price</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {restaurants.map((restaurant) => (
-          <tr key={restaurant.id}>
-            <td>{restaurant.id}</td>
-            <td>{restaurant.name}</td>
-            <td>{restaurant.address}</td>
-            <td>{restaurant.phone}</td>
+        {dishes.map((dish) => (
+          <tr key={dish.id}>
+            <td>{dish.id}</td>
             <td>
-              <button onClick={() => onEditRestaurant(restaurant)} className="btn btn-info">
+              <img
+                src={dish.imageURL}
+                alt={dish.name}
+                style={{ width: "250px" }}
+              />
+            </td>
+            <td>{dish.name}</td>
+            <td>${dish.price}</td>
+            <td>
+              <button onClick={() => onEditDish(dish)} className="btn btn-info">
                 Edit
               </button>
               <button
-                onClick={() => onDeleteRestaurant(restaurant.id)}
+                onClick={() => onDeleteDish(dish.id)}
                 className="btn btn-danger"
               >
                 Delete
@@ -263,4 +317,4 @@ const RestaurantList = ({ restaurants, onDeleteRestaurant, onEditRestaurant }) =
   );
 };
 
-export default RestaurantManagement;
+export default DishesManagement;

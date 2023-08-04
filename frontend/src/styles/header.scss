@@ -1,46 +1,35 @@
-// Định nghĩa mixin cho flex
-@mixin flex {
+// CSS for Header
+.header-container {
+  background-color: #f0f2f5; /* Header background color (light gray) */
+  color: #000; /* Header text color (black) */
+  padding: 10px;
   display: flex;
-}
-
-// Định nghĩa mixin cho căn chỉnh các phần tử con ở giữa trục chéo
-@mixin justify-center {
-  justify-content: center;
-}
-
-// Định nghĩa mixin cho căn chỉnh các phần tử con ở giữa trục chính
-@mixin items-center {
+  justify-content: space-between;
   align-items: center;
 }
 
-.home-1 {
-  background-color: #b2c3d6;
-  width: 100%;
-  overflow: hidden;
+.logo {
+  height: 64px;
+  line-height: 64px;
+  display: flex;
+  align-items: center;
 }
 
-.container-1 {
-  padding: 10px;
-  @include flex;
-  @include justify-center;
-  @include items-center;
-}
-
-/* CSS for logo */
+/* Styles for Logo Image (Assuming the logo is an image) */
 .logo img {
   height: 40px; /* Adjust the height as needed */
   width: auto; /* Preserve aspect ratio */
   margin-right: 10px; /* Add some margin between logo image and text */
 }
 
-.navbar-1 {
-  width: 100%;
-  color: #000;
+.nav-container {
+  display: flex;
+  align-items: center;
 }
 
-/* CSS for navigation links */
 .nav-item {
   margin: 0 12px;
+  flex-grow: 1; /* Cho phép mục điều hướng mở rộng để chứa nội dung */
 }
 
 .nav-item a {
@@ -52,7 +41,9 @@
   transition: color 0.3s;
 }
 
-
+.nav-item a:hover {
+  color: #1890ff; /* Hover link text color (blue) */
+}
 
 /* Custom styles for Ant Design Menu */
 .ant-menu {
@@ -66,6 +57,10 @@
   border: none;
 }
 
+.ant-menu-item a,
+.ant-menu-submenu-title a {
+  color: #000; /* Menu link text color (black) */
+}
 
 .ant-menu-item:hover,
 .ant-menu-submenu-title:hover {
@@ -74,6 +69,9 @@
 
 /* Custom styles for Ant Design Badge */
 .ant-badge {
-  color: #000; /* Badge text color (black) */
+  color: #000; /* Badge text color (white) */
   font-weight: bold;
+}
+.ant-menu-title-content{
+  color: #000;
 }

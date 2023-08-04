@@ -8,8 +8,6 @@ export class DeliverInfo {
     })
     id: number;
     
-    @Column()
-    idShipper: number;
     
     @Column({
         nullable:true
