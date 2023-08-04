@@ -30,13 +30,19 @@ export class RestaurantService {
         
     }
 
-    async remove(idU: number, id: number) {
-        const isOwner = await this.Restaurantrepository.createQueryBuilder('restaurant').where('idUser = :idU', {idU: idU}).andWhere('id = :id', {id: id}).getOne();
-        if(isOwner) {
-            this.Restaurantrepository.delete(id);
-            return "Xóa nhà hàng thành công";
-        } else {
-            return "Bạn không có quyền xóa thông tin nhà hàng này";
-        }
+    remove(id: number) {
+        this.Restaurantrepository.delete(id);
     }
+    async findByRestaurantName(name?: string): Promise<Restaurant[]> {
+        const whereCondition: any = {};
+    
+        if (name) {
+          whereCondition.name = Like(`%${name}%`);
+        }
+    
+        return await this.Restaurantrepository.find({
+          where: whereCondition,
+          select: ['id', 'name', 'address', 'phoneNumber'],
+        });
+      }
 }
