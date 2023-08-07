@@ -3,25 +3,29 @@ import axios from 'axios';
 
 const OrdersWaiting = () => {
   const [orders, setOrders] = useState([]);
+  const [idUser, setIdUser] = useState(null);
   const [error, setError] = useState(null);
 
-  const fetchOrders = async () => {
+  const fetchUserId = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:3000/order/findOrdership`,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`http://localhost:3000/user`);
+      setIdUser(response.data.id);
+    } catch (error) {
+      console.error("Error fetching user ID:", error);
+      setError(error);
+    }
+  };
+
+  const fetchOrders = async () => {
+    if (!idUser) return;
+    try {
+      const response = await axios.get(`http://localhost:3000/order/findOrdership/${idUser}`);
       setOrders(response.data);
     } catch (error) {
       console.error("Error fetching orders:", error);
       setError(error);
     }
   };
-
-  useEffect(() => {
-    fetchOrders();
-  }, []);
 
   const handleAcceptOrder = async (order) => {
     try {
@@ -34,6 +38,16 @@ const OrdersWaiting = () => {
     }
   };
 
+  useEffect(() => {
+    fetchUserId();
+  }, []);
+
+  useEffect(() => {
+    if (idUser) {
+      fetchOrders();
+    }
+  }, [idUser]);
+
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -42,7 +56,7 @@ const OrdersWaiting = () => {
     <div>
       {orders.map(order => (
         <div key={order.id}>
-          <div className="card ">
+          <div className="card">
             <div className="card-body">
               <h5 className="card-title">{order.shop}</h5>
               <p className="card-text">Địa chỉ quán: {order.shopAddress}</p>

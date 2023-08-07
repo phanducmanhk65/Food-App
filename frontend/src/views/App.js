@@ -5,6 +5,7 @@ import Home from "./Home/HomePage";
 import ShipperPage from "./shipper/ShipperPage";
 import Test from "./Test";
 import { Register } from "../components";
+import OrdersWaiting from "./shipper/OrdersWaiting";
 
 // import ShopContextProvider from "../context/shop-context";
 
