@@ -5,23 +5,35 @@ import {
   Delete,
   Get,
   Param,
-  Post,
+  Post,UseGuards,
   Put,
-  Query, UseInterceptors 
+  Query, UseInterceptors, Request
 } from '@nestjs/common';
 import { Dish } from './dish.entity/dish.entity';
 import { DishDto } from './dish.dto';
 import { DishService } from './dish.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {diskStorage} from 'multer';
-
+import { Goard } from '../middleware/goard';
 @Controller('dish')
 export class DishController {
   constructor(private readonly dishService: DishService) {}
 
-  @Get('/all')
+  @Post('/create')
+  @UseGuards(Goard)
+  create(@Body() dish: {productline: string, name: string, price: number, imageUrl: string}, @Request() req) {
+    return this.dishService.create(dish, req.idUser);
+  }
+  @Get('/alldish')
+  @UseGuards(Goard)
   findAll(): Promise<Dish[]> {
     return this.dishService.findAll();
+  }
+  
+  @Get("/findByRes")
+  @UseGuards(Goard)
+  findDishByRes(@Request() req) {
+    return this.dishService.findDishbyRes(req.idUser);
   }
 
   @Get('detail/:id')
@@ -29,20 +41,18 @@ export class DishController {
     return this.dishService.findOne(params.id);
   }
 
-  @Post('/create')
-  create(@Body() dish: DishDto) {
-    return this.dishService.create(dish);
-  }
+ 
 
-  @Put('/update/:id')
-  update(@Param('id') id: number, @Body() dish: Dish) {
-    dish.id = id;
-    return this.dishService.update(dish);
+  @Put('/update')
+  @UseGuards(Goard)
+  update(@Body() dish: Dish, @Request() req) {
+    return this.dishService.update(req.idUser, dish);
   }
 
   @Delete('/delete/:id')
-  deleteUser(@Param() params) {
-    return this.dishService.delete(params.id);
+  @UseGuards(Goard)
+  deleteUser(@Param('id') id: number,@Request() req) {
+    return this.dishService.delete(req.idUser,id );
   }
 
   @Post("/uploadimage")
