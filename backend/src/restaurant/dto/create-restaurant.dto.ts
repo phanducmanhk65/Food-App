@@ -12,4 +12,13 @@ export class CreateRestaurantDto {
  latitude: number;
  longitude: number;
 
+ constructor(idUser: number, name: string, address: string, phoneNumber: string, latitude: number, longitude: number) {
+    this.idUser = idUser;
+    this.name = name;
+    this.address = address;
+    this.phoneNumber = phoneNumber;
+    this.latitude = latitude;
+    this.longitude = longitude;
+ }
+
 }
