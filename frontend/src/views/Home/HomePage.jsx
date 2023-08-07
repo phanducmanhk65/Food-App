@@ -1,7 +1,13 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom"; // Đảm bảo đã import useNavigate từ react-router-dom
 import "../../styles/home.scss";
-import { Header, Login, Register, UserProfile } from "../../components";
+import {
+  Navbar,
+  Login,
+  Register,
+  SearchPage,
+  UserProfile,
+} from "../../components";
 import Main from "../../components/Main/Main";
 import Cart from "../../components/Cart/Cart";
 
@@ -14,7 +20,7 @@ const HomePage = () => {
       <div className="home-1">
         <div className="container-1">
           <div className="navbar-1">
-            <Header onLinkClick={(path) => navigate(path)} />
+            <Navbar onLinkClick={(path) => navigate(path)} />
           </div>
         </div>
       </div>
@@ -25,6 +31,7 @@ const HomePage = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </div>
     </>

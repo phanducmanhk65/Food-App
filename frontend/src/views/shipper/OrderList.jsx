@@ -118,5 +118,4 @@ const OrderList = () => {
     </div>
   );
 };
-//ádasdasdsa
 export default OrderList;
