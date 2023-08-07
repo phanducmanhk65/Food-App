@@ -93,17 +93,14 @@ export class UserController {
     }
   }
   @Put('profile/:id')
-  async updateProFile(
-    @Param('id') id: number,
-    @Body() updatedUser: CreateUserDto,
-  ) {
+  async updateProFile(@Param('id') id: number, @Body() updatedUser: User) {
     const updatedUserProfile = await this.userService.updateProFile(
       id,
       updatedUser,
     );
     if (updatedUserProfile) {
       // Omitting the password field from the returned data
-      const { id, ...userData } = updatedUserProfile;
+      const { id, password, ...userData } = updatedUserProfile;
       return userData;
     } else {
       return {
@@ -112,5 +109,18 @@ export class UserController {
       };
     }
   }
-  
+  @Delete('profile/:id')
+  async deleteUserProfile(@Param('id') id: number) {
+    const deleteResult = await this.userService.delete(id);
+    if (deleteResult.affected === 1) {
+      return {
+        message: 'Profile deleted successfully',
+      };
+    } else {
+      return {
+        statusCode: HttpStatus.NOT_FOUND,
+        message: 'User not found',
+      };
+    }
+  }
 }

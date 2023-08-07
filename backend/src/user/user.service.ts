@@ -39,8 +39,6 @@ export class UserService {
   }
 
   async update(user: User): Promise<any> {
-    const hashedPassword = bcrypt.hashSync(user.password, 10);
-    user.password = hashedPassword;
     return await this.userRepo.update(user.id, { ...user });
   }
 
@@ -59,23 +57,15 @@ export class UserService {
     return bcrypt.compareSync(enteredPassword, storedPassword);
   }
 
-  async updateProFile(
-    id: number,
-    updatedUser: CreateUserDto,
-  ): Promise<User | null> {
+  async updateProFile(id: number, updatedUser: User): Promise<User | null> {
     const existingUser = await this.userRepo.findOne({ where: { id } });
 
     if (!existingUser) {
       return null;
     }
 
-    if (updatedUser.password) {
-      const hashedPassword = bcrypt.hashSync(updatedUser.password, 10);
-      existingUser.password = hashedPassword;
-    }
-
-    const { password, ...userData } = updatedUser;
-    Object.assign(existingUser, userData);
+    // Update only the provided properties
+    Object.assign(existingUser, updatedUser);
 
     try {
       const updatedUserProfile = await this.userRepo.save(existingUser);

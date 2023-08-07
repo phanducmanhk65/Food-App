@@ -2,11 +2,7 @@ export const navLinksCenter = [
     {
         id:"home",
         title:"Home"
-    },
-    {
-        id:"search",
-        title:"Search"
-    },
+    }
     
 ]
 export const navLinksRight = [
@@ -76,3 +72,5 @@ export const Products = [
         restaurant: "Cơm rang ngon",  
     }
 ]
+
+

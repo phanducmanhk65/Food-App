@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { DeliverInfoService } from './deliver-info.service';
 import { CreateDeliverInfoDto } from './dto/create-deliver-info.dto';
 import { UpdateDeliverInfoDto } from './dto/update-deliver-info.dto';
@@ -22,7 +22,7 @@ export class DeliverInfoController {
     return this.deliverInfoService.findOne(+id);
   }
 
-  @Put(':id')
+  @Patch(':id')
   update(@Param('id') id: string, @Body() updateDeliverInfoDto: UpdateDeliverInfoDto) {
     return this.deliverInfoService.update(+id, updateDeliverInfoDto);
   }
