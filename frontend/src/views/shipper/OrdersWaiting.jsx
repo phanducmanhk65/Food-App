@@ -38,16 +38,16 @@ const OrdersWaiting = () => {
     <div>
       {orders.map(order => (
         <div key={order.id}>
-        <div className="card ">
-                  <div className="card-body">
-                    <h5 className="card-title">{order.shop}</h5>
-                    <p className="card-text">Địa chỉ quán: {order.shopAddress}</p>
-                    <p className="card-text">Tên khách hàng: {order.customer}</p>
-                    <p className="card-text">Số điện thoại: {order.phone}</p>
-                    <p className="card-text">Giá đơn: ${order.price}</p>
-                    <button className="btn btn-primary" onClick={() => handleAcceptOrder(order)}>Nhận đơn</button>
-                  </div>
-                </div>
+          <div className="card ">
+            <div className="card-body">
+              <h5 className="card-title">{order.shop}</h5>
+              <p className="card-text">Địa chỉ quán: {order.shopAddress}</p>
+              <p className="card-text">Tên khách hàng: {order.customer}</p>
+              <p className="card-text">Số điện thoại: {order.phone}</p>
+              <p className="card-text">Giá đơn: ${order.price}</p>
+              <button className="btn btn-primary" onClick={() => handleAcceptOrder(order)}>Nhận đơn</button>
+            </div>
+          </div>
         </div>
       ))}
     </div>

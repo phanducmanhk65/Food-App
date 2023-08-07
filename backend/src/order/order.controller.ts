@@ -43,9 +43,9 @@ export class OrderController {
 
 
 // tìm order theo nhà hàng
-  @Get('/findorderres')
+  @Get('/findorderres/:status')
   @UseGuards(Goard)
-  findOrderByRes(@Body('status') status: number, @Request() userInfo  ) {
+  findOrderByRes(@Param('status') status: number, @Request() userInfo  ) {
     if(userInfo.idUser) {
     return this.orderService.findOrderByRes(+userInfo.idUser, status)
     } else {
@@ -83,7 +83,7 @@ export class OrderController {
   }
 
 //cập nhật trạng thái order
-  @Patch('/updateorder')
+  @Put('/updateorder')
   @UseGuards(Goard)
   update(@Body('status') status: number, @Body('idOrder')idOrder: number, @Request() userInfo) {
     this.orderService.update(+idOrder,userInfo.idUser, status);

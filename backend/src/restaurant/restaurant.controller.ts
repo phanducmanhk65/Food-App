@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body,Put,Patch, Delete, Param, UseGuards, Request } from "@nestjs/common";
 import { RestaurantService } from "./restaurant.service";
 import { CreateRestaurantDto } from "./dto/create-restaurant.dto";
@@ -7,7 +8,7 @@ import { Goard } from "../middleware/goard";
 
 @Controller('restaurant')
 export class RestaurantController {
-  constructor(private readonly restaurantService: RestaurantService) {}
+    constructor(private readonly restaurantService: RestaurantService){};
 
     @Post('/create')
     @UseGuards(Goard)
@@ -31,17 +32,10 @@ export class RestaurantController {
         return this.restaurantService.update(req.idUser,idR ,updateRes )
     }
 
-    @Patch('/updateres/:id')
-    update(@Param('id') id: number, @Body() updateRestaurantDto: UpdateRestaurantDto) {
-        return this.restaurantService.update(id,updateRestaurantDto);
-    }
-
-    @Delete('/deleteres/:id')
-    remove(@Param('id') id:number) {
-         this.restaurantService.remove(+id);
-         return "Xóa thành công "+ id;
+    @Delete('/deleteres/:idR')
+    @UseGuards(Goard)
+    remove(@Param('idR') id:number, @Request() req) {
+         return this.restaurantService.remove(req.idUser,+id);
+         
 }
-@Get('/search')
-async search(@Query('name') name?: string): Promise<Restaurant[]> {
-  return this.restaurantService.findByRestaurantName(name);
 }

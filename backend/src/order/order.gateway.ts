@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { SubscribeMessage, WebSocketGateway, OnGatewayConnection, OnGatewayInit,WebSocketServer} from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
