@@ -16,20 +16,37 @@ export class DishService {
     return await this.dishRepo.find();
   }
 
+  async findDishbyRes(idR: number) {
+    const a = await this.dishRepo.createQueryBuilder('dish').where('idRestaurant = :idR', {idR: idR}).getMany();
+    return a;
+  }
+
   async findOne(id: number): Promise<Dish> {
     return await this.dishRepo.findOne({ where: { id } });
   }
 
-   create(dish: DishDto) {
-    return  this.dishRepo.save(dish);
+   create(dish: {productline: string, name: string, price: number, imageUrl: string}, idUser: number) {
+    const newDish = {productline: dish.productline, name: dish.name, price: dish.price, idRestaurant: idUser, imageUrl: dish.imageUrl}
+    return  this.dishRepo.save(newDish);
   }
 
-  async update(dish: Dish): Promise<UpdateResult> {
+  async update(idU: number, dish: Dish){
+    const isOwner = await this.dishRepo.createQueryBuilder('dish').where('idRestaurant = :idR', {idR: idU}).andWhere('id = :idD', {idD: dish.id}).getOne();
+    if(isOwner) {
     return await this.dishRepo.update(dish.id, { ...dish });
+    } else {
+      return "Bạn không có quyền chỉnh sửa món này"
+    }
+    
   }
 
-  async delete(id): Promise<DeleteResult> {
-    return await this.dishRepo.delete(id);
+  async delete(idU: number, id: number){
+    const isOwner = await this.dishRepo.createQueryBuilder('dish').where('idRestaurant = :idR', {idR: idU}).andWhere('id = :idD', {idD: id}).getOne();
+    if(isOwner) {
+      return await this.dishRepo.delete(id);
+    } else {
+      return "Bạn không có quyền xóa món này"
+    }
   }
 
   async findByRestaurantAndDishName(
