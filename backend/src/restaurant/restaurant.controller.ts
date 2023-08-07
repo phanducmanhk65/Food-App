@@ -31,10 +31,17 @@ export class RestaurantController {
         return this.restaurantService.update(req.idUser,idR ,updateRes )
     }
 
-    @Delete('/deleteres/:idR')
-    @UseGuards(Goard)
-    remove(@Param('idR') id:number, @Request() req) {
-         return this.restaurantService.remove(req.idUser,+id);
-         
+    @Patch('/updateres/:id')
+    update(@Param('id') id: number, @Body() updateRestaurantDto: UpdateRestaurantDto) {
+        return this.restaurantService.update(id,updateRestaurantDto);
+    }
+
+    @Delete('/deleteres/:id')
+    remove(@Param('id') id:number) {
+         this.restaurantService.remove(+id);
+         return "Xóa thành công "+ id;
 }
+@Get('/search')
+async search(@Query('name') name?: string): Promise<Restaurant[]> {
+  return this.restaurantService.findByRestaurantName(name);
 }

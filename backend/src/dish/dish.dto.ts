@@ -16,4 +16,12 @@ price: number;
 idRestaurant: number;
 
 imageUrl: string;
+
+constructor(productline: string, name: string, price: number, idRestaurant: number, imageUrl: string) {
+    this.productline = productline;
+    this.name = name;
+    this.price = price;
+    this.idRestaurant = idRestaurant;
+    this.imageUrl = imageUrl;
+}
 }
