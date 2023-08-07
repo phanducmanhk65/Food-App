@@ -40,9 +40,9 @@ export class OrderController {
 
 
 // tìm order theo nhà hàng
-  @Get('/findorderres')
+  @Get('/findorderres/:status')
   @UseGuards(Goard)
-  findOrderByRes(@Body('status') status: number, @Request() userInfo  ) {
+  findOrderByRes(@Param('status') status: number, @Request() userInfo  ) {
     if(userInfo.idUser) {
     return this.orderService.findOrderByRes(+userInfo.idUser, status)
     } else {
