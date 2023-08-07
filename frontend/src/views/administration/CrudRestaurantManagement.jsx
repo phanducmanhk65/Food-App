@@ -13,7 +13,10 @@ const RestaurantManagement = () => {
 
     const fetchRestaurants = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/restaurant/all`);
+            const response = await axios.get(`http://localhost:3000/restaurant/myrestaurant`,
+                {
+                    withCredentials: true,
+                });
             setRestaurants(response.data);
         } catch (error) {
             console.error("Error fetching restaurants:", error);
@@ -22,7 +25,10 @@ const RestaurantManagement = () => {
 
     const handleCreateRestaurant = async (newRestaurant) => {
         try {
-            const response = await axios.post("http://localhost:3000/restaurant/create", newRestaurant);
+            const response = await axios.post("http://localhost:3000/restaurant/create",
+                {
+                    withCredentials: true,
+                }, newRestaurant);
             setRestaurants([...restaurants, response.data]);
         } catch (error) {
             console.error("Error creating restaurant:", error);
@@ -31,7 +37,9 @@ const RestaurantManagement = () => {
 
     const handleDeleteRestaurant = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/restaurant/delete/${id}`);
+            await axios.delete(`http://localhost:3000/restaurant/delete/${id}`,
+                { withCredentials: true }
+            );
             const updatedRestaurants = restaurants.filter((restaurant) => restaurant.id !== id);
             setRestaurants(updatedRestaurants);
         } catch (error) {
@@ -47,8 +55,9 @@ const RestaurantManagement = () => {
     const handleUpdateRestaurant = async (id, updatedRestaurant) => {
         try {
             const response = await axios.patch(
-                `http://localhost:3000/restaurant/updateres/${id}`,
-                updatedRestaurant
+                `http://localhost:3000/restaurant/updateres/${id},`,
+                updatedRestaurant,
+                { withCredentials: true }
             );
 
             setRestaurants((prevRestaurants) =>
@@ -97,7 +106,7 @@ const AddRestaurantForm = ({ onCreateRestaurant }) => {
     const [restaurant, setRestaurant] = useState({
         name: "",
         address: "",
-        phone: "",
+        phoneNumber: "",
     });
 
     const handleChange = (e) => {
@@ -111,7 +120,7 @@ const AddRestaurantForm = ({ onCreateRestaurant }) => {
         setRestaurant({
             name: "",
             address: "",
-            phone: "",
+            phoneNumber: "",
         });
     };
 
@@ -142,9 +151,9 @@ const AddRestaurantForm = ({ onCreateRestaurant }) => {
             <div className="form-group">
                 <input
                     type="text"
-                    name="phone"
+                    name="phoneNumber"
                     placeholder="Phone"
-                    value={restaurant.phone}
+                    value={restaurant.phoneNumber}
                     onChange={handleChange}
                     required
                     className="form-control"
@@ -202,8 +211,8 @@ const EditRestaurantForm = ({ currentRestaurant, onUpdateRestaurant, onCancelEdi
             <div className="form-group">
                 <input
                     type="text"
-                    name="phone"
-                    value={restaurant.phone}
+                    name="phoneNumber"
+                    value={restaurant.phoneNumber}
                     onChange={handleChange}
                     required
                     className="form-control"
