@@ -40,12 +40,6 @@ export class OrderController {
 
   }
 
-  @Get('getone/:id')
-  findOne(@Param('id') id: string, @Request() userInfo) {
-    let idU = userInfo.idUser;
-    return this.orderService.findOne(+id, +idU);
-  }
-  
 
 // tìm order theo nhà hàng
   @Get('/findorderres/:status')
@@ -59,21 +53,21 @@ export class OrderController {
   }
 
 // tìm order theo shipper
-  @Get('/findOrdership/:id')
+  @Get('/findOrdership/:status')
   @UseGuards(Goard)
-  findOrderByShip(@Param('id') id: string, @Body('status') status: number, @Request() userInfo  ) {
+  findOrderByShip( @Param('status') status: number, @Request() userInfo  ) {
     if(userInfo.idUser) {
-    return this.orderService.findOrderByShipper(+id, status);
+    return this.orderService.findOrderByShipper(userInfo.idUser, status);
     } else {
       throw new HttpException("Chưa đăng nhập!",HttpStatus.FORBIDDEN);
     }
   }
 
 // tìm order theo khách hàng
-  @Get('/findOrderCus/:id')
+  @Get('/findOrderCus/:status')
   @UseGuards(Goard)
-  findOrderByCus(@Param('id') id: string, @Body('status') status: number ) {
-    return this.orderService.findOrderByCustomer(+id, status);
+  findOrderByCus( @Param('status') status: number, @Request() req ) {
+    return this.orderService.findOrderByCustomer(req.idUser, status);
   }
 
 // lấy status của order

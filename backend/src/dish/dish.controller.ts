@@ -7,11 +7,13 @@ import {
   Param,
   Post,
   Put,
-  Query,
+  Query, UseInterceptors 
 } from '@nestjs/common';
 import { Dish } from './dish.entity/dish.entity';
 import { DishDto } from './dish.dto';
 import { DishService } from './dish.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import {diskStorage} from 'multer';
 
 @Controller('dish')
 export class DishController {
@@ -41,6 +43,20 @@ export class DishController {
   @Delete('/delete/:id')
   deleteUser(@Param() params) {
     return this.dishService.delete(params.id);
+  }
+
+  @Post("/uploadimage")
+  @UseInterceptors(FileInterceptor("file",{
+    storage: diskStorage({
+      destination: "./imagedish",
+      filename: (req, file, cb)=> {
+        cb(null, `${file.originalname}`)
+      }
+    })
+  }))
+  async uploadimage() {
+
+    return "success";
   }
   // @Get('/search')
   // async search(
