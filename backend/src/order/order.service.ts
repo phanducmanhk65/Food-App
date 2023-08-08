@@ -1,10 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Repository } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { isEmpty } from 'class-validator';
 @Injectable()
 export class OrderService {
   constructor(@InjectRepository(Order)
@@ -61,12 +62,12 @@ export class OrderService {
     }
    }
 
-   update(id: number,idU: number, status: number) {
-    const isexist = this.orderRepository.createQueryBuilder('order').where('id = :id', {id:id}).andWhere('idRestaurant = :idU OR idShipper = :idU', {idU: idU}).getOne();
-    if(isexist){
+   async update(id: number,idU: number, status: number) {
+    const isexist =await this.orderRepository.createQueryBuilder('order').where('id = :id', {id:id}).andWhere('idRestaurant = :idU OR idShipper = :idU', {idU: idU}).getOne();
+    if(isexist.idCustomer){
       return this.orderRepository.createQueryBuilder().update('order').set({status: status}).where('id = :id', {id:id}).execute();
     } else {
-      return "Kho"
+      return "khoo"
     }
     
   }

@@ -83,9 +83,9 @@ export class OrderController {
   }
 
 //cập nhật trạng thái order
-  @Put('/updateorder/:idOrder/:status')
+  @Put('/updateorder')
   @UseGuards(Goard)
-  update(@Param('status') status: number, @Param('idOrder')idOrder: number, @Request() userInfo) {
+  update(@Body('status') status: number, @Body('idOrder')idOrder: number, @Request() userInfo) {
     this.orderService.update(+idOrder,userInfo.idUser, status);
     if(status == 1) {
       let data = {idOrder: +idOrder, idRestaurant: userInfo.idUser}
