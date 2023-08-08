@@ -37,4 +37,7 @@ export class User {
         nullable: true
     })
     phoneNumber: string;
+
+    @Column({ nullable: true })
+  imageUrl: string;
 }

@@ -4,12 +4,14 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
   HttpStatus,
   Param,
   Post,
   Put,
   Req,
   Res,
+  UseInterceptors,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { User } from './entities/user.entity';
@@ -17,6 +19,9 @@ import { UserService } from './user.service';
 import * as bcrypt from 'bcryptjs';
 import { AuthService } from '../auth/auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import axios from 'axios';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { extname } from 'path';
 
 @Controller('user')
 export class UserController {
@@ -121,6 +126,23 @@ export class UserController {
         statusCode: HttpStatus.NOT_FOUND,
         message: 'User not found',
       };
+    }
+  }
+  async updateUserProfile(id: number, updatedUser: User): Promise<User | null> {
+    const existingUser = await this.userRepo.findOne({ where: { id } });
+
+    if (!existingUser) {
+      return null;
+    }
+
+    // Update only the provided properties
+    Object.assign(existingUser, updatedUser);
+
+    try {
+      const updatedUserProfile = await this.userRepo.save(existingUser);
+      return updatedUserProfile;
+    } catch (error) {
+      return null;
     }
   }
 }
