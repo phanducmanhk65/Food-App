@@ -99,6 +99,7 @@ export class OrderController {
       this.orderGateWay.server.emit('restaurantapprove',data);
     } 
   }
+}
 
   // @Delete('delete/:id')
   // remove(@Param('id') id: string) {
