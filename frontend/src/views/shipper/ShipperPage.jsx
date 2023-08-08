@@ -3,12 +3,9 @@ import "../../styles/AdminPanel.scss";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UserOutlined,
   ShopOutlined,
-  UnorderedListOutlined,
   LogoutOutlined,
   LoginOutlined,
-  CoffeeOutlined,
   CarOutlined
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
