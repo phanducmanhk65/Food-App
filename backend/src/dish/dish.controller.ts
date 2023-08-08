@@ -5,43 +5,76 @@ import {
   Delete,
   Get,
   Param,
-  Post,
+  Post,UseGuards,
   Put,
-  Query,
+  Query, UseInterceptors, Request
 } from '@nestjs/common';
 import { Dish } from './dish.entity/dish.entity';
 import { DishDto } from './dish.dto';
 import { DishService } from './dish.service';
-
+import { FileInterceptor } from '@nestjs/platform-express';
+import {diskStorage} from 'multer';
+import * as AWS from 'aws-sdk';
+import { Goard } from '../middleware/goard';
+import { UploadedFile } from '@nestjs/common';
 @Controller('dish')
 export class DishController {
   constructor(private readonly dishService: DishService) {}
 
-  @Get('/all')
+  @Post('/create')
+  @UseGuards(Goard)
+  create(@Body() dish: {productline: string, name: string, price: number, imageUrl: string}, @Request() req) {
+    if(dish.productline && dish.name && dish.price && dish.imageUrl) {    
+      return this.dishService.create(dish, req.idUser);
+    } else {
+      return "Thiếu thông tin về món";
+    }
+  }
+  @Get('/alldish')
+  @UseGuards(Goard)
   findAll(): Promise<Dish[]> {
     return this.dishService.findAll();
   }
+  
+  @Get("/findByRes")
+  @UseGuards(Goard)
+  findDishByRes(@Request() req) {
+    return this.dishService.findDishbyRes(req.idUser);
+  }
 
   @Get('detail/:id')
-  get(@Param() params) {
-    return this.dishService.findOne(params.id);
+  get(@Param('id') id) {
+    if(id) {
+      return this.dishService.findOne(id);
+    }
   }
 
-  @Post('/create')
-  create(@Body() dish: DishDto) {
-    return this.dishService.create(dish);
-  }
+ 
 
-  @Put('/update/:id')
-  update(@Param('id') id: number, @Body() dish: Dish) {
-    dish.id = id;
-    return this.dishService.update(dish);
+  @Put('/update')
+  @UseGuards(Goard)
+  update(@Body() dish: Dish, @Request() req) {
+    if(dish) {   
+     return this.dishService.update(req.idUser, dish);
+    } else {
+      return "Thiếu dữ liệu dish để update";
+    }
   }
 
   @Delete('/delete/:id')
-  deleteUser(@Param() params) {
-    return this.dishService.delete(params.id);
+  @UseGuards(Goard)
+  deleteUser(@Param('id') id: number,@Request() req) {
+    return this.dishService.delete(req.idUser,id );
   }
+
+  @Post("/uploadimage")
+  @UseInterceptors(FileInterceptor("file",))
+  async uploadimage(@UploadedFile() file) {
+
+
+    return "success";
+  }
+ 
   @Get('/search')
   async search(
     @Query('idRestaurant') idRestaurant?: string,
@@ -54,4 +87,5 @@ export class DishController {
       productline,
     );
   }
+
 }

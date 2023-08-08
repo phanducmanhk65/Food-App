@@ -39,6 +39,8 @@ export class UserService {
   }
 
   async update(user: User): Promise<any> {
+    const hashedPassword = bcrypt.hashSync(user.password, 10);
+    user.password = hashedPassword;
     return await this.userRepo.update(user.id, { ...user });
   }
 

@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { OrderDetailService } from './order-detail.service';
 import { CreateOrderDetailDto } from './dto/create-order-detail.dto';
 import { UpdateOrderDetailDto } from './dto/update-order-detail.dto';
-import { Goard } from 'src/middleware/goard';
+import { Goard } from '../middleware/goard';
 
 @Controller('orderdetail')
 export class OrderDetailController {
