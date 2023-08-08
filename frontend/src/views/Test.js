@@ -37,6 +37,7 @@ const OrdersWaiting = () => {
   };
 
 
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -46,23 +47,26 @@ const OrdersWaiting = () => {
   }
 
   return (
-    <div>
-      {orders.map(order => (
-        <div key={order.id}>
-          <div className="card">
-            <div className="card-body">
-              <h5 className="card-title">{order.shop}</h5>
-              <p className="card-text">Địa chỉ quán: {order.idRestaurant}</p>
-              <p className="card-text">Tên khách hàng: {order.idCustomer}</p>
-              <p className="card-text">Note: {order.note}</p>
-              <p className="card-text">Giá đơn: ${order.totalPrice}</p>
-              <button className="btn btn-primary" onClick={() => handleAcceptOrder(order)}>Nhận đơn</button>
+    <div className="container mt-3">
+      <div className="row">
+        {orders.map(order => (
+          <div key={order.id} className="col-md-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">{order.shop}</h5>
+                <p className="card-text">Địa chỉ quán: {order.idRestaurant}</p>
+                <p className="card-text">Tên khách hàng: {order.idCustomer}</p>
+                <p className="card-text">Note: {order.note}</p>
+                <p className="card-text">Giá đơn: ${order.totalPrice}</p>
+                <button className="btn btn-primary" onClick={() => handleAcceptOrder(order)}>Nhận đơn</button>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
+
 }
 
 export default OrdersWaiting;
