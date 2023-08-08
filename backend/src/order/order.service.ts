@@ -61,10 +61,10 @@ export class OrderService {
    }
 
   update(id: number,idU: number, status: number) {
-    return this.orderRepository.createQueryBuilder().update('order').set({status: status}).where('id = :id', {id:id}).where('idRestaurant = :idU OR idShipper = :idU', {idU: idU}).execute();
+    return this.orderRepository.createQueryBuilder().update('order').set({status: status}).where('id = :id', {id:id}).andWhere('idRestaurant = :idU OR idShipper = :idU', {idU: idU}).execute();
   }
 
-  // remove(id: number) {
+  // remove(id: number) { 
   //   return this.orderRepository.delete({id});
   // }
 }

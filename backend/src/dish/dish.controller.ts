@@ -14,7 +14,9 @@ import { DishDto } from './dish.dto';
 import { DishService } from './dish.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {diskStorage} from 'multer';
+import * as AWS from 'aws-sdk';
 import { Goard } from '../middleware/goard';
+import { UploadedFile } from '@nestjs/common';
 @Controller('dish')
 export class DishController {
   constructor(private readonly dishService: DishService) {}
@@ -22,7 +24,11 @@ export class DishController {
   @Post('/create')
   @UseGuards(Goard)
   create(@Body() dish: {productline: string, name: string, price: number, imageUrl: string}, @Request() req) {
-    return this.dishService.create(dish, req.idUser);
+    if(dish.productline && dish.name && dish.price && dish.imageUrl) {    
+      return this.dishService.create(dish, req.idUser);
+    } else {
+      return "Thiếu thông tin về món";
+    }
   }
   @Get('/alldish')
   @UseGuards(Goard)
@@ -37,8 +43,10 @@ export class DishController {
   }
 
   @Get('detail/:id')
-  get(@Param() params) {
-    return this.dishService.findOne(params.id);
+  get(@Param('id') id) {
+    if(id) {
+      return this.dishService.findOne(id);
+    }
   }
 
  
@@ -46,7 +54,11 @@ export class DishController {
   @Put('/update')
   @UseGuards(Goard)
   update(@Body() dish: Dish, @Request() req) {
-    return this.dishService.update(req.idUser, dish);
+    if(dish) {   
+     return this.dishService.update(req.idUser, dish);
+    } else {
+      return "Thiếu dữ liệu dish để update";
+    }
   }
 
   @Delete('/delete/:id')
@@ -56,15 +68,9 @@ export class DishController {
   }
 
   @Post("/uploadimage")
-  @UseInterceptors(FileInterceptor("file",{
-    storage: diskStorage({
-      destination: "./imagedish",
-      filename: (req, file, cb)=> {
-        cb(null, `${file.originalname}`)
-      }
-    })
-  }))
-  async uploadimage() {
+  @UseInterceptors(FileInterceptor("file",))
+  async uploadimage(@UploadedFile() file) {
+
 
     return "success";
   }
