@@ -7,7 +7,8 @@ import {
   DeleteCart,
   actFetchDishRequest,
   addToCart, // Import thêm action addToCart
-} from "../../store/action";
+  GetNumberCart,
+} from "../../store/action/cartAction";
 
 function Cart({
   cartItems,
@@ -17,10 +18,12 @@ function Cart({
   DeleteCart,
   actFetchDishRequest,
   addToCart, // Thêm addToCart vào props
+  GetNumberCart,
 }) {
   useEffect(() => {
     actFetchDishRequest();
-  }, [actFetchDishRequest]);
+    GetNumberCart();
+  }, [actFetchDishRequest, GetNumberCart]);
 
   let ListCart = cartItems;
   let TotalCart = 0;
@@ -106,8 +109,8 @@ function Cart({
 
 const mapStateToProps = (state) => {
   return {
-    cartItems: state._todoDish._todoProduct.cart, // Lấy thông tin giỏ hàng từ Redux store
-    numberCart: state._todoDish._todoProduct.numberCart,
+    cartItems: state.cart._todoProduct.cart, // Lấy thông tin giỏ hàng từ Redux store
+    numberCart: state.cart._todoProduct.numberCart,
   };
 };
 
@@ -117,4 +120,5 @@ export default connect(mapStateToProps, {
   DeleteCart,
   actFetchDishRequest,
   addToCart, // Thêm addToCart vào action
+  GetNumberCart,
 })(Cart);

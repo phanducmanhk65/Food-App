@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, useNavigate } from "react-router-dom"; // Đảm bảo đã import useNavigate từ react-router-dom
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "../../styles/home.scss";
 import { Header, Login, Register, UserProfile } from "../../components";
 import Main from "../../components/Main/Main";
@@ -7,10 +7,10 @@ import Cart from "../../components/Cart/Cart";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   return (
     <>
-      {" "}
       <div className="home-1">
         <div className="container-1">
           <div className="navbar-1">
@@ -24,7 +24,10 @@ const HomePage = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/user-profile" element={<UserProfile />} />
+          <Route
+            path="/user-profile"
+            element={<UserProfile user={userInfo} />}
+          />
         </Routes>
       </div>
     </>
