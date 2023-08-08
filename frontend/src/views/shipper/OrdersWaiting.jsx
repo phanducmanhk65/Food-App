@@ -29,7 +29,6 @@ const OrdersWaiting = () => {
         {
           withCredentials: true
         });
-      console.log("Orders before update:", orders); // <-- Log orders before update
       setOrders(orders.map(o => o.id === order.id ? updatedOrder : o));
     } catch (error) {
       console.error("Error updating order:", error);
@@ -48,13 +47,13 @@ const OrdersWaiting = () => {
   }
 
   return (
-    <div className="container mt-3">
+    <div className="container mt-4">
       <div className="row">
         {orders.map(order => (
-          <div key={order.id} className="col-md-3 mb-3">
+          <div key={order.id} className="col-md-3 mb-4">
             <div className="card">
               <div className="card-body">
-                <h5 className="card-title">{order.shop}</h5>
+                <h5 className="card-title">Đang chờ</h5>
                 <p className="card-text">Địa chỉ quán: {order.idRestaurant}</p>
                 <p className="card-text">Tên khách hàng: {order.idCustomer}</p>
                 <p className="card-text">Note: {order.note}</p>

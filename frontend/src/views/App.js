@@ -10,6 +10,6 @@ import OrdersWaiting from "./shipper/OrdersWaiting";
 // import ShopContextProvider from "../context/shop-context";
 
 function App() {
-  return <Test />;
+  return <ShipperPage />;
 }
 export default App;

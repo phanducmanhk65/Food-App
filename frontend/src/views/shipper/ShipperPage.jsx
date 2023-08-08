@@ -13,11 +13,11 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import MapContainer from './MapContainer';
-import OrderList from './OrderList';
+import OrdersProcessing from './OrdersProcessing'
+import OrdersWaiting from "./OrdersWaiting";
 import Login from "../../components/Login";
 import Register from "../../components/Register";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import OrdersWaiting from "./OrdersWaiting";
 const { Header, Sider, Content } = Layout;
 
 function ShipperPage() {
@@ -104,7 +104,7 @@ function ShipperPage() {
               path="/dishes"
               element={
                 <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <MapContainer/>
+                  <MapContainer />
                 </div>
               }></Route>
             <Route
@@ -113,6 +113,14 @@ function ShipperPage() {
               element={
                 <div style={{ flex: 1 }}>
                   <OrdersWaiting />
+                </div>
+              }></Route>
+            <Route
+              exact
+              path="/ondoing"
+              element={
+                <div style={{ flex: 1 }}>
+                  <OrdersProcessing />
                 </div>
               }></Route>
             <Route
