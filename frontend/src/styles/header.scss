@@ -1,0 +1,77 @@
+// CSS for Header
+.header-container {
+  background-color: #f0f2f5; /* Header background color (light gray) */
+  color: #000; /* Header text color (black) */
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  height: 64px;
+  line-height: 64px;
+  display: flex;
+  align-items: center;
+}
+
+/* Styles for Logo Image (Assuming the logo is an image) */
+.logo img {
+  height: 40px; /* Adjust the height as needed */
+  width: auto; /* Preserve aspect ratio */
+  margin-right: 10px; /* Add some margin between logo image and text */
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item {
+  margin: 0 12px;
+  flex-grow: 1; /* Cho phép mục điều hướng mở rộng để chứa nội dung */
+}
+
+.nav-item a {
+  color: #000; /* Link text color (black) */
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-item a:hover {
+  color: #1890ff; /* Hover link text color (blue) */
+}
+
+/* Custom styles for Ant Design Menu */
+.ant-menu {
+  background-color: transparent; /* Make the menu transparent */
+  border: none; /* Remove border */
+  margin-left: 20px; /* Add some margin between logo and menu */
+}
+
+.ant-menu-item,
+.ant-menu-submenu-title {
+  border: none;
+}
+
+.ant-menu-item a,
+.ant-menu-submenu-title a {
+  color: #000; /* Menu link text color (black) */
+}
+
+.ant-menu-item:hover,
+.ant-menu-submenu-title:hover {
+  background-color: #e6f7ff; /* Hover menu background color (light blue) */
+}
+
+/* Custom styles for Ant Design Badge */
+.ant-badge {
+  color: #000; /* Badge text color (white) */
+  font-weight: bold;
+}
+.ant-menu-title-content{
+  color: #000;
+}

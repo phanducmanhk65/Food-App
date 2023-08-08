@@ -1,0 +1,16 @@
+.table-wrapper {
+    overflow-x: auto;
+
+    .table {
+
+        th,
+        td {
+            word-wrap: break-word;
+        }
+
+        td {
+            max-width: 150px;
+            word-break: break-all;
+        }
+    }
+}
