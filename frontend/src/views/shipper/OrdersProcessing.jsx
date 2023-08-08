@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const OrdersProcessing = () => {
+
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
 
@@ -21,12 +22,13 @@ const OrdersProcessing = () => {
 
   const handleUpdateOrder = async (order) => {
     try {
-      const updatedOrder = { ...order, status: 3 };
-      await axios.put(`http://localhost:3000/order/updateorder`, updatedOrder,
+      const updatedOrder = { idOrder: order.id, status: 3 };
+      await axios.put(`http://localhost:3000/order/updateorder`, { idOrder: 1, status: 3 },
         {
           withCredentials: true
         });
       setOrders(orders.map(o => o.id === order.id ? updatedOrder : o));
+      console.log(updatedOrder);
     } catch (error) {
       console.error("Error updating order:", error);
       setError(error);
