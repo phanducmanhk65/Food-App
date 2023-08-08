@@ -24,7 +24,7 @@ const OrdersWaiting = () => {
 
   const handleAcceptOrder = async (order) => {
     try {
-      const updatedOrder = { ...order, status: 2 };
+      const updatedOrder = { idOrder: order.id, status: 2 };
       await axios.put(`http://localhost:3000/order/updateorder`, updatedOrder,
         {
           withCredentials: true

@@ -61,8 +61,14 @@ export class OrderService {
     }
    }
 
-  update(id: number,idU: number, status: number) {
-    return this.orderRepository.createQueryBuilder().update('order').set({status: status}).where('id = :id', {id:id}).where('idRestaurant = :idU OR idShipper = :idU', {idU: idU}).execute();
+   update(id: number,idU: number, status: number) {
+    const isexist = this.orderRepository.createQueryBuilder('order').where('id = :id', {id:id}).andWhere('idRestaurant = :idU OR idShipper = :idU', {idU: idU}).getOne();
+    if(isexist){
+      return this.orderRepository.createQueryBuilder().update('order').set({status: status}).where('id = :id', {id:id}).execute();
+    } else {
+      return "Kho"
+    }
+    
   }
 
   // remove(id: number) {

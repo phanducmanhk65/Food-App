@@ -83,14 +83,15 @@ export class OrderController {
   }
 
 //cập nhật trạng thái order
-  @Put('/updateorder')
+  @Put('/updateorder/:idOrder/:status')
   @UseGuards(Goard)
-  update(@Body('status') status: number, @Body('idOrder')idOrder: number, @Request() userInfo) {
+  update(@Param('status') status: number, @Param('idOrder')idOrder: number, @Request() userInfo) {
     this.orderService.update(+idOrder,userInfo.idUser, status);
     if(status == 1) {
       let data = {idOrder: +idOrder, idRestaurant: userInfo.idUser}
       this.orderGateWay.server.emit('restaurantapprove',data);
     } 
+    return "Hoan thanh";
   }
 
   // @Delete('delete/:id')
