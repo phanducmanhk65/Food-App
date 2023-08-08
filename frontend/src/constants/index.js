@@ -18,6 +18,10 @@ export const navLinksRight = [
         id:"login",
         title:"Login"
     },
+    {
+        id:"logout",
+        title:"Logout"
+    },
     
 ]
 export const userInfo = [

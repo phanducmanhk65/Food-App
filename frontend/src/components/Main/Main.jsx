@@ -4,7 +4,7 @@ import {
   actFetchDishRequest,
   AddCart,
   actSearchDishRequest,
-} from "../../store/action/index";
+} from "../../store/action/cartAction";
 
 const Main = ({
   _dish,
@@ -40,6 +40,7 @@ const Main = ({
   };
 
   const handleAddToCart = (item) => {
+    console.log("Adding item to cart:", item);
     AddCart(item);
   };
 
@@ -107,7 +108,7 @@ const Main = ({
 
 const mapStateToProps = (state) => {
   return {
-    _dish: state._todoDish._dish,
+    _dish: state.cart._dish,
   };
 };
 

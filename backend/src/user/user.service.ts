@@ -76,4 +76,22 @@ export class UserService {
       return null;
     }
   }
+
+  async updateUserProfile(id: number, updatedUser: User): Promise<User | null> {
+    const existingUser = await this.userRepo.findOne({ where: { id } });
+
+    if (!existingUser) {
+      return null;
+    }
+
+    // Update only the provided properties
+    Object.assign(existingUser, updatedUser);
+
+    try {
+      const updatedUserProfile = await this.userRepo.save(existingUser);
+      return updatedUserProfile;
+    } catch (error) {
+      return null;
+    }
+  }
 }
