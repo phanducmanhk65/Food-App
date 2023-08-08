@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../../styles/AdminPanel.scss";
 import {
+  EnvironmentOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   ShopOutlined,
@@ -35,7 +36,7 @@ function ShipperPage() {
           items={[
             {
               key: "/map",
-              icon: <ShopOutlined />,
+              icon: <EnvironmentOutlined />,
               label: "Map",
             },
             {
@@ -98,12 +99,13 @@ function ShipperPage() {
           <Routes>
             <Route
               exact
-              path="/dishes"
+              path="/map"
               element={
-                <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '500px' }}>
                   <MapContainer />
                 </div>
-              }></Route>
+              }
+            ></Route>
             <Route
               exact
               path="/order"

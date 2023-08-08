@@ -13,7 +13,7 @@ const DishesManagement = () => {
 
   const fetchDishes = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/dish/all");
+      const response = await axios.get("http://localhost:3000/dish/alldish");
       setDishes(response.data);
     } catch (error) {
       console.error("Error fetching dishes:", error);
