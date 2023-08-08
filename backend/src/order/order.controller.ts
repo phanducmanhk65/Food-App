@@ -10,7 +10,6 @@ import { OrderDetailService } from '../order-detail/order-detail.service';
 import { CreateOrderWithDetailDto } from './dto/create-order-orderdetail.dto';
 import { CreateOrderDetailDto } from '../order-detail/dto/create-order-detail.dto';
 import { Goard } from '../middleware/goard';
-import { userInfo } from 'os';
 import { OrderGateway } from './order.gateway';
 @Controller('order')
 export class OrderController {
@@ -45,11 +44,11 @@ export class OrderController {
 // tìm order theo nhà hàng
   @Get('/findorderres/:status')
   @UseGuards(Goard)
-  findOrderByRes(@Param('status') status: number, @Request() userInfo  ) {
+  findOrderByRes(@Body('status') status: number, @Request() userInfo  ) {
     if(userInfo.idUser) {
     return this.orderService.findOrderByRes(+userInfo.idUser, status)
     } else {
-      throw new HttpException("Chưa đăng nhập!",HttpStatus.FORBIDDEN);
+      throw new HttpException("Chưa đăng nhập hoặc thiếu status trong query API",HttpStatus.FORBIDDEN);
     }
   }
 
@@ -58,10 +57,10 @@ export class OrderController {
   @Get('/findOrdership/:status') 
   @UseGuards(Goard)
   findOrderByShip( @Param('status') status: number, @Request() userInfo  ) {
-    if(userInfo.idUser) {
+    if(userInfo.idUser && status != null) {
     return this.orderService.findOrderByShipper(userInfo.idUser, status);
     } else {
-      throw new HttpException("Chưa đăng nhập!",HttpStatus.FORBIDDEN);
+      throw new HttpException("Chưa đăng nhập hoặc thiếu status trong query API",HttpStatus.FORBIDDEN);
     }
   }
 
@@ -69,16 +68,24 @@ export class OrderController {
   @Get('/findOrderCus/:status')
   @UseGuards(Goard)
   findOrderByCus( @Param('status') status: number, @Request() req ) {
-    return this.orderService.findOrderByCustomer(req.idUser, status);
+    if(status != null) {
+      return this.orderService.findOrderByCustomer(req.idUser, status);
+    } else {
+      return "Thiếu trường status trong query API"
+    }
   }
 
 // lấy status của order
   @Get('/orderstatus')
   @UseGuards(Goard)
   async getOrderStatus(@Request() userInfo, @Body('idOrder')idOrder: number) {
-    let idU = userInfo.idUser;
-    const status = await this.orderService.getOrderStatus(idOrder, idU);
-    return (status >= 0) ? status : "Bạn không có đơn hàng này";
+    if(idOrder != null) {let idU = userInfo.idUser;
+      const status = await this.orderService.getOrderStatus(idOrder, idU);
+      return (status >= 0) ? status : "Bạn không có đơn hàng này";
+    } else {
+      return "Thiếu idOrder trong body request";
+    }
+    
     
   }
 
@@ -91,13 +98,9 @@ export class OrderController {
       let data = {idOrder: +idOrder, idRestaurant: userInfo.idUser}
       this.orderGateWay.server.emit('restaurantapprove',data);
     } 
-    return "Hoan thanh";
   }
 
   // @Delete('delete/:id')
   // remove(@Param('id') id: string) {
   //   return this.orderService.remove(+id);
   // }
-
-
-}

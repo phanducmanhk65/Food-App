@@ -72,7 +72,7 @@ export class OrderService {
     
   }
 
-  // remove(id: number) {
+  // remove(id: number) { 
   //   return this.orderRepository.delete({id});
   // }
 }

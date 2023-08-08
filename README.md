@@ -30,7 +30,7 @@ npm i bootstrap@5.3.0 --save
 
 npm install --save-exact 
 
-npm i react-router-dom redux react-redux redux-thunk --save
+npm i react-router-dom redux react-redux redux-thunk jwt-decode--save
 
 npm install @googlemaps/js-api-loader --save
 
