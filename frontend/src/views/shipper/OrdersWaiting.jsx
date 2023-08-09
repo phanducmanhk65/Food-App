@@ -29,7 +29,7 @@ const OrdersWaiting = () => {
         {
           withCredentials: true
         });
-      setOrders(orders.map(o => o.id === order.id ? updatedOrder : o));
+      setOrders(prevOrders => prevOrders.filter(o => o.id !== order.id));
     } catch (error) {
       console.error("Error updating order:", error);
       setError(error);

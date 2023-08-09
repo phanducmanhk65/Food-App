@@ -23,12 +23,11 @@ const OrdersProcessing = () => {
   const handleUpdateOrder = async (order) => {
     try {
       const updatedOrder = { idOrder: order.id, status: 3 };
-      await axios.put(`http://localhost:3000/order/updateorder`, { idOrder: 1, status: 3 },
+      await axios.put(`http://localhost:3000/order/updateorder`, updatedOrder,
         {
           withCredentials: true
         });
-      setOrders(orders.map(o => o.id === order.id ? updatedOrder : o));
-      console.log(updatedOrder);
+      setOrders(prevOrders => prevOrders.filter(o => o.id !== order.id));
     } catch (error) {
       console.error("Error updating order:", error);
       setError(error);

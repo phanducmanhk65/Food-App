@@ -175,7 +175,7 @@ const AddDishForm = ({ onCreateDish }) => {
           type="text"
           name="imageUrl"
           placeholder="Image URL"
-          value={dish.image}
+          value={dish.imageUrl}
           onChange={handleChange}
           required
           className="form-control"
