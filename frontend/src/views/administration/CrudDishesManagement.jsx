@@ -6,6 +6,8 @@ const DishesManagement = () => {
   const [dishes, setDishes] = useState([]);
   const [editing, setEditing] = useState(false);
   const [currentDish, setCurrentDish] = useState({});
+  const [imageFile, setImageFile] = useState(null);
+
 
   useEffect(() => {
     fetchDishes();
@@ -114,7 +116,8 @@ const DishesManagement = () => {
           />
         ) : (
           <>
-            <AddDishForm onCreateDish={handleCreateDish} />
+            <AddDishForm onCreateDish={handleCreateDish} setDishes={setDishes} dishes={dishes} />
+
             {dishes && dishes.length > 0 && (
               <DishList
                 dishes={dishes}
@@ -129,10 +132,8 @@ const DishesManagement = () => {
   );
 };
 
-const AddDishForm = ({ onCreateDish }) => {
-
+const AddDishForm = ({ onCreateDish, setDishes, dishes }) => {
   const [dish, setDish] = useState({
-
     name: "",
     price: 1,
     imageUrl: "",
@@ -140,22 +141,42 @@ const AddDishForm = ({ onCreateDish }) => {
     productline: "",
   });
 
+  const [imageFile, setImageFile] = useState(null); // State to manage the uploaded file
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDish({ ...dish, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onCreateDish({ ...dish });
-    setDish({
-      name: "",
-      price: 1,
-      imageUrl: "",
-      idRestaurant: 1,
-      productline: "",
-    });
+  const handleFileChange = (e) => {
+    setImageFile(e.target.files[0]);
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('name', dish.name);
+    formData.append('price', dish.price);
+    formData.append('idRestaurant', dish.idRestaurant);
+    formData.append('productline', dish.productline);
+    if (imageFile) {
+      formData.append('file', imageFile);
+    }
+
+    try {
+      const response = await axios.post("http://localhost:3000/dish/create", formData, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setDishes([...dishes, response.data]);
+    } catch (error) {
+      console.error("Error creating dish:", error);
+    }
+  };
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -184,11 +205,9 @@ const AddDishForm = ({ onCreateDish }) => {
       </div>
       <div className="form-group">
         <input
-          type="text"
-          name="imageUrl"
-          placeholder="Image URL"
-          value={dish.imageUrl}
-          onChange={handleChange}
+          type="file"
+          name="file"
+          onChange={handleFileChange}
           required
           className="form-control"
         />
@@ -211,7 +230,7 @@ const AddDishForm = ({ onCreateDish }) => {
   );
 };
 
-const EditDishForm = ({ currentDish, onUpdateDish, onCancelEdit, editing }) => {
+const EditDishForm = ({ currentDish, onUpdateDish, onCancelEdit, editing, handleFileChange }) => {
   const [dish, setDish] = useState(currentDish);
 
   useEffect(() => {
@@ -257,10 +276,9 @@ const EditDishForm = ({ currentDish, onUpdateDish, onCancelEdit, editing }) => {
       </div>
       <div className="form-group">
         <input
-          type="text"
-          name="imageUrl"
-          value={dish.imageUrl}
-          onChange={handleChange}
+          type="file"
+          name="file"
+          onChange={handleFileChange}
           required
           className="form-control"
         />
