@@ -47,10 +47,11 @@ const OrdersWaiting = () => {
   return (
     <div className="container mt-4">
       {orders.length === 0 ? (
-        <h2>Không có đơn hàng nào đang chờ</h2>
+        <h3>Không có đơn hàng nào đang chờ</h3>
       ) : (
         <>
-          <h2>Đang có {orders.length} đơn đang đợi</h2>
+          <h2>Đang có {orders.length} đơn đang chờ</h2>
+          <br></br>
           <div className="row">
             {orders.map(order => (
               <div key={order.id} className="col-md-3 mb-4">
@@ -61,7 +62,7 @@ const OrdersWaiting = () => {
                     <p className="card-text">Tên khách hàng: {order.idCustomer}</p>
                     <p className="card-text">Note: {order.note}</p>
                     <p className="card-text">Giá đơn: ${order.totalPrice}</p>
-                    <button className="btn btn-primary" onClick={() => handleAcceptOrder(order)}>Nhận đơn</button>
+                    <button className="btn btn-primary " onClick={() => handleAcceptOrder(order)}>Nhận đơn</button>
                   </div>
                 </div>
               </div>
