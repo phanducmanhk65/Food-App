@@ -45,24 +45,27 @@ const OrdersProcessing = () => {
   return (
     <div className="container mt-4">
       {orders.length === 0 ? (
-        <h1>Không có đơn hàng nào đang thực hiện</h1>
+        <h2>Không có đơn hàng nào đang thực hiện</h2>
       ) : (
-        <div className="row">
-          {orders.map(order => (
-            <div key={order.id} className="col-md-3 mb-4">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">Đang thực hiện</h5>
-                  <p className="card-text">Tên khách hàng: {order.idCustomer}</p>
-                  <p className="card-text">Địa chỉ khách: {order.idCustomer}</p>
-                  <p className="card-text">Số điện thoại: {order.phoneNumber}</p>
-                  <p className="card-text">Giá đơn: ${order.totalPrice}</p>
-                  <button className="btn btn-primary" onClick={() => handleUpdateOrder(order)}>Xong</button>
+        <>
+          <h2>Đang có {orders.length} đơn đang thực hiện</h2>
+          <div className="row">
+            {orders.map(order => (
+              <div key={order.id} className="col-md-3 mb-4">
+                <div className="card">
+                  <div className="card-body">
+                    <h5 className="card-title">Đang thực hiện</h5>
+                    <p className="card-text">Tên khách hàng: {order.idCustomer}</p>
+                    <p className="card-text">Địa chỉ khách: {order.idCustomer}</p>
+                    <p className="card-text">Số điện thoại: {order.phoneNumber}</p>
+                    <p className="card-text">Giá đơn: ${order.totalPrice}</p>
+                    <button className="btn btn-primary" onClick={() => handleUpdateOrder(order)}>Xong</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

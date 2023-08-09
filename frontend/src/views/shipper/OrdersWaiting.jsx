@@ -47,24 +47,27 @@ const OrdersWaiting = () => {
   return (
     <div className="container mt-4">
       {orders.length === 0 ? (
-        <h1>Không có đơn hàng nào đang chờ</h1>
+        <h2>Không có đơn hàng nào đang chờ</h2>
       ) : (
-        <div className="row">
-          {orders.map(order => (
-            <div key={order.id} className="col-md-3 mb-4">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">Đang chờ</h5>
-                  <p className="card-text">Địa chỉ quán: {order.idRestaurant}</p>
-                  <p className="card-text">Tên khách hàng: {order.idCustomer}</p>
-                  <p className="card-text">Note: {order.note}</p>
-                  <p className="card-text">Giá đơn: ${order.totalPrice}</p>
-                  <button className="btn btn-primary" onClick={() => handleAcceptOrder(order)}>Nhận đơn</button>
+        <>
+          <h2>Đang có {orders.length} đơn đang đợi</h2>
+          <div className="row">
+            {orders.map(order => (
+              <div key={order.id} className="col-md-3 mb-4">
+                <div className="card">
+                  <div className="card-body">
+                    <h5 className="card-title">Đang chờ</h5>
+                    <p className="card-text">Địa chỉ quán: {order.idRestaurant}</p>
+                    <p className="card-text">Tên khách hàng: {order.idCustomer}</p>
+                    <p className="card-text">Note: {order.note}</p>
+                    <p className="card-text">Giá đơn: ${order.totalPrice}</p>
+                    <button className="btn btn-primary" onClick={() => handleAcceptOrder(order)}>Nhận đơn</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
