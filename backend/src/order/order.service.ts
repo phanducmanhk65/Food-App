@@ -24,8 +24,8 @@ export class OrderService {
     return this.orderRepository.createQueryBuilder('order').where('idRestaurant = :id OR idCustomer = :id OR idShipper = :id', {id: idUser}).andWhere('id = :id', {id: id}).getOne();
   }
   //lấy danh sách order theo nhà hàng
-  findOrderByRes(id: number, status: number) {
-    return this.orderRepository.createQueryBuilder('order').where('status = :stt', {stt: status}).andWhere('idRestaurant = :idR', {idR: id}).getMany();
+   findOrderByRes(id: number, status: number) {
+    return  this.orderRepository.createQueryBuilder('order').where('idRestaurant = :id', {id: id}).andWhere('status = :status', {status: status}).getMany();
   }
   // lấy detail order theo nhà hàng
   findOrderDetail(id: number) {

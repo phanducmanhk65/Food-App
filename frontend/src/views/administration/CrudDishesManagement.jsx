@@ -13,7 +13,10 @@ const DishesManagement = () => {
 
   const fetchDishes = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/dish/findByRes");
+      const response = await axios.get("http://localhost:3000/dish/findByRes",
+        {
+          withCredentials: true
+        });
       setDishes(response.data);
     } catch (error) {
       console.error("Error fetching dishes:", error);
@@ -30,7 +33,10 @@ const DishesManagement = () => {
           price: priceAsNumber,
           idRestaurant: idRestaurantAsNumber,
         };
-        const response = await axios.post("http://localhost:3000/dish/create", dishWithNumberValues);
+        const response = await axios.post("http://localhost:3000/dish/create", dishWithNumberValues,
+          {
+            withCredentials: true
+          });
         setDishes([...dishes, response.data]);
       } else {
         console.error("Invalid price or idRestaurant value:", newDish);
@@ -43,7 +49,10 @@ const DishesManagement = () => {
 
   const handleDeleteDish = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/dish/delete/${id}`);
+      await axios.delete(`http://localhost:3000/dish/delete/${id}`,
+        {
+          withCredentials: true
+        });
       const updatedDishes = dishes.filter((dish) => dish.id !== id);
       setDishes(updatedDishes);
     } catch (error) {
@@ -67,11 +76,14 @@ const DishesManagement = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:3000/dish/update/${id}`,
+        `http://localhost:3000/dish/update`,
         {
           ...updatedDish,
           price: priceAsNumber,
           idRestaurant: idRestaurantAsNumber,
+        },
+        {
+          withCredentials: true
         }
       );
 
@@ -192,18 +204,6 @@ const AddDishForm = ({ onCreateDish }) => {
           className="form-control"
         />
       </div>
-      <div className="form-group">
-        <input
-          type="number"
-          name="idRestaurant"
-          step="1"
-          placeholder="ID Restaurant"
-          value={dish.idRestaurant}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
       <button type="submit" className="btn btn-primary">
         Add Dish
       </button>
@@ -270,17 +270,6 @@ const EditDishForm = ({ currentDish, onUpdateDish, onCancelEdit, editing }) => {
           type="text"
           name="productline"
           value={dish.productline}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="number"
-          name="idRestaurant"
-          step="1"
-          value={dish.idRestaurant}
           onChange={handleChange}
           required
           className="form-control"

@@ -8,6 +8,6 @@ import Test from "./Test";
 // import ShopContextProvider from "../context/shop-context";
 
 function App() {
-  return <ShipperPage />;
+  return <AdminPanel />;
 }
 export default App;

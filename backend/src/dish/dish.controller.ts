@@ -61,10 +61,10 @@ export class DishController {
     }
   }
 
-  @Delete('/delete/:id')
+  @Delete('/delete/:idD')
   @UseGuards(Goard)
-  deleteUser(@Param('id') id: number,@Request() req) {
-    return this.dishService.delete(req.idUser,id );
+  deleteUser(@Param('idD') idD: number,@Request() req) {
+    return this.dishService.delete(req.idUser,idD );
   }
 
   @Post("/uploadimage")
