@@ -1,8 +1,6 @@
-import { Controller, Get, Post, Body,Put,Patch, Delete, Param, UseGuards, Request } from "@nestjs/common";
+import { Controller, Get, Post, Body,Put, Delete, Param, UseGuards, Request } from "@nestjs/common";
 import { RestaurantService } from "./restaurant.service";
 import { CreateRestaurantDto } from "./dto/create-restaurant.dto";
-import { UpdateRestaurantDto } from "./dto/update-user.dto";
-import { Restaurant } from "./entities/restaurant.entity";
 import { Goard } from "../middleware/goard"; 
 
 @Controller('restaurant')
