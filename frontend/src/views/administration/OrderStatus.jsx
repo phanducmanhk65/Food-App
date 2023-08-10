@@ -5,6 +5,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const EnhancedOrderStatus = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
+  const [orderDetail, setOrderDetail] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
 
   useEffect(() => {
     fetchOrders();
@@ -19,6 +23,21 @@ const EnhancedOrderStatus = () => {
     } catch (error) {
       console.error("Error fetching orders:", error);
     }
+  };
+
+  const handleViewOrderDetail = async (idOrder) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/orderdetail/findOrderDetail/${idOrder}`, {
+        withCredentials: true,
+      });
+      setOrderDetail(response.data);
+    } catch (error) {
+      console.error("Error fetching order details:", error);
+    }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const handleAcceptOrder = async (order) => {
@@ -72,18 +91,54 @@ const EnhancedOrderStatus = () => {
               <td>{order.note}</td>
               <td>
                 {order.status === 0 && (
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => handleAcceptOrder(order)}
-                  >
-                    Chấp nhận đơn
-                  </button>
+                  <>
+                    <><button
+                      className="btn btn-primary"
+                      onClick={() => handleAcceptOrder(order)}
+                    >
+                      Chấp nhận đơn
+                    </button></>
+                    <><button
+                      className="btn btn-secondary"
+                      onClick={() => handleViewOrderDetail(order.id)}
+                    >
+                      Chi tiết đơn
+                    </button>
+                    </>
+                  </>
                 )}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {isModalOpen && (
+        <div className="modal" style={{ display: 'block' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Chi tiết đơn</h5>
+                <button type="button" className="close" onClick={closeModal}>
+                  <span>&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                {orderDetail && (
+                  <div>
+                    <p>ID: {orderDetail.id}</p>
+                    <p>Price: {orderDetail.price}</p>
+                  </div>
+                )}
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={closeModal}>
+                  Đóng
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
