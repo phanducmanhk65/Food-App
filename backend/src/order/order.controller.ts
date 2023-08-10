@@ -90,18 +90,23 @@ export class OrderController {
   }
 
 //cập nhật trạng thái order
-  @Put('/updateorder')
-  @UseGuards(Goard)
-  update(@Body('status') status: number, @Body('idOrder')idOrder: number, @Request() userInfo) {
-    this.orderService.update(+idOrder,userInfo.idUser, status);
+@Put('/updateorder')
+@UseGuards(Goard)
+update(@Body('status') status: number, @Body('idOrder')idOrder: number, @Request() userInfo) {
+  if(status != null && idOrder != null && userInfo.idUser != null) {this.orderService.update(+idOrder,userInfo.idUser, status);
     if(status == 1) {
       let data = {idOrder: +idOrder, idRestaurant: userInfo.idUser}
       this.orderGateWay.server.emit('restaurantapprove',data);
-    } 
+      
+    }
+     return "Cập nhật thành công";
+     } 
+  else {
+      let statement = ""; 
+      if(status == null) statement += "Thiếu status ";        
+      if(idOrder == null) statement += "Thiếu idOrder";   
+      if(userInfo.idUser == null) statement += "Thiếu idUser, chưa đăng nhập";
+      return statement;
+     }
+    }
   }
-}
-
-  // @Delete('delete/:id')
-  // remove(@Param('id') id: string) {
-  //   return this.orderService.remove(+id);
-  // }

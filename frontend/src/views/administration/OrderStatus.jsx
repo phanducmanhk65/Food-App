@@ -24,13 +24,25 @@ const OrderStatus = () => {
 
   const handleAcceptOrder = async (order) => {
     try {
-      const updatedOrder = { idOrder: order.id, status: 1 };
-      await axios.put(
-        `http://localhost:3000/order/updateorder/`, updatedOrder,
+      const updatedOrder = {
+        idOrder: order.id,
+        status: 1
+      };
+      console.log(updatedOrder);
+      const response = await axios.put(
+        `http://localhost:3000/order/updateorder/`,
+        updatedOrder,
         {
           withCredentials: true
-        });
-      setOrders(orders.map(o => o.id === order.id ? updatedOrder : o));
+        }
+      );
+      if (response.data === "Cập nhật thành công") {
+        setOrders(prevOrders =>
+          prevOrders.map(o => o.id === order.id ? { ...o, status: 1 } : o)
+        );
+      } else {
+        console.error("Backend response:", response.data);
+      }
     } catch (error) {
       console.error("Error updating order:", error);
       setError(error);
