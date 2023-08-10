@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../../styles/OrderStatus.scss"
 
-const OrderStatus = () => {
+const EnhancedOrderStatus = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
 
@@ -28,7 +27,6 @@ const OrderStatus = () => {
         idOrder: order.id,
         status: 1
       };
-      console.log(updatedOrder);
       const response = await axios.put(
         `http://localhost:3000/order/updateorder/`,
         updatedOrder,
@@ -53,26 +51,17 @@ const OrderStatus = () => {
     return <div>Error: {error.message}</div>;
   }
 
-
   return (
     <div className="container">
-      <h2>New Order</h2>
+      <h2>Đơn Hàng Mới</h2>
       <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
-        <colgroup>
-          <col style={{ width: "12.5%" }} />
-          <col style={{ width: "12.5%" }} />
-          <col style={{ width: "12.5%" }} />
-          <col style={{ width: "12.5%" }} />
-          <col style={{ width: "12.5%" }} />
-          <col style={{ width: "12.5%" }} />
-        </colgroup>
         <thead>
           <tr>
             <th>ID</th>
             <th>idCustomer</th>
             <th>idRestaurant</th>
             <th>Price</th>
-            <th>note</th>
+            <th>Note</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -88,7 +77,7 @@ const OrderStatus = () => {
                 {order.status === 0 && (
                   <button
                     className="btn btn-primary"
-                    onClick={() => handleAcceptOrder(order.id)}
+                    onClick={() => handleAcceptOrder(order)}
                   >
                     Chấp nhận đơn
                   </button>
@@ -102,4 +91,4 @@ const OrderStatus = () => {
   );
 };
 
-export default OrderStatus;
+export default EnhancedOrderStatus;
