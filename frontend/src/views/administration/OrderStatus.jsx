@@ -35,8 +35,7 @@ const EnhancedOrderStatus = () => {
         }
       );
       if (response.data === "Cập nhật thành công") {
-        setOrders(prevOrders =>
-          prevOrders.map(o => o.id === order.id ? { ...o, status: 1 } : o)
+        setOrders(prevOrders => prevOrders.filter(o => o.id !== order.id)
         );
       } else {
         console.error("Backend response:", response.data);
@@ -59,7 +58,6 @@ const EnhancedOrderStatus = () => {
           <tr>
             <th>ID</th>
             <th>idCustomer</th>
-            <th>idRestaurant</th>
             <th>Price</th>
             <th>Note</th>
             <th>Action</th>
@@ -70,7 +68,6 @@ const EnhancedOrderStatus = () => {
             <tr key={order.id}>
               <td>{order.id}</td>
               <td>{order.idCustomer}</td>
-              <td>{order.idRestaurant}</td>
               <td>${order.totalPrice}</td>
               <td>{order.note}</td>
               <td>

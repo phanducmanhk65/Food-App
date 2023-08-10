@@ -1,5 +1,6 @@
 import "./App.scss";
-import "bootstrap/dist/css/bootstrap.min.css"; import AdminPanel from "./administration/AdminPanel";
+import "bootstrap/dist/css/bootstrap.min.css";
+import AdminPanel from "./administration/AdminPanel";
 import ShipperPage from "./shipper/ShipperPage";
 import Test from "./Test";
 // import { Register } from "../components";
@@ -8,6 +9,6 @@ import Test from "./Test";
 // import ShopContextProvider from "../context/shop-context";
 
 function App() {
-  return <AdminPanel />;
+  return <ShipperPage />;
 }
 export default App;

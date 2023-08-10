@@ -59,10 +59,10 @@ const OrdersProcessing = () => {
   return (
     <div className="container mt-4">
       {orders.length === 0 ? (
-        <h2>Không có đơn hàng nào đang thực hiện</h2>
+        <h3>Không có đơn hàng nào đang thực hiện</h3>
       ) : (
         <>
-          <h2>Đang có {orders.length} đơn đang thực hiện</h2>
+          <h3>Đang có {orders.length} đơn đang thực hiện</h3>
           <br></br>
           <div className="row">
             {orders.map(order => (
