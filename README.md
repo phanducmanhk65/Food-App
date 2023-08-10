@@ -1,4 +1,5 @@
 # Sota-Intern
+link deploy backend: https://backend-bjtcumnsi-phanducmanhk65.vercel.app/
 ----------------BACKEND---------------------------
 
 sửa file main.ts với thông tin đăng nhập MySQL trong máy cá nhân
