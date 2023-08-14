@@ -18,11 +18,12 @@ export{
 };
 let API_URL = "http://localhost:3000";
 
-export default function callAPIDish(endpoint, method='GET',body){
+export default function callAPIDish(endpoint, method='GET', body){
     return axios({
         method,
         url: `${API_URL}/${endpoint}`,
-        data: body
+        data: body,
+        withCredentials: true
     }).catch(err => {
         console.log(err);
     });

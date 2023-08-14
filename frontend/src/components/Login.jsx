@@ -38,7 +38,12 @@ const Login = (props) => {
   const handleLogin = () => {
     // Make the login API call
     axios
-      .post("http://localhost:3000/user/login", { username, password })
+      .post(
+        "http://localhost:3000/user/login",
+
+        { username, password },
+        { withCredentials: true }
+      )
       .then((response) => {
         console.log("Login successful!", response.data);
 
@@ -50,7 +55,9 @@ const Login = (props) => {
         const userId = decodedToken.userId;
 
         axios
-          .get(`http://localhost:3000/user/${userId}`) // Thay thế URL API thực tế của bạn
+          .get(`http://localhost:3000/user/${userId}`, {
+            withCredentials: true,
+          }) // Thay thế URL API thực tế của bạn
           .then((response) => {
             const userInfo = response.data;
             console.log("User details:", userInfo);
@@ -70,7 +77,7 @@ const Login = (props) => {
           .catch((error) => {
             console.error("Error fetching user details:", error);
           });
-        // window.location.replace("/home");
+        window.location.replace("/home");
       })
       .catch((error) => {
         console.error("Login failed:", error.response.data);
