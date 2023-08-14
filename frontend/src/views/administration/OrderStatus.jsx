@@ -8,8 +8,6 @@ const EnhancedOrderStatus = () => {
   const [orderDetail, setOrderDetail] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-
   useEffect(() => {
     fetchOrders();
   }, []);
