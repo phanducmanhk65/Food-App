@@ -12,17 +12,19 @@ export const DELETE_CART = 'DELETE_CART';
 export const GET_DISH_SEARCH = 'GET_DISH_SEARCH'
 
 export const actFetchDishRequest = () => {
-    return (dispatch) => {
-        return callAPIDish('dish/all', 'GET', null).then(res => {
-           
-            dispatch(GetAllDish(res.data));
-        });
-    }
+  return (dispatch) => {
+      return callAPIDish('dish/alldish', 'GET').then(res => {
+          dispatch(GetAllDish(res.data));
+          console.log('Dishsssssssssssssssssssss', res.data);
+      });
+     
+  }
 }
+
   // SEARCH FOR PRODUCT
   export const actSearchDishRequest = (searchCriteria) => {
     return (dispatch) => {
-      return callAPIDish(`dish/search?${searchCriteria}`)
+      return callAPIDish(`dish/search?${searchCriteria}`,{ withCredentials: true })
         .then((response) => {
           dispatch(GetDishSearch(response.data));
         })
