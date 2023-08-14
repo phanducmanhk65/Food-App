@@ -25,8 +25,13 @@ export class DishController {
   // tạo món
   @Post('/create')
   @UseGuards(Goard)
-  create(@Body() dish: {productline: string, name: string, price: number, imageUrl: string}, @Request() req) {
-    if(dish.productline && dish.name && dish.price && dish.imageUrl) {    
+  @UseInterceptors(FileInterceptor("file",))
+ async create(@Body() dish: {productline: string, name: string, price: number, imageUrl: string}, @Request() req,@UploadedFile() file: Express.Multer.File) {
+    if(!file) {
+      return "Thiếu hình ảnh";
+    }
+    if(dish.productline && dish.name && dish.price ) { 
+      dish.imageUrl = (await this.cloundinaryService.uploadFile(file)).secure_url;
       return this.dishService.create(dish, req.idUser);
     } else {
       return "Thiếu thông tin về món";
@@ -66,10 +71,10 @@ export class DishController {
     }
   }
 
-  @Delete('/delete/:id')
+  @Delete('/delete/:idD')
   @UseGuards(Goard)
-  deleteUser(@Param('id') id: number,@Request() req) {
-    return this.dishService.delete(req.idUser,id );
+  deleteUser(@Param('idD') idD: number,@Request() req) {
+    return this.dishService.delete(req.idUser,idD );
   }
 
   @Post("/uploadimage")

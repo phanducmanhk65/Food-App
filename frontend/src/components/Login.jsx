@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess, loginFail } from "../store/action/authAction";
-import jwt_decode from "jwt-decode";
+import jwt_decode from "jwt-decode"; // Import jwt_decode
+
 import {
   CaretLeftOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
 import "../styles/Login.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useHistory
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../store/action/authAction";
 
 const Login = (props) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const errorMessage = useSelector((state) => state.auth.errorMessage);
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [userInfo, setUserInfo] = useState(null);
 
   const handleUsernameChange = (e) => {
@@ -28,12 +29,6 @@ const Login = (props) => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-
-  useEffect(() => {
-    if (userInfo) {
-      // Thực hiện các xử lý liên quan đến thông tin người dùng (nếu cần)
-    }
-  }, [userInfo]);
 
   const handleLogin = () => {
     // Make the login API call
@@ -81,11 +76,10 @@ const Login = (props) => {
       })
       .catch((error) => {
         console.error("Login failed:", error.response.data);
-        dispatch(loginFail("Invalid username or password"));
+        setErrorMessage("Invalid username or password");
       });
   };
 
-  console.log("Error message:", errorMessage);
   return (
     <>
       <div className="login-container col-12 col-sm-4">
