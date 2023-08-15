@@ -45,7 +45,7 @@ const Register = (props) => {
 
     axios
       .post(
-        "https://backend-cvjhefcki-phanducmanhk65.vercel.app/user/signup",
+        "https://https://backend-six-beryl.vercel.app/user/signup",
         userData
       )
       .then((response) => {
