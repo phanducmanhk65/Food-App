@@ -10,15 +10,15 @@ const EnhancedOrderStatus = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const socket = io("http://localhost:3000"); // Địa chỉ của máy chủ Socket.io
+    const socket = io(`http://localhost:3000`); // Địa chỉ của máy chủ Socket.io
 
-    socket.on("newOrder", (newOrder) => {
-      setOrders((prevOrders) => [...prevOrders, newOrder]); // Thêm đơn hàng mới vào danh sách
+    socket.on("restaurantapprove", (newOrder) => {
+      setOrders((prevOrders) => [...prevOrders, newOrder]);
     });
 
     return () => {
-      socket.off("newOrder");  // Hủy lắng nghe sự kiện khi component unmount
-      socket.close(); // Đóng kết nối
+      socket.off("newOrder");
+      socket.close();
     };
   }, []);
 
