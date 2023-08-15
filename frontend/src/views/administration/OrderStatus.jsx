@@ -10,10 +10,12 @@ const EnhancedOrderStatus = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const socket = io(`http://localhost:3000`); // Địa chỉ của máy chủ Socket.io
+    const socket = new io(`http://localhost:3000`, {
+      withCredentials: true,
+    }); // Địa chỉ của máy chủ Socket.io
 
-    socket.on("restaurantapprove", (newOrder) => {
-      setOrders((prevOrders) => [...prevOrders, newOrder]);
+    socket.on("restaurantapprove", (data) => {
+      console.log(data);
     });
 
     return () => {

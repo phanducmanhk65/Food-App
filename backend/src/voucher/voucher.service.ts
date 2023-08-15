@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -60,5 +61,22 @@ export class VoucherService {
 
   async getAllVouchers(): Promise<Voucher[]> {
     return this.voucherRepository.find();
+  }
+  async applyVoucherToPayment(code: string, price: number): Promise<any> {
+    const voucher = await this.getVoucherByCode(code);
+
+    if (!voucher) {
+      throw new NotFoundException('Voucher not found');
+    }
+
+    const discountAmount = (price * voucher.discountPercent) / 100;
+    const discountedTotal = price - discountAmount;
+
+    return {
+      voucher,
+      price: discountedTotal, // Return the discounted total amount
+      discountAmount,
+      discountedTotal,
+    };
   }
 }

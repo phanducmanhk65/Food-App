@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Controller,
   Post,
@@ -59,22 +60,15 @@ export class VoucherController {
   @Post('/apply/:code')
   async applyVoucherToPayment(
     @Param('code') code: string,
-    @Body('totalAmount') totalAmount: number,
+    @Body('price') price: number,
   ) {
-    const voucher = await this.voucherService.getVoucherByCode(code);
+    const appliedVoucher = await this.voucherService.applyVoucherToPayment(
+      code,
+      price,
+    );
 
-    if (!voucher) {
-      throw new NotFoundException('Voucher not found');
-    }
+    // Update your order's total amount here based on the appliedVoucher.totalAmount
 
-    const discountAmount = (totalAmount * voucher.discountPercent) / 100;
-    const discountedTotal = totalAmount - discountAmount;
-
-    return {
-      voucher,
-      totalAmount,
-      discountAmount,
-      discountedTotal,
-    };
+    return appliedVoucher;
   }
 }
