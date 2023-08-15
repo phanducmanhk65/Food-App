@@ -1,13 +1,15 @@
+/* eslint-disable no-unreachable */
 import "./App.scss";
-import "bootstrap/dist/css/bootstrap.min.css"; import AdminPanel from "./administration/AdminPanel";
-import ShipperPage from "./shipper/ShipperPage";
-import Test from "./Test";
-// import { Register } from "../components";
-// import OrdersWaiting from "./shipper/OrdersWaiting";
-// import Home from "./Home/HomePage";
-// import ShopContextProvider from "../context/shop-context";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Home from "./Home/HomePage";
+import { Provider } from "react-redux";
+import store from "../store/stores";
 
 function App() {
-  return <AdminPanel />;
+  return (
+    <Provider store={store}>
+      <Home />
+    </Provider>
+  );
 }
 export default App;

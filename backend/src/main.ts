@@ -6,8 +6,6 @@ import * as dotenv from 'dotenv';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import cookieParser from 'cookie-parser';
 
-
-
 async function bootstrap() {
   dotenv.config();
   console.log('DATABASEHOST:', process.env.DATABASEHOST);
@@ -20,7 +18,7 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization'], // The allowed request headers
     credentials: true, // Enable sending cookies and authorization headers with requests
   };
-  
+
   const app = await NestFactory.create(AppModule);
   app.enableCors(corsOptions);
 
