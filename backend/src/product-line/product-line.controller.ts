@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body,Put, Patch, Param, Delete } from '@nestjs/common';
 import { ProductLineService } from './product-line.service';
 import { CreateProductLineDto } from './dto/create-product-line.dto';
 import { UpdateProductLineDto } from './dto/update-product-line.dto';
@@ -23,7 +23,7 @@ export class ProductLineController {
     return this.productLineService.findOne(+id);
   }
 
-  @Patch('/update/:id')
+  @Put('/update/:id')
   update(@Param('id') id: string, @Body() updateProductLineDto: UpdateProductLineDto) {
     return this.productLineService.update(+id, updateProductLineDto);
   }
