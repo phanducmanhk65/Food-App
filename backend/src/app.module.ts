@@ -15,6 +15,7 @@ import { ConfigModule } from '@nestjs/config';
 import { EventGateway } from './event.gateway';
 import { LoginMiddleware } from './middleware/login.middleware';
 import { JwtModule } from '@nestjs/jwt';
+import { VoucherModule } from './voucher/voucher.module';
 
 @Module({
   imports:[  
@@ -32,7 +33,7 @@ import { JwtModule } from '@nestjs/jwt';
     database: process.env.DBNAME,
     entities,
     synchronize: true,
-  }), RestaurantModule, DishModule, ProductLineModule, UserModule, OrderModule, OrderDetailModule, DeliverInfoModule],
+  }), RestaurantModule, DishModule, ProductLineModule, UserModule, OrderModule, OrderDetailModule, DeliverInfoModule, VoucherModule],
   controllers: [AppController],
   providers: [AppService],
 })

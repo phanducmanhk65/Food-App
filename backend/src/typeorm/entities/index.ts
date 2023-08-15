@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { User } from '../../user/entities/user.entity';
 import { ProductLine } from '../../product-line/entities/product-line.entity';
 import { Dish } from '../../dish/dish.entity/dish.entity';
@@ -5,6 +6,7 @@ import { Restaurant } from '../../restaurant/entities/restaurant.entity';
 import { Order } from '../../order/entities/order.entity';
 import { OrderDetail } from '../../order-detail/entities/order-detail.entity';
 import { DeliverInfo } from '../../deliver-info/entities/deliver-info.entity';
+import { Voucher } from '../../voucher/voucher.entity';
 const entities = [
   User,
   ProductLine,
@@ -13,7 +15,8 @@ const entities = [
   Order,
   OrderDetail,
   DeliverInfo,
+  Voucher,
 ];
 
-export { User, ProductLine, Dish, Restaurant, Order, OrderDetail, DeliverInfo };
+export { User, ProductLine, Dish, Restaurant, Order, OrderDetail, DeliverInfo, Voucher };
 export default entities;
