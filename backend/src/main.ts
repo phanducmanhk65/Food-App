@@ -16,11 +16,13 @@ async function bootstrap() {
   console.log('PORT:', process.env.PORT);
   console.log('USER:', process.env.USER);
   console.log('PASSWORD:', process.env.PASSWORD);
-  const corsOptions: CorsOptions = {
-    origin: ['*', 'https://tuanbc-sotatek-frontend.vercel.app/'], // The allowed origin
+  const corsOptions = {
+    origin: ['http://localhost:3001/', 'https://tuanbc-sotatek-frontend.vercel.app/'], // The allowed origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // The allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // The allowed request headers
-    credentials: true, // Enable sending cookies and authorization headers with requests
+    credentials: true, 
+    websockets: true,
+   // Enable sending cookies and authorization headers with requests
   };
   
   const app = await NestFactory.create<NestExpressApplication>(AppModule);

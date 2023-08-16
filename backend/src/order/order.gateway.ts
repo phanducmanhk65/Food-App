@@ -4,7 +4,7 @@ import { Server } from 'socket.io';
 import { WebSocketsInterceptor } from './websocketinterceptor/websocket.interceptor';
 
 
-@WebSocketGateway(3002)
+@WebSocketGateway()
 @UseInterceptors(WebSocketsInterceptor)
 export class OrderGateway implements OnGatewayInit{
   @WebSocketServer()
