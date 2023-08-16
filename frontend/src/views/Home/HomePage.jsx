@@ -1,0 +1,37 @@
+import React from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import "../../styles/home.scss";
+import { Header, Login, Register, UserProfile } from "../../components";
+import Main from "../../components/Main/Main";
+import Cart from "../../components/Cart/Cart";
+
+const HomePage = () => {
+  const navigate = useNavigate();
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+  return (
+    <>
+      <div className="home-1">
+        <div className="container-1">
+          <div className="navbar-1">
+            <Header onLinkClick={(path) => navigate(path)} />
+          </div>
+        </div>
+      </div>
+      <div className="home-2">
+        <Routes>
+          <Route path="/home" element={<Main />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route
+            path="/user-profile"
+            element={<UserProfile user={userInfo} />}
+          />
+        </Routes>
+      </div>
+    </>
+  );
+};
+
+export default HomePage;
