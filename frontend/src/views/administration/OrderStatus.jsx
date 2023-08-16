@@ -12,6 +12,7 @@ const EnhancedOrderStatus = () => {
   useEffect(() => {
     const socket = new io(`http://localhost:3000`, {
       withCredentials: true,
+      transports: ['websocket', 'polling', 'flashsocket'],
     }); // Địa chỉ của máy chủ Socket.io
 
     socket.on("restaurantapprove", (data) => {

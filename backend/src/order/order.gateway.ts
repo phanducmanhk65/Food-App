@@ -16,7 +16,7 @@ export class OrderGateway implements OnGatewayInit {
   @WebSocketServer()
   server = new Server({
     cors: {
-      origin: '*', // This is the client's origin
+      origin: 'http://localhost:3001/', // This is the client's origin
       methods: ['GET', 'POST'],
       credentials: true,
     },
