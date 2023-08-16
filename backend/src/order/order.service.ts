@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Repository } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { isEmpty } from 'class-validator';
 @Injectable()
 export class OrderService {
   constructor(@InjectRepository(Order)
@@ -22,8 +24,8 @@ export class OrderService {
     return this.orderRepository.createQueryBuilder('order').where('idRestaurant = :id OR idCustomer = :id OR idShipper = :id', {id: idUser}).andWhere('id = :id', {id: id}).getOne();
   }
   //lấy danh sách order theo nhà hàng
-  findOrderByRes(id: number, status: number) {
-    return this.orderRepository.createQueryBuilder('order').where('status = :stt', {stt: status}).andWhere('idRestaurant = :idR', {idR: id}).getMany();
+   findOrderByRes(id: number, status: number) {
+    return  this.orderRepository.createQueryBuilder('order').where('idRestaurant = :id', {id: id}).andWhere('status = :status', {status: status}).getMany();
   }
   // lấy detail order theo nhà hàng
   findOrderDetail(id: number) {
@@ -60,8 +62,14 @@ export class OrderService {
     }
    }
 
-  update(id: number,idU: number, status: number) {
-    return this.orderRepository.createQueryBuilder().update('order').set({status: status}).where('id = :id', {id:id}).andWhere('idRestaurant = :idU OR idShipper = :idU', {idU: idU}).execute();
+   async update(id: number,idU: number, status: number) {
+    const isexist =await this.orderRepository.createQueryBuilder('order').where('id = :id', {id:id}).andWhere('idRestaurant = :idU OR idShipper = :idU', {idU: idU}).getOne();
+    if(isexist.idCustomer){
+      return this.orderRepository.createQueryBuilder().update('order').set({status: status}).where('id = :id', {id:id}).execute();
+    } else {
+      return "khoo"
+    }
+    
   }
 
   // remove(id: number) { 

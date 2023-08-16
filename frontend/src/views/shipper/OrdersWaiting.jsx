@@ -50,7 +50,7 @@ const OrdersWaiting = () => {
         <h3>Không có đơn hàng nào đang chờ</h3>
       ) : (
         <>
-          <h2>Đang có {orders.length} đơn đang chờ</h2>
+          <h3>Đang có {orders.length} đơn đang chờ</h3>
           <br></br>
           <div className="row">
             {orders.map(order => (

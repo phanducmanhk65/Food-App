@@ -17,8 +17,9 @@ export class DishService {
   }
 
   async findDishbyRes(idR: number) {
-    const a = await this.dishRepo.createQueryBuilder('dish').where('idRestaurant = :idR', {idR: idR}).getMany();
-    return a;
+    return await this.dishRepo.createQueryBuilder('dish').where('idRestaurant = :idR', {idR: idR}).getMany();
+    //return idR;
+    // return a;
   }
 
   async findOne(id: number): Promise<Dish> {

@@ -6,8 +6,6 @@ const DishesManagement = () => {
   const [dishes, setDishes] = useState([]);
   const [editing, setEditing] = useState(false);
   const [currentDish, setCurrentDish] = useState({});
-  const [imageFile, setImageFile] = useState(null);
-
 
   useEffect(() => {
     fetchDishes();
@@ -117,7 +115,6 @@ const DishesManagement = () => {
         ) : (
           <>
             <AddDishForm onCreateDish={handleCreateDish} setDishes={setDishes} dishes={dishes} />
-
             {dishes && dishes.length > 0 && (
               <DishList
                 dishes={dishes}
@@ -132,7 +129,7 @@ const DishesManagement = () => {
   );
 };
 
-const AddDishForm = ({ onCreateDish, setDishes, dishes }) => {
+const AddDishForm = ({ setDishes, dishes }) => {
   const [dish, setDish] = useState({
     name: "",
     price: 1,
@@ -141,7 +138,8 @@ const AddDishForm = ({ onCreateDish, setDishes, dishes }) => {
     productline: "",
   });
 
-  const [imageFile, setImageFile] = useState(null); // State to manage the uploaded file
+  const [imageFile, setImageFile] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -150,6 +148,17 @@ const AddDishForm = ({ onCreateDish, setDishes, dishes }) => {
 
   const handleFileChange = (e) => {
     setImageFile(e.target.files[0]);
+  };
+
+  const resetForm = () => {
+    setDish({
+      name: "",
+      price: 1,
+      imageUrl: "",
+      idRestaurant: 1,
+      productline: "",
+    });
+    setImageFile(null);
   };
 
   const handleSubmit = async (e) => {
@@ -172,63 +181,71 @@ const AddDishForm = ({ onCreateDish, setDishes, dishes }) => {
         },
       });
       setDishes([...dishes, response.data]);
+      resetForm();
+      setSuccessMessage("Dish successfully added!");
     } catch (error) {
       console.error("Error creating dish:", error);
     }
   };
 
-
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <input
-          type="text"
-          name="name"
-          placeholder="Dish Name"
-          value={dish.name}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="number"
-          step="0.01"
-          name="price"
-          placeholder="Price"
-          onChange={handleChange}
-          value={dish.price}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="file"
-          name="file"
-          onChange={handleFileChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          name="productline"
-          placeholder="Product Line"
-          value={dish.productline}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <button type="submit" className="btn btn-primary">
-        Add Dish
-      </button>
-    </form>
+    <div>
+      {successMessage && <div className="alert alert-success">{successMessage}</div>}
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <input
+            type="text"
+            name="name"
+            placeholder="Dish Name"
+            value={dish.name}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="number"
+            step="0.01"
+            name="price"
+            placeholder="Price"
+            onChange={handleChange}
+            value={dish.price}
+            required
+            className="form-control"
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="file"
+            name="file"
+            onChange={handleFileChange}
+            required
+            className="form-control"
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            name="productline"
+            placeholder="Product Line"
+            value={dish.productline}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Add Dish
+        </button>
+      </form>
+    </div>
   );
 };
+
+
+
+
 
 const EditDishForm = ({ currentDish, onUpdateDish, onCancelEdit, editing, handleFileChange }) => {
   const [dish, setDish] = useState(currentDish);
