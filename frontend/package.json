@@ -51,9 +51,9 @@
     ]
   },
   "devDependencies": {
-    "nvm": "^0.0.4",
     "@types/js-cookie": "^3.0.3",
-    "react-scripts": "4.0.3",
+    "nvm": "^0.0.4",
+    "react-scripts": "^4.0.3",
     "tailwindcss": "^3.3.3"
   },
   "engines": {
