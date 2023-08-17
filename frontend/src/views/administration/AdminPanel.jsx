@@ -6,15 +6,13 @@ import {
   UserOutlined,
   ShopOutlined,
   UnorderedListOutlined,
-  LogoutOutlined,
-  LoginOutlined,
+  BarcodeOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import CrudUser from "./CrudUser";
+import CrudVoucher from "./CrudVoucher"
 import CrudDishesManagement from "./CrudDishesManagement";
 import OrderStatus from "./OrderStatus";
-import Login from "../../components/Login";
-import Register from "../../components/Register";
 import { Routes, Route, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
@@ -50,9 +48,9 @@ function AdminPanel() {
               label: "User",
             },
             {
-              key: "/",
-              icon: <LogoutOutlined />,
-              label: "Log out",
+              key: "/voucher",
+              icon: <BarcodeOutlined />,
+              label: "Voucher",
             },
           ]}
         />
@@ -71,23 +69,6 @@ function AdminPanel() {
             }}
           />
 
-          <Menu
-            style={{ padding: 0, float: "right" }}
-            theme="light"
-            mode="horizontal"
-            onClick={({ key }) => navigate(key)}
-            items={[
-              {
-                key: "/login",
-                icon: <LoginOutlined />,
-                label: "Log in",
-              },
-              {
-                key: "/register",
-                icon: <LogoutOutlined />,
-                label: "Register",
-              },
-            ]}></Menu>
         </Header>
         <Content
           style={{
@@ -123,20 +104,13 @@ function AdminPanel() {
                   <CrudUser />
                 </div>
               }></Route>
+
             <Route
               exact
-              path="/login"
+              path="/voucher"
               element={
                 <div>
-                  <Login />
-                </div>
-              }></Route>
-            <Route
-              exact
-              path="/register"
-              element={
-                <div>
-                  <Register />
+                  <CrudVoucher />
                 </div>
               }></Route>
           </Routes>

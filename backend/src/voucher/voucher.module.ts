@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Voucher } from './voucher.entity'; // Đảm bảo đường dẫn ở đây chính xác
