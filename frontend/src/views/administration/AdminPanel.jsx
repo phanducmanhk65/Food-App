@@ -6,8 +6,6 @@ import {
   UserOutlined,
   ShopOutlined,
   UnorderedListOutlined,
-  LogoutOutlined,
-  LoginOutlined,
   BarcodeOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
@@ -15,8 +13,6 @@ import CrudUser from "./CrudUser";
 import CrudVoucher from "./CrudVoucher"
 import CrudDishesManagement from "./CrudDishesManagement";
 import OrderStatus from "./OrderStatus";
-import Login from "../../components/Login";
-import Register from "../../components/Register";
 import { Routes, Route, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
@@ -56,11 +52,6 @@ function AdminPanel() {
               icon: <BarcodeOutlined />,
               label: "Voucher",
             },
-            {
-              key: "/",
-              icon: <LogoutOutlined />,
-              label: "Log out",
-            },
           ]}
         />
       </Sider>
@@ -78,23 +69,6 @@ function AdminPanel() {
             }}
           />
 
-          <Menu
-            style={{ padding: 0, float: "right" }}
-            theme="light"
-            mode="horizontal"
-            onClick={({ key }) => navigate(key)}
-            items={[
-              {
-                key: "/login",
-                icon: <LoginOutlined />,
-                label: "Log in",
-              },
-              {
-                key: "/register",
-                icon: <LogoutOutlined />,
-                label: "Register",
-              },
-            ]}></Menu>
         </Header>
         <Content
           style={{
@@ -137,22 +111,6 @@ function AdminPanel() {
               element={
                 <div>
                   <CrudVoucher />
-                </div>
-              }></Route>
-            <Route
-              exact
-              path="/login"
-              element={
-                <div>
-                  <Login />
-                </div>
-              }></Route>
-            <Route
-              exact
-              path="/register"
-              element={
-                <div>
-                  <Register />
                 </div>
               }></Route>
           </Routes>
