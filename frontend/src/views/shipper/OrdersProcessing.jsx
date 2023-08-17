@@ -6,9 +6,6 @@ const OrdersProcessing = () => {
 
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
-  const socket = io('http://localhost:3000', {
-    transports: ['websocket', 'polling', 'flashsocket'],
-  });
 
   const fetchOrders = async () => {
     try {
@@ -55,14 +52,17 @@ const OrdersProcessing = () => {
   useEffect(() => {
     fetchOrders();
 
-    // Lắng nghe sự kiện thời gian thực có tên "newOrder" (bạn có thể đổi tên sự kiện này để phù hợp với máy chủ của bạn)
+    const socket = io('http://localhost:3000', {
+      transports: ['websocket', 'polling', 'flashsocket'],
+    });
+
     socket.on('newOrder', (newOrder) => {
       setOrders(prevOrders => [newOrder, ...prevOrders]);
     });
 
-    // Dọn dẹp listener khi component bị unmount
     return () => {
       socket.off('newOrder');
+      socket.close();
     };
   }, []);
 
