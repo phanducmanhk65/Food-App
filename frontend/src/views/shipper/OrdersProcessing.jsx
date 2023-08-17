@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import io from 'socket.io-client';
 
 const OrdersProcessing = () => {
 
@@ -50,6 +51,19 @@ const OrdersProcessing = () => {
 
   useEffect(() => {
     fetchOrders();
+
+    const socket = io('http://localhost:3000', {
+      transports: ['websocket', 'polling', 'flashsocket'],
+    });
+
+    socket.on('newOrder', (newOrder) => {
+      setOrders(prevOrders => [newOrder, ...prevOrders]);
+    });
+
+    return () => {
+      socket.off('newOrder');
+      socket.close();
+    };
   }, []);
 
   if (error) {
