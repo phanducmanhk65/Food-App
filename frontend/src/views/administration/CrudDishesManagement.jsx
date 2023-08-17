@@ -6,6 +6,7 @@ const DishesManagement = () => {
   const [dishes, setDishes] = useState([]);
   const [editing, setEditing] = useState(false);
   const [currentDish, setCurrentDish] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchDishes();
@@ -13,10 +14,9 @@ const DishesManagement = () => {
 
   const fetchDishes = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/dish/findByRes",
-        {
-          withCredentials: true
-        });
+      const response = await axios.get("http://localhost:3000/dish/findByRes", {
+        withCredentials: true
+      });
       setDishes(response.data);
     } catch (error) {
       console.error("Error fetching dishes:", error);
@@ -101,9 +101,20 @@ const DishesManagement = () => {
     setCurrentDish({});
   };
 
+  const filteredDishes = dishes.filter(dish =>
+    dish.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container mt-4">
       <h1>Dishes Management</h1>
+      <input
+        type="text"
+        placeholder="Search for dishes..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="form-control mb-3 w-25 p-3"
+      />
       <div className="d-flex p-3">
         {editing ? (
           <EditDishForm
@@ -114,10 +125,10 @@ const DishesManagement = () => {
           />
         ) : (
           <>
-            <AddDishForm onCreateDish={handleCreateDish} setDishes={setDishes} dishes={dishes} />
-            {dishes && dishes.length > 0 && (
+            <AddDishForm onCreateDish={handleCreateDish} />
+            {filteredDishes && filteredDishes.length > 0 && (
               <DishList
-                dishes={dishes}
+                dishes={filteredDishes}
                 onDeleteDish={handleDeleteDish}
                 onEditDish={handleEditDish}
               />

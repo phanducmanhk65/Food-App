@@ -212,6 +212,16 @@ const EditVoucherForm = ({ currentVoucher, onUpdateVoucher, onCancelEdit, editin
                     className="form-control"
                 />
             </div>
+            <div className="form-group">
+                <input
+                    type="date"
+                    name="expiredAt"
+                    value={voucher.expiredAt}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                />
+            </div>
             <button type="submit" className="btn btn-primary">
                 Update Voucher
             </button>
