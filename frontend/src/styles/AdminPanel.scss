@@ -1,0 +1,26 @@
+.ant-layout {
+    min-height: 100vw;
+}
+
+.ant-menu-item {
+    margin: 20px;
+}
+
+.demo-logo-vertical {
+    height: 90px;
+}
+
+.ant-menu {
+
+    position: sticky;
+    top: 90px;
+}
+
+.header-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 0;
+    background: colorBgContainer;
+    width: 30%;
+}
