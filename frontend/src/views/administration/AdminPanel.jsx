@@ -8,9 +8,11 @@ import {
   UnorderedListOutlined,
   LogoutOutlined,
   LoginOutlined,
+  BarcodeOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import CrudUser from "./CrudUser";
+import CrudVoucher from "./CrudVoucher"
 import CrudDishesManagement from "./CrudDishesManagement";
 import OrderStatus from "./OrderStatus";
 import Login from "../../components/Login";
@@ -48,6 +50,11 @@ function AdminPanel() {
               key: "/user",
               icon: <UserOutlined />,
               label: "User",
+            },
+            {
+              key: "/voucher",
+              icon: <BarcodeOutlined />,
+              label: "Voucher",
             },
             {
               key: "/",
@@ -121,6 +128,15 @@ function AdminPanel() {
               element={
                 <div>
                   <CrudUser />
+                </div>
+              }></Route>
+
+            <Route
+              exact
+              path="/voucher"
+              element={
+                <div>
+                  <CrudVoucher />
                 </div>
               }></Route>
             <Route

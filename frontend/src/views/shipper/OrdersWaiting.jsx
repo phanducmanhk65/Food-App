@@ -13,8 +13,6 @@ const OrdersWaiting = () => {
     });
 
     socket.on("newOrder", (newOrderData) => {
-      // Bạn có thể xử lý dữ liệu từ newOrderData ở đây.
-      // Ví dụ: thêm newOrderData vào danh sách orders.
       setOrders(prevOrders => [...prevOrders, newOrderData]);
     });
 
