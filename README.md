@@ -21,6 +21,8 @@ npm i @nestjs/websockets --save
 
 ----------------FRONTENT--------------------------
 
+npm i socket.io-client --save
+
 npm install --save
 
 npm install antd --save
