@@ -87,7 +87,8 @@ function AdminPanel() {
                 icon: <LogoutOutlined />,
                 label: "Register",
               },
-            ]}></Menu>
+            ]}
+          ></Menu>
         </Header>
         <Content
           style={{
@@ -95,7 +96,8 @@ function AdminPanel() {
             padding: 24,
             minHeight: 280,
             background: colorBgContainer,
-          }}>
+          }}
+        >
           <Routes>
             <Route
               exact
@@ -104,7 +106,8 @@ function AdminPanel() {
                 <div>
                   <CrudDishesManagement />
                 </div>
-              }></Route>
+              }
+            ></Route>
 
             <Route
               exact
@@ -113,7 +116,8 @@ function AdminPanel() {
                 <div>
                   <OrderStatus />
                 </div>
-              }></Route>
+              }
+            ></Route>
 
             <Route
               exact
@@ -122,7 +126,8 @@ function AdminPanel() {
                 <div>
                   <CrudUser />
                 </div>
-              }></Route>
+              }
+            ></Route>
             <Route
               exact
               path="/login"
@@ -130,7 +135,8 @@ function AdminPanel() {
                 <div>
                   <Login />
                 </div>
-              }></Route>
+              }
+            ></Route>
             <Route
               exact
               path="/register"
@@ -138,7 +144,8 @@ function AdminPanel() {
                 <div>
                   <Register />
                 </div>
-              }></Route>
+              }
+            ></Route>
           </Routes>
         </Content>
       </Layout>

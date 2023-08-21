@@ -44,10 +44,7 @@ const Register = (props) => {
     };
 
     axios
-      .post(
-        "https://https://backend-six-beryl.vercel.app/user/signup",
-        userData
-      )
+      .post("http://localhost:3000/user/signup", userData)
       .then((response) => {
         // Xử lý kết quả trả về từ API (nếu cần)
         if (response.status === 201) {
