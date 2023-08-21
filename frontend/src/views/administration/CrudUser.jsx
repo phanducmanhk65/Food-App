@@ -107,9 +107,7 @@ const AddUserForm = ({ onAddUser }) => {
     email: "",
     address: "",
     username: "",
-    password: "",
     phonenumber: "",
-    avatar: "",
   });
 
   const handleChange = (e) => {
@@ -120,7 +118,7 @@ const AddUserForm = ({ onAddUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddUser({ ...user, id: Date.now() });
-    setUser({ name: "", username: "", email: "", address: "", password: "", phonenumber: "", avatar: "" });
+    setUser({ name: "", username: "", email: "", address: "", phonenumber: "" });
   };
 
   return (
