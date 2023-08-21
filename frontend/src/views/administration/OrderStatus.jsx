@@ -20,7 +20,7 @@ const EnhancedOrderStatus = () => {
     });
 
     return () => {
-      socket.off("newOrder");
+      socket.off("restaurantapprove");
       socket.close();
     };
   }, []);

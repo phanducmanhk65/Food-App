@@ -4,28 +4,28 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/CrudUser.scss"
 
 const initialUsers = [
-  {
-    id: 1,
-    name: "John Doe",
-    username: "Joe_Dohn",
-    email: "john@example.com",
-    password: "999",
-    address: "New York",
-    phonenumber: "122133"
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    username: "Jith_Smane",
-    email: "jane@example.com",
-    password: "888",    
-    address: "Los Angeles",
-    phonenumber: "233244"
-  },
+  // {
+  //   id: 1,
+  //   name: "John Doe",
+  //   username: "Joe_Dohn",
+  //   email: "john@example.com",
+  //   password: "999",
+  //   address: "New York",
+  //   phonenumber: "122133"
+  // },
+  // {
+  //   id: 2,
+  //   name: "Jane Smith",
+  //   username: "Jith_Smane",
+  //   email: "jane@example.com",
+  //   password: "888",    
+  //   address: "Los Angeles",
+  //   phonenumber: "233244"
+  // },
 
 ];
 
-const Test = () => {
+const UserManagement = () => {
   const [users, setUsers] = useState(initialUsers);
   const [editing, setEditing] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
@@ -36,20 +36,29 @@ const Test = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get({});
-      setUsers(response.data.data);
+      const response = await axios.get('http://localhost:3000/user');
+      setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
   };
 
-  const handleAddUser = (user) => {
-    setUsers([...users, user]);
+  const handleAddUser = async (user) => {
+    try {
+      const response = await axios.post('http://localhost:3000/user', user);
+      setUsers([...users, response.data]);
+    } catch (error) {
+      console.error('Error adding user:', error);
+    }
   };
 
-  const handleDeleteUser = (id) => {
-    const updatedUsers = users.filter((user) => user.id !== id);
-    setUsers(updatedUsers);
+  const handleDeleteUser = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/user/${id}`);
+      setUsers(users.filter(user => user.id !== id));
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
   };
 
   const handleEditUser = (user) => {
@@ -57,9 +66,14 @@ const Test = () => {
     setCurrentUser(user);
   };
 
-  const handleUpdateUser = (id, updatedUser) => {
-    setEditing(false);
-    setUsers(users.map((user) => (user.id === id ? updatedUser : user)));
+  const handleUpdateUser = async (updatedUser) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/user/${updatedUser.id}`, updatedUser);
+      setUsers(users.map(user => (user.id === updatedUser.id ? response.data : user)));
+      setEditing(false);
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
   };
 
   return (
@@ -70,10 +84,9 @@ const Test = () => {
           <EditUserForm
             currentUser={currentUser}
             onUpdateUser={handleUpdateUser}
-            className="p-2"
           />
         ) : (
-          <AddUserForm onAddUser={handleAddUser} className="p-2" />
+          <AddUserForm onAddUser={handleAddUser} />
         )}
       </div>
       <div>
@@ -96,7 +109,7 @@ const AddUserForm = ({ onAddUser }) => {
     username: "",
     password: "",
     phonenumber: "",
-    avatar:"",
+    avatar: "",
   });
 
   const handleChange = (e) => {
@@ -107,7 +120,7 @@ const AddUserForm = ({ onAddUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddUser({ ...user, id: Date.now() });
-    setUser({ name: "", username: "", email: "", address: "",password: "", phonenumber: "",avatar:"" });
+    setUser({ name: "", username: "", email: "", address: "", password: "", phonenumber: "", avatar: "" });
   };
 
   return (
@@ -282,56 +295,56 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
 const UserList = ({ users, onDeleteUser, onEditUser }) => {
   return (
     <div className="table-wrapper">
-    <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
-      <colgroup>
-        <col style={{ width: "8%" }} />
-        <col style={{ width: "12%" }} />
-        <col style={{ width: "12%" }} />
-        <col style={{ width: "16%" }} />
-        <col style={{ width: "14%" }} />
-        <col style={{ width: "12%" }} />
-        <col style={{ width: "12%" }} />
-        <col style={{ width: "12%" }} />
-      </colgroup>
-      <thead>
-        <tr>
-          <th>ID</th>          
-          <th>Name</th>
-          <th>Username</th>
-          <th>Address</th>
-          <th>Email</th>
-          <th>Password</th>
-          <th>Phone Number</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map((user) => (
-          <tr key={user.id}>
-            <td>{user.id}</td>
-            <td>{user.name}</td>
-            <td>{user.username}</td>
-            <td>{user.address}</td>
-            <td>{user.email}</td>
-            <td>{user.password}</td>
-            <td>{user.phonenumber}</td>
-            <td>
-              <button onClick={() => onEditUser(user)} className="btn btn-info">
-                Edit
-              </button>
-              <button
-                onClick={() => onDeleteUser(user.id)}
-                className="btn btn-danger"
-              >
-                Delete
-              </button>
-            </td>
+      <table className="table table-bordered" style={{ tableLayout: "fixed" }}>
+        <colgroup>
+          <col style={{ width: "8%" }} />
+          <col style={{ width: "12%" }} />
+          <col style={{ width: "12%" }} />
+          <col style={{ width: "16%" }} />
+          <col style={{ width: "14%" }} />
+          <col style={{ width: "12%" }} />
+          <col style={{ width: "12%" }} />
+          <col style={{ width: "12%" }} />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.name}</td>
+              <td>{user.username}</td>
+              <td>{user.address}</td>
+              <td>{user.email}</td>
+              <td>{user.password}</td>
+              <td>{user.phonenumber}</td>
+              <td>
+                <button onClick={() => onEditUser(user)} className="btn btn-info">
+                  Edit
+                </button>
+                <button
+                  onClick={() => onDeleteUser(user.id)}
+                  className="btn btn-danger"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default Test;
+export default UserManagement;

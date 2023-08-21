@@ -10,7 +10,7 @@ import ShipperPage from "./shipper/ShipperPage"
 
 function App() {
   return (
-    <ShipperPage />
+    <AdminPanel />
   );
 }
 export default App;
