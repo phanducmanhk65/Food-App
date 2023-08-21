@@ -1,20 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { io } from "socket.io-client";
 
 const OrdersWaiting = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    const socket = io(`http://localhost:3000`, {
+      withCredentials: true,
+      transports: ["websocket", "polling", "flashsocket"],
+    });
+
+    socket.on("newOrder", (newOrderData) => {
+      setOrders(prevOrders => [...prevOrders, newOrderData]);
+    });
+
+    return () => {
+      socket.off("newOrder");
+      socket.close();
+    };
+  }, []);
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/order/findOrdership/1`,
-        {
-          withCredentials: true
-        }
-      );
+      const response = await axios.get(`http://localhost:3000/order/findOrdership/1`, {
+        withCredentials: true
+      });
       setOrders(response.data);
     } catch (error) {
       console.error("Error fetching orders:", error);
@@ -25,10 +37,9 @@ const OrdersWaiting = () => {
   const handleAcceptOrder = async (order) => {
     try {
       const updatedOrder = { idOrder: order.id, status: 2 };
-      await axios.put(`http://localhost:3000/order/updateorder`, updatedOrder,
-        {
-          withCredentials: true
-        });
+      await axios.put(`http://localhost:3000/order/updateorder`, updatedOrder, {
+        withCredentials: true
+      });
       setOrders(prevOrders => prevOrders.filter(o => o.id !== order.id));
     } catch (error) {
       console.error("Error updating order:", error);
@@ -62,7 +73,7 @@ const OrdersWaiting = () => {
                     <p className="card-text">Tên khách hàng: {order.idCustomer}</p>
                     <p className="card-text">Note: {order.note}</p>
                     <p className="card-text">Giá đơn: ${order.totalPrice}</p>
-                    <button className="btn btn-primary " onClick={() => handleAcceptOrder(order)}>Nhận đơn</button>
+                    <button className="btn btn-primary" onClick={() => handleAcceptOrder(order)}>Nhận đơn</button>
                   </div>
                 </div>
               </div>
@@ -72,8 +83,6 @@ const OrdersWaiting = () => {
       )}
     </div>
   );
-
-
-}
+};
 
 export default OrdersWaiting;

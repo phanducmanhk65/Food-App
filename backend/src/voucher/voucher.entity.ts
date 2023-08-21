@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 // voucher.entity.ts
 
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
