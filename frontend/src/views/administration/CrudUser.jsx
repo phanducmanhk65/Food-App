@@ -4,24 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/CrudUser.scss"
 
 const initialUsers = [
-  // {
-  //   id: 1,
-  //   name: "John Doe",
-  //   username: "Joe_Dohn",
-  //   email: "john@example.com",
-  //   password: "999",
-  //   address: "New York",
-  //   phonenumber: "122133"
-  // },
-  // {
-  //   id: 2,
-  //   name: "Jane Smith",
-  //   username: "Jith_Smane",
-  //   email: "jane@example.com",
-  //   password: "888",    
-  //   address: "Los Angeles",
-  //   phonenumber: "233244"
-  // },
 
 ];
 
@@ -197,7 +179,7 @@ const AddUserForm = ({ onAddUser }) => {
 };
 
 const EditUserForm = ({ currentUser, onUpdateUser }) => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(currentUser);
 
   useEffect(() => {
     setUser(currentUser);
@@ -210,7 +192,9 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdateUser(currentUser.id, user);
+    if (user.name && user.username) {
+      onUpdateUser(user);
+    }
   };
 
   return (
@@ -220,7 +204,7 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
           type="text"
           name="name"
           placeholder="Name"
-          value={user.name || ""} // Kiểm tra nếu user.name là null hoặc undefined thì trả về ""
+          value={user.name || ""}
           onChange={handleChange}
           required
           className="form-control"
@@ -287,8 +271,6 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
     </form>
   );
 };
-
-
 
 const UserList = ({ users, onDeleteUser, onEditUser }) => {
   return (
