@@ -1,36 +1,79 @@
 // Định nghĩa mixin cho flex
 @mixin flex {
-    display: flex;
-  }
-  
-  // Định nghĩa mixin cho căn chỉnh các phần tử con ở giữa trục chéo
-  @mixin justify-center {
-    justify-content: center;
-  }
-  
-  // Định nghĩa mixin cho căn chỉnh các phần tử con ở giữa trục chính
-  @mixin items-center {
-    align-items: center;
-  }
-  
+  display: flex;
+}
 
+// Định nghĩa mixin cho căn chỉnh các phần tử con ở giữa trục chéo
+@mixin justify-center {
+  justify-content: center;
+}
+
+// Định nghĩa mixin cho căn chỉnh các phần tử con ở giữa trục chính
+@mixin items-center {
+  align-items: center;
+}
 
 .home-1 {
-    background-color: #b2c3d6;
-    width: 100%;
-    overflow: hidden;
+  background-color: #b2c3d6;
+  width: 100%;
+  overflow: hidden;
 }
+
 .container-1 {
-    padding: 10px;
- @include flex;
+  padding: 10px;
+  @include flex;
   @include justify-center;
   @include items-center;
 }
-.navbar-1{
-  width: 100%;
+
+/* CSS for logo */
+.logo img {
+  height: 40px; /* Adjust the height as needed */
+  width: auto; /* Preserve aspect ratio */
+  margin-right: 10px; /* Add some margin between logo image and text */
 }
-.home-2 {
-  margin-top: 20px;
+
+.navbar-1 {
   width: 100%;
-  overflow: hidden;
+  color: #000;
+}
+
+/* CSS for navigation links */
+.nav-item {
+  margin: 0 12px;
+}
+
+.nav-item a {
+  color: #000; /* Link text color (black) */
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+
+
+/* Custom styles for Ant Design Menu */
+.ant-menu {
+  background-color: transparent; /* Make the menu transparent */
+  border: none; /* Remove border */
+  margin-left: 20px; /* Add some margin between logo and menu */
+}
+
+.ant-menu-item,
+.ant-menu-submenu-title {
+  border: none;
+}
+
+
+.ant-menu-item:hover,
+.ant-menu-submenu-title:hover {
+  background-color: #e6f7ff; /* Hover menu background color (light blue) */
+}
+
+/* Custom styles for Ant Design Badge */
+.ant-badge {
+  color: #000; /* Badge text color (black) */
+  font-weight: bold;
 }

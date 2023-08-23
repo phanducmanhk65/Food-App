@@ -6,13 +6,13 @@ import {
   UserOutlined,
   ShopOutlined,
   UnorderedListOutlined,
-  BarcodeOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import CrudUser from "./CrudUser";
-import CrudVoucher from "./CrudVoucher";
 import CrudDishesManagement from "./CrudDishesManagement";
 import OrderStatus from "./OrderStatus";
+
 import { Routes, Route, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
@@ -48,9 +48,9 @@ function AdminPanel() {
               label: "User",
             },
             {
-              key: "/voucher",
-              icon: <BarcodeOutlined />,
-              label: "Voucher",
+              key: "/",
+              icon: <LogoutOutlined />,
+              label: "Log out",
             },
           ]}
         />
@@ -104,16 +104,6 @@ function AdminPanel() {
               element={
                 <div>
                   <CrudUser />
-                </div>
-              }
-            ></Route>
-
-            <Route
-              exact
-              path="/voucher"
-              element={
-                <div>
-                  <CrudVoucher />
                 </div>
               }
             ></Route>

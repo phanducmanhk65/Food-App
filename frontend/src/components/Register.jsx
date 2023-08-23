@@ -68,15 +68,13 @@ const Register = (props) => {
           type="text"
           placeholder="Full Name "
           value={name}
-          onChange={handleNameChange}
-        ></input>
+          onChange={handleNameChange}></input>
         <div className="text">Username :</div>
         <input
           type="text"
           placeholder="Username"
           value={username}
-          onChange={handleUsernameChange}
-        ></input>
+          onChange={handleUsernameChange}></input>
         <div className="text">Password :</div>
         <div className="input-pass">
           <input
@@ -104,15 +102,13 @@ const Register = (props) => {
           type="text"
           placeholder="Phone"
           value={phoneNumber}
-          onChange={handlePhoneNumberChange}
-        ></input>
+          onChange={handlePhoneNumberChange}></input>
         <div className="text">Address :</div>
         <input
           type="text"
           placeholder="Address"
           value={address}
-          onChange={handleAddressChange}
-        ></input>
+          onChange={handleAddressChange}></input>
         <button
           onClick={handleSubmit}
           className={
@@ -124,8 +120,7 @@ const Register = (props) => {
             name && password && username && phoneNumber && address
               ? false
               : true
-          }
-        >
+          }>
           Sign up
         </button>
         <Link to="/login" className="link-btn">
