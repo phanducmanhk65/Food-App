@@ -8,16 +8,30 @@ export const navLinksRight = [
   {
     id: "user-profile",
     title: "User Profile",
+    path: "/user-profile", // Đường dẫn cho User Profile
   },
   {
     id: "cart",
     title: "Cart",
+    path: "/cart", // Đường dẫn cho Cart
   },
   {
     id: "login",
     title: "Login",
+    path: "/login", // Đường dẫn cho Login
+  },
+  {
+    id: "logout",
+    title: "Logout",
+    path: "/logout", // Đường dẫn cho Logout
+  },
+  {
+    id: "admin-panel",
+    title: "Admin Panel",
+    path: "/admin-panel", // Đường dẫn cho Admin Panel
   },
 ];
+
 export const userInfo = [
   {
     label: "Full Name",

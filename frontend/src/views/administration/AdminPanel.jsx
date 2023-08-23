@@ -6,13 +6,13 @@ import {
   UserOutlined,
   ShopOutlined,
   UnorderedListOutlined,
-  BarcodeOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import CrudUser from "./CrudUser";
-import CrudVoucher from "./CrudVoucher"
 import CrudDishesManagement from "./CrudDishesManagement";
 import OrderStatus from "./OrderStatus";
+
 import { Routes, Route, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
@@ -48,9 +48,9 @@ function AdminPanel() {
               label: "User",
             },
             {
-              key: "/voucher",
-              icon: <BarcodeOutlined />,
-              label: "Voucher",
+              key: "/",
+              icon: <LogoutOutlined />,
+              label: "Log out",
             },
           ]}
         />
@@ -68,7 +68,6 @@ function AdminPanel() {
               marginTop: "1px",
             }}
           />
-
         </Header>
         <Content
           style={{
@@ -76,7 +75,8 @@ function AdminPanel() {
             padding: 24,
             minHeight: 280,
             background: colorBgContainer,
-          }}>
+          }}
+        >
           <Routes>
             <Route
               exact
@@ -85,7 +85,8 @@ function AdminPanel() {
                 <div>
                   <CrudDishesManagement />
                 </div>
-              }></Route>
+              }
+            ></Route>
 
             <Route
               exact
@@ -94,7 +95,8 @@ function AdminPanel() {
                 <div>
                   <OrderStatus />
                 </div>
-              }></Route>
+              }
+            ></Route>
 
             <Route
               exact
@@ -103,16 +105,8 @@ function AdminPanel() {
                 <div>
                   <CrudUser />
                 </div>
-              }></Route>
-
-            <Route
-              exact
-              path="/voucher"
-              element={
-                <div>
-                  <CrudVoucher />
-                </div>
-              }></Route>
+              }
+            ></Route>
           </Routes>
         </Content>
       </Layout>

@@ -1,34 +1,38 @@
-import { LOGIN_SUCCESS,LOGIN_FAIL,LOGOUT } from "../action/authAction";
+import { LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from "../action/authAction";
 
-const initialState= {
-    username: null,
-    errorMessage: null,
-}
+const initialState = {
+  username: null,
+  errorMessage: null,
+  isAuthenticated: false,
+};
 
 export const authReducer = (state = initialState, action) => {
-switch(action.type){
+  switch (action.type) {
     case LOGIN_SUCCESS:
-        return{
-            ...state,
-            username: action.payload,
-            errorMessage: "",
-        }
-        case LOGIN_FAIL:
+      return {
+        ...state,
+        username: action.payload,
+        isAuthenticated: true,
+        errorMessage: "",
+      };
+    case LOGIN_FAIL:
       return {
         ...state,
         username: null,
+        isAuthenticated: false,
         errorMessage: action.payload,
       };
-      case LOGOUT:
+    case LOGOUT:
       return {
         ...state,
         isAuthenticated: false,
-        user: null,
+        username: null,
+        errorMessage: null,
       };
 
     default:
       return state;
-}
+  }
+};
 
- }
- export default authReducer;
+export default authReducer;
