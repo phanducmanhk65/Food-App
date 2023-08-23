@@ -15,28 +15,22 @@ import { logout } from "../../store/action/authAction.js";
 
 const { Header: AntdHeader } = Layout;
 
-const Header = ({ numberCart, isAuthenticated, GetNumberCart, logout }) => {
+const Header = ({ numberCart, isAuthenticated, GetNumberCart }) => {
   const navigate = useNavigate();
-  console.log("isAuthenticated:", isAuthenticated);
+
   useEffect(() => {
     // Gọi action GetNumberCart để cập nhật numberCart từ Redux store
     GetNumberCart();
   }, [GetNumberCart]);
 
   const handleLogout = () => {
-    // Không cần gọi action logout ở đây nữa
-    navigate("/logout"); // Chuyển hướng đến trang Logout
+    // Gọi action logout để đăng xuất
+    logout();
+    navigate("/login"); // Chuyển hướng về trang đăng nhập sau khi đăng xuất
   };
-  const handleAdminPanel = () => {
-    window.location.href = "/admin-panel"; // Chuyển đến trang AdminPanel
-  };
+
   const userMenu = (
     <Menu>
-      <Menu.Item key="admin-panel" onClick={handleAdminPanel}>
-        <a>
-          <UserOutlined /> Admin Panel
-        </a>
-      </Menu.Item>
       <Menu.Item key="profile">
         <Link to="/user-profile">
           <UserOutlined /> Profile
@@ -64,30 +58,27 @@ const Header = ({ numberCart, isAuthenticated, GetNumberCart, logout }) => {
       </Menu>
       <Menu theme="dark" className="nav-container">
         {isAuthenticated ? (
-          <>
-            <Menu.Item key="cart" className="nav-item">
-              <Badge count={numberCart} offset={[8, -8]}>
-                <Link to="/cart">
-                  <ShoppingCartOutlined /> Cart
-                </Link>
-              </Badge>
-            </Menu.Item>
-            <Menu.Item key="user-dropdown" className="nav-item">
-              <Dropdown overlay={userMenu} placement="bottomRight" arrow>
-                <a href="/user-profile">
-                  <UserOutlined /> User
-                </a>
-              </Dropdown>
-            </Menu.Item>
-          </>
+          <Menu.Item key="user-dropdown" className="nav-item">
+            <Dropdown overlay={userMenu} placement="bottomRight" arrow>
+              <a href="/">
+                <UserOutlined /> User
+              </a>
+            </Dropdown>
+          </Menu.Item>
         ) : (
-          navLinksRight.find((nav) => nav.id === "login") && (
-            <Menu.Item key="login" className="nav-item">
-              <Link to="/login" onClick={() => navigate("/login")}>
-                <UserOutlined /> Login
+          navLinksRight.map((nav, index) => (
+            <Menu.Item key={nav.id} className="nav-item">
+              <Link to={`/${nav.id}`} onClick={() => navigate(`/${nav.id}`)}>
+                {index === 1 ? (
+                  <Badge count={numberCart} offset={[8, -8]}>
+                    <ShoppingCartOutlined /> {nav.title}
+                  </Badge>
+                ) : (
+                  nav.title
+                )}
               </Link>
             </Menu.Item>
-          )
+          ))
         )}
       </Menu>
     </AntdHeader>
