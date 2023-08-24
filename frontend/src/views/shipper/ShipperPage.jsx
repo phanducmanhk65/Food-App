@@ -7,14 +7,13 @@ import {
   ShopOutlined,
   LogoutOutlined,
   LoginOutlined,
-  CarOutlined
+  CarOutlined,
+  ArrowLeftOutlined, // Thêm biểu tượng ArrowLeftOutlined
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
-import MapContainer from './MapContainer';
-import OrdersProcessing from './OrdersProcessing'
+import MapContainer from "./MapContainer";
+import OrdersProcessing from "./OrdersProcessing";
 import OrdersWaiting from "./OrdersWaiting";
-import Login from "../../components/Login";
-import Register from "../../components/Register";
 import { Routes, Route, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
@@ -25,6 +24,41 @@ function ShipperPage() {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const [currentPage, setCurrentPage] = useState("map");
+
+  const renderPageContent = () => {
+    switch (currentPage) {
+      case "map":
+        return (
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "500px",
+            }}
+          >
+            <MapContainer />
+          </div>
+        );
+      case "order":
+        return (
+          <div style={{ flex: 1 }}>
+            <OrdersWaiting />
+          </div>
+        );
+      case "ondoing":
+        return (
+          <div style={{ flex: 1 }}>
+            <OrdersProcessing />
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -32,27 +66,33 @@ function ShipperPage() {
         <Menu
           theme="dark"
           mode="inline"
-          onClick={({ key }) => navigate(key)}
+          onClick={({ key }) => {
+            if (key === "return") {
+              navigate("/home"); // Chuyển hướng về trang Home khi ấn "Return"
+            } else {
+              setCurrentPage(key);
+            }
+          }}
           items={[
             {
-              key: "/map",
+              key: "map",
               icon: <EnvironmentOutlined />,
               label: "Map",
             },
             {
-              key: "/order",
+              key: "order",
               icon: <ShopOutlined />,
               label: "Order",
             },
             {
-              key: "/ondoing",
+              key: "ondoing",
               icon: <CarOutlined />,
               label: "On doing",
             },
             {
-              key: "/",
-              icon: <LogoutOutlined />,
-              label: "Log out",
+              key: "return", // Thay đổi key để phù hợp với trường hợp "Return"
+              icon: <ArrowLeftOutlined />, // Sử dụng biểu tượng ArrowLeftOutlined
+              label: "Return", // Thay đổi nhãn để hiển thị "Return"
             },
           ]}
         />
@@ -87,7 +127,8 @@ function ShipperPage() {
                 icon: <LogoutOutlined />,
                 label: "Register",
               },
-            ]}></Menu>
+            ]}
+          ></Menu>
         </Header>
         <Content
           style={{
@@ -95,50 +136,9 @@ function ShipperPage() {
             padding: 24,
             minHeight: 280,
             background: colorBgContainer,
-          }}>
-          <Routes>
-            <Route
-              exact
-              path="/map"
-              element={
-                <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '500px' }}>
-                  <MapContainer />
-                </div>
-              }
-            ></Route>
-            <Route
-              exact
-              path="/order"
-              element={
-                <div style={{ flex: 1 }}>
-                  <OrdersWaiting />
-                </div>
-              }></Route>
-            <Route
-              exact
-              path="/ondoing"
-              element={
-                <div style={{ flex: 1 }}>
-                  <OrdersProcessing />
-                </div>
-              }></Route>
-            <Route
-              exact
-              path="/login"
-              element={
-                <div>
-                  <Login />
-                </div>
-              }></Route>
-            <Route
-              exact
-              path="/register"
-              element={
-                <div>
-                  <Register />
-                </div>
-              }></Route>
-          </Routes>
+          }}
+        >
+          {renderPageContent()}
         </Content>
       </Layout>
     </Layout>

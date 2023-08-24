@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../../styles/CrudUser.scss"
+import "../../styles/CrudUser.scss";
 
-const initialUsers = [
-
-];
+const initialUsers = [];
 
 const UserManagement = () => {
   const [users, setUsers] = useState(initialUsers);
@@ -18,7 +16,7 @@ const UserManagement = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/user');
+      const response = await axios.get("http://localhost:3000/user");
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -27,19 +25,19 @@ const UserManagement = () => {
 
   const handleAddUser = async (user) => {
     try {
-      const response = await axios.post('http://localhost:3000/user', user);
+      const response = await axios.post("http://localhost:3000/user", user);
       setUsers([...users, response.data]);
     } catch (error) {
-      console.error('Error adding user:', error);
+      console.error("Error adding user:", error);
     }
   };
 
   const handleDeleteUser = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/user/${id}`);
-      setUsers(users.filter(user => user.id !== id));
+      setUsers(users.filter((user) => user.id !== id));
     } catch (error) {
-      console.error('Error deleting user:', error);
+      console.error("Error deleting user:", error);
     }
   };
 
@@ -50,11 +48,16 @@ const UserManagement = () => {
 
   const handleUpdateUser = async (updatedUser) => {
     try {
-      const response = await axios.put(`http://localhost:3000/user/${updatedUser.id}`, updatedUser);
-      setUsers(users.map(user => (user.id === updatedUser.id ? response.data : user)));
+      const response = await axios.put(
+        `http://localhost:3000/user/${updatedUser.id}`,
+        updatedUser
+      );
+      setUsers(
+        users.map((user) => (user.id === updatedUser.id ? response.data : user))
+      );
       setEditing(false);
     } catch (error) {
-      console.error('Error updating user:', error);
+      console.error("Error updating user:", error);
     }
   };
 
@@ -100,7 +103,13 @@ const AddUserForm = ({ onAddUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddUser({ ...user, id: Date.now() });
-    setUser({ name: "", username: "", email: "", address: "", phonenumber: "" });
+    setUser({
+      name: "",
+      username: "",
+      email: "",
+      address: "",
+      phonenumber: "",
+    });
   };
 
   return (
@@ -309,7 +318,10 @@ const UserList = ({ users, onDeleteUser, onEditUser }) => {
               <td>{user.password}</td>
               <td>{user.phonenumber}</td>
               <td>
-                <button onClick={() => onEditUser(user)} className="btn btn-info">
+                <button
+                  onClick={() => onEditUser(user)}
+                  className="btn btn-info"
+                >
                   Edit
                 </button>
                 <button

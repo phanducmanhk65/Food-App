@@ -1,14 +1,20 @@
-import React, { useState, useRef } from 'react';
-import { GoogleMap, LoadScript, Marker, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
+import React, { useState, useRef } from "react";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  DirectionsService,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
 
 const MapContainer = () => {
-  const apiKey = 'AIzaSyDNI_ZWPqvdS6r6gPVO50I4TlYkfkZdXh8';
+  const apiKey = "AIzaSyDNI_ZWPqvdS6r6gPVO50I4TlYkfkZdXh8";
   const [destination, setDestination] = useState(null);
   const [directions, setDirections] = useState(null);
   const [selectedPosition, setSelectedPosition] = useState(null);
   const mapRef = useRef(null);
 
-  const defaultCenter = { lat: 21.0239591, lng: 105.7901580 };
+  const defaultCenter = { lat: 21.0239591, lng: 105.790158 };
 
   const handleMapClick = (event) => {
     setSelectedPosition({
@@ -35,7 +41,7 @@ const MapContainer = () => {
     <LoadScript googleMapsApiKey={apiKey}>
       <GoogleMap
         ref={mapRef}
-        mapContainerStyle={{ width: '100%', height: '100%' }}
+        mapContainerStyle={{ width: "100%", height: "100%" }}
         center={defaultCenter}
         zoom={13}
         onClick={handleMapClick}
@@ -48,18 +54,16 @@ const MapContainer = () => {
             options={{
               origin: defaultCenter,
               destination: destination,
-              travelMode: "DRIVING"
+              travelMode: "DRIVING",
             }}
             callback={handleDirectionsResult}
           />
         )}
 
         {directions && <DirectionsRenderer directions={directions} />}
-
       </GoogleMap>
 
       <button onClick={handleGetDirections}>Chỉ đường</button>
-
     </LoadScript>
   );
 };

@@ -13,7 +13,7 @@ const OrdersWaiting = () => {
     });
 
     socket.on("newOrder", (newOrderData) => {
-      setOrders(prevOrders => [...prevOrders, newOrderData]);
+      setOrders((prevOrders) => [...prevOrders, newOrderData]);
     });
 
     return () => {
@@ -24,9 +24,12 @@ const OrdersWaiting = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/order/findOrdership/1`, {
-        withCredentials: true
-      });
+      const response = await axios.get(
+        `http://localhost:3000/order/findOrdership/1`,
+        {
+          withCredentials: true,
+        }
+      );
       setOrders(response.data);
     } catch (error) {
       console.error("Error fetching orders:", error);
@@ -38,9 +41,9 @@ const OrdersWaiting = () => {
     try {
       const updatedOrder = { idOrder: order.id, status: 2 };
       await axios.put(`http://localhost:3000/order/updateorder`, updatedOrder, {
-        withCredentials: true
+        withCredentials: true,
       });
-      setOrders(prevOrders => prevOrders.filter(o => o.id !== order.id));
+      setOrders((prevOrders) => prevOrders.filter((o) => o.id !== order.id));
     } catch (error) {
       console.error("Error updating order:", error);
       setError(error);
@@ -64,16 +67,25 @@ const OrdersWaiting = () => {
           <h3>Đang có {orders.length} đơn đang chờ</h3>
           <br></br>
           <div className="row">
-            {orders.map(order => (
+            {orders.map((order) => (
               <div key={order.id} className="col-md-3 mb-4">
                 <div className="card">
                   <div className="card-body">
                     <h5 className="card-title">Đang chờ</h5>
-                    <p className="card-text">Địa chỉ quán: {order.idRestaurant}</p>
-                    <p className="card-text">Tên khách hàng: {order.idCustomer}</p>
+                    <p className="card-text">
+                      Địa chỉ quán: {order.idRestaurant}
+                    </p>
+                    <p className="card-text">
+                      Tên khách hàng: {order.idCustomer}
+                    </p>
                     <p className="card-text">Note: {order.note}</p>
                     <p className="card-text">Giá đơn: ${order.totalPrice}</p>
-                    <button className="btn btn-primary" onClick={() => handleAcceptOrder(order)}>Nhận đơn</button>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => handleAcceptOrder(order)}
+                    >
+                      Nhận đơn
+                    </button>
                   </div>
                 </div>
               </div>

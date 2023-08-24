@@ -15,7 +15,7 @@ const DishesManagement = () => {
   const fetchDishes = async () => {
     try {
       const response = await axios.get("http://localhost:3000/dish/findByRes", {
-        withCredentials: true
+        withCredentials: true,
       });
       setDishes(response.data);
     } catch (error) {
@@ -33,10 +33,13 @@ const DishesManagement = () => {
           price: priceAsNumber,
           idRestaurant: idRestaurantAsNumber,
         };
-        const response = await axios.post("http://localhost:3000/dish/create", dishWithNumberValues,
+        const response = await axios.post(
+          "http://localhost:3000/dish/create",
+          dishWithNumberValues,
           {
-            withCredentials: true
-          });
+            withCredentials: true,
+          }
+        );
         setDishes([...dishes, response.data]);
       } else {
         console.error("Invalid price or idRestaurant value:", newDish);
@@ -46,13 +49,11 @@ const DishesManagement = () => {
     }
   };
 
-
   const handleDeleteDish = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/dish/delete/${id}`,
-        {
-          withCredentials: true
-        });
+      await axios.delete(`http://localhost:3000/dish/delete/${id}`, {
+        withCredentials: true,
+      });
       const updatedDishes = dishes.filter((dish) => dish.id !== id);
       setDishes(updatedDishes);
     } catch (error) {
@@ -83,7 +84,7 @@ const DishesManagement = () => {
           idRestaurant: idRestaurantAsNumber,
         },
         {
-          withCredentials: true
+          withCredentials: true,
         }
       );
 
@@ -101,7 +102,7 @@ const DishesManagement = () => {
     setCurrentDish({});
   };
 
-  const filteredDishes = dishes.filter(dish =>
+  const filteredDishes = dishes.filter((dish) =>
     dish.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -176,21 +177,25 @@ const AddDishForm = ({ setDishes, dishes }) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('name', dish.name);
-    formData.append('price', dish.price);
-    formData.append('idRestaurant', dish.idRestaurant);
-    formData.append('productline', dish.productline);
+    formData.append("name", dish.name);
+    formData.append("price", dish.price);
+    formData.append("idRestaurant", dish.idRestaurant);
+    formData.append("productline", dish.productline);
     if (imageFile) {
-      formData.append('file', imageFile);
+      formData.append("file", imageFile);
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/dish/create", formData, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:3000/dish/create",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       setDishes([...dishes, response.data]);
       resetForm();
       setSuccessMessage("Dish successfully added!");
@@ -201,7 +206,9 @@ const AddDishForm = ({ setDishes, dishes }) => {
 
   return (
     <div>
-      {successMessage && <div className="alert alert-success">{successMessage}</div>}
+      {successMessage && (
+        <div className="alert alert-success">{successMessage}</div>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input
@@ -254,11 +261,13 @@ const AddDishForm = ({ setDishes, dishes }) => {
   );
 };
 
-
-
-
-
-const EditDishForm = ({ currentDish, onUpdateDish, onCancelEdit, editing, handleFileChange }) => {
+const EditDishForm = ({
+  currentDish,
+  onUpdateDish,
+  onCancelEdit,
+  editing,
+  handleFileChange,
+}) => {
   const [dish, setDish] = useState(currentDish);
 
   useEffect(() => {
@@ -324,7 +333,11 @@ const EditDishForm = ({ currentDish, onUpdateDish, onCancelEdit, editing, handle
       <button type="submit" className="btn btn-primary">
         Update Dish
       </button>
-      <button type="button" className="btn btn-secondary" onClick={onCancelEdit}>
+      <button
+        type="button"
+        className="btn btn-secondary"
+        onClick={onCancelEdit}
+      >
         Cancel
       </button>
     </form>

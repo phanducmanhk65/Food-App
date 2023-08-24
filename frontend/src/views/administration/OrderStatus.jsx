@@ -12,7 +12,7 @@ const EnhancedOrderStatus = () => {
   useEffect(() => {
     const socket = new io(`http://localhost:3000`, {
       withCredentials: true,
-      transports: ['websocket', 'polling', 'flashsocket'],
+      transports: ["websocket", "polling", "flashsocket"],
     }); // Địa chỉ của máy chủ Socket.io
 
     socket.on("restaurantapprove", (data) => {
@@ -31,9 +31,12 @@ const EnhancedOrderStatus = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/order/findorderres/0", {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        "http://localhost:3000/order/findorderres/0",
+        {
+          withCredentials: true,
+        }
+      );
       setOrders(response.data);
     } catch (error) {
       console.error("Error fetching orders:", error);
@@ -42,9 +45,12 @@ const EnhancedOrderStatus = () => {
 
   const handleViewOrderDetail = async (idOrder) => {
     try {
-      const response = await axios.get(`http://localhost:3000/orderdetail/findOrderDetail/${idOrder}`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `http://localhost:3000/orderdetail/findOrderDetail/${idOrder}`,
+        {
+          withCredentials: true,
+        }
+      );
       setOrderDetail(response.data);
       setIsModalOpen(true);
     } catch (error) {
@@ -60,18 +66,17 @@ const EnhancedOrderStatus = () => {
     try {
       const updatedOrder = {
         idOrder: order.id,
-        status: 1
+        status: 1,
       };
       const response = await axios.put(
         `http://localhost:3000/order/updateorder/`,
         updatedOrder,
         {
-          withCredentials: true
+          withCredentials: true,
         }
       );
       if (response.data === "Cập nhật thành công") {
-        setOrders(prevOrders => prevOrders.filter(o => o.id !== order.id)
-        );
+        setOrders((prevOrders) => prevOrders.filter((o) => o.id !== order.id));
       } else {
         console.error("Backend response:", response.data);
       }
@@ -108,18 +113,21 @@ const EnhancedOrderStatus = () => {
               <td>
                 {order.status === 0 && (
                   <>
-                    <><button
-                      className="btn btn-primary"
-                      onClick={() => handleAcceptOrder(order)}
-                    >
-                      Chấp nhận đơn
-                    </button></>
-                    <><button
-                      className="btn btn-secondary"
-                      onClick={() => handleViewOrderDetail(order.id)}
-                    >
-                      Chi tiết đơn
-                    </button>
+                    <>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => handleAcceptOrder(order)}
+                      >
+                        Chấp nhận đơn
+                      </button>
+                    </>
+                    <>
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => handleViewOrderDetail(order.id)}
+                      >
+                        Chi tiết đơn
+                      </button>
                     </>
                   </>
                 )}
@@ -129,7 +137,7 @@ const EnhancedOrderStatus = () => {
         </tbody>
       </table>
       {isModalOpen && (
-        <div className="modal" style={{ display: 'block' }}>
+        <div className="modal" style={{ display: "block" }}>
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -147,7 +155,11 @@ const EnhancedOrderStatus = () => {
                 )}
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={closeModal}>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={closeModal}
+                >
                   Đóng
                 </button>
               </div>

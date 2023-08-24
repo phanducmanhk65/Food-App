@@ -30,11 +30,19 @@ const Header = ({ numberCart, isAuthenticated, GetNumberCart, logout }) => {
   const handleAdminPanel = () => {
     window.location.href = "/admin-panel"; // Chuyển đến trang AdminPanel
   };
+  const handleShipperPage = () => {
+    window.location.href = "/shipper-page"; // Chuyển đến trang shipper-page
+  };
   const userMenu = (
     <Menu>
       <Menu.Item key="admin-panel" onClick={handleAdminPanel}>
         <a>
           <UserOutlined /> Admin Panel
+        </a>
+      </Menu.Item>
+      <Menu.Item key="shipper-page" onClick={handleShipperPage}>
+        <a>
+          <UserOutlined /> ShipperPage
         </a>
       </Menu.Item>
       <Menu.Item key="profile">
