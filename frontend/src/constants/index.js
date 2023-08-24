@@ -30,6 +30,11 @@ export const navLinksRight = [
     title: "Admin Panel",
     path: "/admin-panel", // Đường dẫn cho Admin Panel
   },
+  {
+    id: "shipper-page",
+    title: "Shipper Page",
+    path: "/shipper-page", // Đường dẫn cho Shipper Page
+  },
 ];
 
 export const userInfo = [

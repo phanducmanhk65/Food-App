@@ -3,6 +3,7 @@ import "../../styles/AdminPanel.scss";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  BarcodeOutlined,
   UserOutlined,
   ShopOutlined,
   UnorderedListOutlined,
@@ -11,9 +12,11 @@ import {
 import { Layout, Menu, Button, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 import CrudUser from "./CrudUser";
+import CrudVoucher from "./CrudVoucher";
 import CrudDishesManagement from "./CrudDishesManagement";
 import OrderStatus from "./OrderStatus";
 import HomePage from "../Home/HomePage";
+import CrudRestaurantManagement from "./CrudRestaurantManagement";
 
 const { Sider, Content } = Layout;
 
@@ -34,6 +37,10 @@ function AdminPanel() {
         return <OrderStatus />;
       case "user":
         return <CrudUser />;
+      case "voucher":
+        return <CrudVoucher />;
+      case "restaurant":
+        return <CrudRestaurantManagement />;
       case "return":
         return <HomePage />;
       default:
@@ -48,6 +55,7 @@ function AdminPanel() {
         <Menu
           theme="dark"
           mode="inline"
+          className="header-container-adminPanel"
           onClick={({ key }) => {
             if (key === "return") {
               navigate("/home"); // Chuyển hướng về trang Home khi ấn "Return"
@@ -70,6 +78,16 @@ function AdminPanel() {
               key: "user",
               icon: <UserOutlined />,
               label: "User",
+            },
+            {
+              key: "voucher",
+              icon: <BarcodeOutlined />,
+              label: "Voucher",
+            },
+            {
+              key: "restaurant",
+              icon: <MenuFoldOutlined />,
+              label: "Restaurant",
             },
             {
               key: "return",
