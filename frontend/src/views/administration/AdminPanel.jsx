@@ -6,12 +6,11 @@ import {
   UserOutlined,
   ShopOutlined,
   UnorderedListOutlined,
-  BarcodeOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 import CrudUser from "./CrudUser";
-import CrudVoucher from "./CrudVoucher";
 import CrudDishesManagement from "./CrudDishesManagement";
 import OrderStatus from "./OrderStatus";
 import HomePage from "../Home/HomePage";
@@ -73,27 +72,14 @@ function AdminPanel() {
               label: "User",
             },
             {
-              key: "/",
+              key: "return",
               icon: <LogoutOutlined />,
-              label: "Log out",
+              label: "Return",
             },
           ]}
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: "16px",
-              width: 64,
-              height: 64,
-              marginTop: "1px",
-            }}
-          />
-        </Header>
         <Content
           style={{
             margin: "0",
@@ -102,37 +88,7 @@ function AdminPanel() {
             background: colorBgContainer,
           }}
         >
-          <Routes>
-            <Route
-              exact
-              path="/dishes"
-              element={
-                <div>
-                  <CrudDishesManagement />
-                </div>
-              }
-            ></Route>
-
-            <Route
-              exact
-              path="/order"
-              element={
-                <div>
-                  <OrderStatus />
-                </div>
-              }
-            ></Route>
-
-            <Route
-              exact
-              path="/user"
-              element={
-                <div>
-                  <CrudUser />
-                </div>
-              }
-            ></Route>
-          </Routes>
+          {renderPageContent()}
         </Content>
       </Layout>
     </Layout>
