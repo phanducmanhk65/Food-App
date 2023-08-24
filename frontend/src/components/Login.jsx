@@ -40,6 +40,7 @@ const Login = () => {
         console.log("Ủa alo :", decodedToken);
         const userId = decodedToken.userId;
         dispatch(loginSuccess(decodedToken));
+        localStorage.setItem("token", response.data.token);
 
         axios
           .get(`http://localhost:3000/user/${userId}`, {
