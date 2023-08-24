@@ -9,12 +9,14 @@ import {
   BarcodeOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
+import { useNavigate } from "react-router-dom";
 import CrudUser from "./CrudUser";
-import CrudVoucher from "./CrudVoucher"
+import CrudVoucher from "./CrudVoucher";
 import CrudDishesManagement from "./CrudDishesManagement";
 import OrderStatus from "./OrderStatus";
-import { Routes, Route, useNavigate } from "react-router-dom";
-const { Header, Sider, Content } = Layout;
+import HomePage from "../Home/HomePage";
+
+const { Sider, Content } = Layout;
 
 function AdminPanel() {
   const navigate = useNavigate();
@@ -23,6 +25,23 @@ function AdminPanel() {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const [currentPage, setCurrentPage] = useState("dishes");
+
+  const renderPageContent = () => {
+    switch (currentPage) {
+      case "dishes":
+        return <CrudDishesManagement />;
+      case "order":
+        return <OrderStatus />;
+      case "user":
+        return <CrudUser />;
+      case "return":
+        return <HomePage />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -30,27 +49,33 @@ function AdminPanel() {
         <Menu
           theme="dark"
           mode="inline"
-          onClick={({ key }) => navigate(key)}
+          onClick={({ key }) => {
+            if (key === "return") {
+              navigate("/home"); // Chuyển hướng về trang Home khi ấn "Return"
+            } else {
+              setCurrentPage(key);
+            }
+          }}
           items={[
             {
-              key: "/dishes",
+              key: "dishes",
               icon: <ShopOutlined />,
               label: "Dishes",
             },
             {
-              key: "/order",
+              key: "order",
               icon: <UnorderedListOutlined />,
               label: "Order",
             },
             {
-              key: "/user",
+              key: "user",
               icon: <UserOutlined />,
               label: "User",
             },
             {
-              key: "/voucher",
-              icon: <BarcodeOutlined />,
-              label: "Voucher",
+              key: "/",
+              icon: <LogoutOutlined />,
+              label: "Log out",
             },
           ]}
         />
@@ -68,15 +93,15 @@ function AdminPanel() {
               marginTop: "1px",
             }}
           />
-
         </Header>
         <Content
           style={{
-            margin: "24px 16px",
-            padding: 24,
-            minHeight: 280,
+            margin: "0",
+            padding: "0",
+            minHeight: "100vh",
             background: colorBgContainer,
-          }}>
+          }}
+        >
           <Routes>
             <Route
               exact
@@ -85,7 +110,8 @@ function AdminPanel() {
                 <div>
                   <CrudDishesManagement />
                 </div>
-              }></Route>
+              }
+            ></Route>
 
             <Route
               exact
@@ -94,7 +120,8 @@ function AdminPanel() {
                 <div>
                   <OrderStatus />
                 </div>
-              }></Route>
+              }
+            ></Route>
 
             <Route
               exact
@@ -103,16 +130,8 @@ function AdminPanel() {
                 <div>
                   <CrudUser />
                 </div>
-              }></Route>
-
-            <Route
-              exact
-              path="/voucher"
-              element={
-                <div>
-                  <CrudVoucher />
-                </div>
-              }></Route>
+              }
+            ></Route>
           </Routes>
         </Content>
       </Layout>
