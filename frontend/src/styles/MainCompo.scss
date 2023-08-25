@@ -1,0 +1,160 @@
+/* Style input and search button */
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Hover effect */
+}
+
+button:hover {
+  background-color: #0056b3; /* Change color on hover */
+}
+
+/* Center align the row */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center align horizontally */
+}
+
+/* Style individual columns */
+.col-md-2 {
+  flex-basis: calc(20% - 20px);
+  margin-right: 20px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease; /* Hover effect */
+}
+
+/* Responsive images */
+.img-responsive {
+  max-width: 100%;
+  height: 150px;
+}
+
+/* Style h5 elements */
+h5 {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+/* Style the "Thêm vào giỏ hàng" badge */
+.badge {
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Hover effect */
+}
+
+/* Margin on top of the row */
+div.row {
+  margin-top: 20px;
+}
+
+/* Hover effect on badge */
+.badge:hover {
+  background-color: #c82333;
+}
+.search-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+button:hover {
+  background-color: #0056b3; /* Change color on hover */
+}
+
+/* Center align the row */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center align horizontally */
+}
+
+/* Style individual columns */
+.col-md-2 {
+  flex-basis: calc(20% - 20px);
+  margin-right: 20px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease; /* Hover effect */
+}
+
+/* Responsive images */
+.img-responsive {
+  max-width: 100%;
+  height: 150px;
+}
+
+/* Style h5 elements */
+h5 {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+/* Style the "Thêm vào giỏ hàng" badge */
+.badge {
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Hover effect */
+}
+
+/* Margin on top of the row */
+div.row {
+  margin-top: 20px;
+}
+
+/* Hover effect on badge */
+.badge:hover {
+  background-color: #c82333;
+}
+
+/* Center align the search button */
+.search-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Style the search button text */
+.search-button button {
+  background-color: #3d9be9;
+  color: white;
+  border-radius: 20px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+/* Style the search input */
+.search-input-container {
+  display: flex;
+  align-items: center;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+}
+
+/* Style the search input icon */
+.search-icon {
+  margin-right: 5px;
+  color: #888;
+}

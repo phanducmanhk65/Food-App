@@ -5,6 +5,7 @@ import {
   AddCart,
   actSearchDishRequest,
 } from "../../store/action/cartAction";
+import "../../styles/MainCompo.scss";
 
 const Main = ({
   _dish,
@@ -46,14 +47,14 @@ const Main = ({
 
   return (
     <>
-      <div>
+      <div className="search-button">
         <input
           type="text"
           value={searchTerm}
           onChange={handleSearchInputChange}
           placeholder="Nhập từ khóa tìm kiếm..."
         />
-        <button onClick={handleSearch}>Tìm kiếm</button>
+        <button onClick={handleSearch}>Search</button>
       </div>
       <div className="row" style={{ marginTop: "10px" }}>
         <div className="col-md-12">
