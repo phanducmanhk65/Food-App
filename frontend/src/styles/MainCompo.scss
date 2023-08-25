@@ -131,8 +131,9 @@ div.row {
 /* Center align the search button */
 .search-button {
   display: flex;
+  align-items: flex-start;
+
   justify-content: center;
-  align-items: center;
 }
 
 /* Style the search button text */
@@ -142,6 +143,7 @@ div.row {
   border-radius: 20px;
   font-weight: bold;
   border: none;
+  margin-top: 0px;
   cursor: pointer;
 }
 
