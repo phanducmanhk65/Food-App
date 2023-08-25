@@ -23,15 +23,6 @@ const UserManagement = () => {
     }
   };
 
-  const handleAddUser = async (user) => {
-    try {
-      const response = await axios.post("http://localhost:3000/user", user);
-      setUsers([...users, response.data]);
-    } catch (error) {
-      console.error("Error adding user:", error);
-    }
-  };
-
   const handleDeleteUser = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/user/${id}`);
@@ -50,12 +41,15 @@ const UserManagement = () => {
     try {
       const response = await axios.put(
         `http://localhost:3000/user/${updatedUser.id}`,
-        updatedUser
+        updatedUser,
+        { withCredentials: true }
       );
-      setUsers(
-        users.map((user) => (user.id === updatedUser.id ? response.data : user))
-      );
-      setEditing(false);
+      if (response.status === 200) {
+        setUsers(users.map((user) => (user.id === updatedUser.id ? updatedUser : user)));
+        setEditing(false);
+      } else {
+        console.error("Failed to update user on the server");
+      }
     } catch (error) {
       console.error("Error updating user:", error);
     }
@@ -70,9 +64,7 @@ const UserManagement = () => {
             currentUser={currentUser}
             onUpdateUser={handleUpdateUser}
           />
-        ) : (
-          <AddUserForm onAddUser={handleAddUser} />
-        )}
+        ) : null}
       </div>
       <div>
         <h2>User List</h2>
@@ -83,107 +75,6 @@ const UserManagement = () => {
         />
       </div>
     </div>
-  );
-};
-
-const AddUserForm = ({ onAddUser }) => {
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    address: "",
-    username: "",
-    phonenumber: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onAddUser({ ...user, id: Date.now() });
-    setUser({
-      name: "",
-      username: "",
-      email: "",
-      address: "",
-      phonenumber: "",
-    });
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={user.name}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={user.username}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={user.email}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          value={user.address}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={user.password}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          name="phonenumber"
-          placeholder="Phone Number"
-          value={user.phonenumber}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <button type="submit" className="btn btn-primary">
-        Add User
-      </button>
-    </form>
   );
 };
 
@@ -230,17 +121,7 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
           className="form-control"
         />
       </div>
-      <div className="form-group">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={user.email || ""}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
+
       <div className="form-group">
         <input
           type="text"
@@ -254,21 +135,10 @@ const EditUserForm = ({ currentUser, onUpdateUser }) => {
       </div>
       <div className="form-group">
         <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={user.password || ""}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
           type="text"
-          name="phonenumber"
+          name="phoneNumber"
           placeholder="Phone Number"
-          value={user.phonenumber || ""}
+          value={user.phoneNumber || ""}
           onChange={handleChange}
           required
           className="form-control"
@@ -316,7 +186,7 @@ const UserList = ({ users, onDeleteUser, onEditUser }) => {
               <td>{user.address}</td>
               <td>{user.email}</td>
               <td>{user.password}</td>
-              <td>{user.phonenumber}</td>
+              <td>{user.phoneNumber}</td>
               <td>
                 <button
                   onClick={() => onEditUser(user)}

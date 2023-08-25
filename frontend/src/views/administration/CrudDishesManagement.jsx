@@ -68,7 +68,7 @@ const DishesManagement = () => {
 
   const handleUpdateDish = async (id, updatedDish) => {
     try {
-      const priceAsNumber = parseFloat(updatedDish.price);
+      const priceAsNumber = parseInt(updatedDish.price);
       const idRestaurantAsNumber = parseInt(updatedDish.idRestaurant);
 
       if (isNaN(priceAsNumber) || isNaN(idRestaurantAsNumber)) {
@@ -88,14 +88,19 @@ const DishesManagement = () => {
         }
       );
 
-      setDishes((prevDishes) =>
-        prevDishes.map((dish) => (dish.id === id ? response.data : dish))
-      );
-      setEditing(false);
+      if (response.status === 200) {
+        setDishes((prevDishes) =>
+          prevDishes.map((dish) => (dish.id === id ? updatedDish : dish))
+        );
+        setEditing(false);
+      } else {
+        console.error("Failed to update dish on the server");
+      }
     } catch (error) {
       console.error("Error updating dish:", error);
     }
   };
+
 
   const handleCancelEdit = () => {
     setEditing(false);
@@ -103,8 +108,9 @@ const DishesManagement = () => {
   };
 
   const filteredDishes = dishes.filter((dish) =>
-    dish.name.toLowerCase().includes(searchTerm.toLowerCase())
+    dish.name && dish.name.toLowerCase().includes(searchTerm?.toLowerCase() || "")
   );
+
 
   return (
     <div className="container mt-4">
@@ -307,15 +313,6 @@ const EditDishForm = ({
           placeholder="Price"
           onChange={handleChange}
           value={dish.price}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="file"
-          name="file"
-          onChange={handleFileChange}
           required
           className="form-control"
         />
